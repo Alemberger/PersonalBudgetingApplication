@@ -26,7 +26,6 @@ namespace PersonalBudgetingApplication
             InitializeComponent();
 
             //Apply Profile list to a dropdown list
-
         }
 
         private void NavBarToggle_Click(object sender, RoutedEventArgs e)
