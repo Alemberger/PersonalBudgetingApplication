@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalBudgetingApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Personal Budgetting" Height="450" Width="800">
     <Grid>
-        
+        <Label Content="Overview" FontSize="32" FontWeight="Bold" ContentStringFormat="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"/>
     </Grid>
 </Window>
