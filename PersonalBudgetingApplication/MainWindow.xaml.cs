@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,23 @@ namespace PersonalBudgetingApplication
         public MainWindow()
         {
             InitializeComponent();
+
+            //Apply Profile list to a dropdown list
+
+        }
+
+        private void NavBarToggle_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavBar.Visibility == Visibility.Collapsed)
+            {
+                NavBar.Visibility = Visibility.Visible;
+                NavBarToggle.Content = "Hide";
+            }
+            else
+            {
+                NavBarToggle.Content = "Show";
+                NavBar.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
