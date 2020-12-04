@@ -11,7 +11,7 @@
         <Frame Name="PrimaryFrame" Content="Place Content Here" HorizontalAlignment="Left" Height="288" Margin="10,121,0,0" VerticalAlignment="Top" Width="772" Source="DefaultPage.xaml"/>
         <Grid Name="NavBar" HorizontalAlignment="Left" Height="56" Margin="10,60,0,0" VerticalAlignment="Top" Width="772">
             <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="486,10,0,0" VerticalAlignment="Top" Height="36" Width="66"/>
-            <ComboBox HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="99" Height="36" />
+            <ComboBox Name="DDLProfileList" HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="99" Height="36" />
 
         </Grid>
         <Button Content="Hide" HorizontalAlignment="Right" Margin="0,70,20,0" VerticalAlignment="Top" Width="97" Height="36" Name="NavBarToggle" Click="NavBarToggle_Click"/>

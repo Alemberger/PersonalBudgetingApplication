@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PersonalBudgetingApplication.Classes;
 
 namespace PersonalBudgetingApplication
 {
@@ -26,6 +28,9 @@ namespace PersonalBudgetingApplication
             InitializeComponent();
 
             //Apply Profile list to a dropdown list
+            var Populater = new Common();
+
+            Populater.PopulateProfileList(DDLProfileList);
         }
 
         private void NavBarToggle_Click(object sender, RoutedEventArgs e)
