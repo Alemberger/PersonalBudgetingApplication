@@ -28,9 +28,8 @@ namespace PersonalBudgetingApplication
             InitializeComponent();
 
             //Apply Profile list to a dropdown list
-            var Populater = new Common();
 
-            Populater.PopulateProfileList(DDLProfileList);
+            Common.PopulateProfileList(DDLProfileList);
         }
 
         private void NavBarToggle_Click(object sender, RoutedEventArgs e)
@@ -45,6 +44,19 @@ namespace PersonalBudgetingApplication
                 NavBarToggle.Content = "Show";
                 NavBar.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void BtnOpenWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var Win2 = new ProfileCreation();
+
+            Win2.Show();
+        }
+
+        private void Window_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //Repopulate the Profile list when refocusing on this window
+            Common.PopulateProfileList(DDLProfileList);
         }
     }
 }

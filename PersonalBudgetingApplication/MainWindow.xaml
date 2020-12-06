@@ -5,15 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalBudgetingApplication"
         mc:Ignorable="d"
-        Title="Personal Budgetting" Height="900" Width="1600">
+        Title="Personal Budgetting" Height="900" Width="1600" GotFocus="Window_GotFocus">
     <Grid>
         <Label Content="Overview" FontSize="32" FontWeight="Bold" ContentStringFormat="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"/>
-        <Frame Name="PrimaryFrame" Content="Place Content Here" HorizontalAlignment="Left" Height="288" Margin="10,121,0,0" VerticalAlignment="Top" Width="1562" Source="DefaultPage.xaml"/>
-        <Grid Name="NavBar" HorizontalAlignment="Left" Height="56" Margin="10,60,0,0" VerticalAlignment="Top" Width="772">
+        <Frame Name="PrimaryFrame" Content="Place Content Here" HorizontalAlignment="Left" Height="288" Margin="10,121,0,0" VerticalAlignment="Top" Width="1562" Source="SecondPage.xaml"/>
+        <Grid Name="NavBar" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top">
             <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="486,10,0,0" VerticalAlignment="Top" Height="36" Width="66"/>
-            <ComboBox Name="DDLProfileList" HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="99" Height="36" />
+            <ComboBox Name="DDLProfileList"  HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="99" Height="36" />
+            <ComboBox HorizontalAlignment="Left" Margin="263,10,0,0" VerticalAlignment="Top" Width="120"/>
 
         </Grid>
         <Button Content="Hide" HorizontalAlignment="Right" Margin="0,70,20,0" VerticalAlignment="Top" Width="97" Height="36" Name="NavBarToggle" Click="NavBarToggle_Click"/>
+        <Button Content="Open New Window" Name="BtnOpenWindow" Click="BtnOpenWindow_Click" HorizontalAlignment="Left" Margin="90,723,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Window>

@@ -1,0 +1,17 @@
+﻿<Window x:Class="PersonalBudgetingApplication.ProfileCreation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PersonalBudgetingApplication"
+        mc:Ignorable="d"
+        Title="ProfileCreation" Height="450" Width="800">
+    <Grid>
+        <Label Content="Create Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="310,36,0,0" Height="42" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Name="TbProfileName" Height="23" Margin="212,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Profile Name" HorizontalAlignment="Left" Margin="128,118,0,0" VerticalAlignment="Top"/>
+        <Button Content="Create" HorizontalAlignment="Left" Margin="207,191,0,0" VerticalAlignment="Top" Width="75" Name="BtnCreateProfile" Click="BtnCreateProfile_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="399,196,0,0" VerticalAlignment="Top" Width="75" Name="BtnCancelProfile" Click="BtnCancelProfile_Click"/>
+
+    </Grid>
+</Window>

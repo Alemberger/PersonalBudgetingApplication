@@ -12,11 +12,18 @@ namespace PersonalBudgetingApplication.Classes
 {
     class Common
     {
-        public void PopulateProfileList(ComboBox target)
+        public static SQLiteConnection CreateConnection()
+        {
+            var conn = new SQLiteConnection("Data Source = C:\\PersonalBudget\\BudgetDB.db;");
+            return conn;
+        }
+
+        public static void PopulateProfileList(ComboBox target)
         {
             //Add the first blank value to the combo box
-            target.Items.Add(new ComboBoxItem());
-            var conn = new SQLiteConnection("Data Source=C:\\PersonalBudget\\BudgetDB.db;");
+            var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "" } };
+            
+            var conn = CreateConnection();
             if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
             var cmd = conn.CreateCommand();
@@ -29,6 +36,8 @@ namespace PersonalBudgetingApplication.Classes
                 target.Items.Add(new ComboBoxItem() { Content = read.GetString(0) });
             }
             conn.Close();
+
+            
         }
     }
 }
