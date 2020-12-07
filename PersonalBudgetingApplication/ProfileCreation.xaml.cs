@@ -41,6 +41,19 @@ namespace PersonalBudgetingApplication
 
             MessageBox.Show("Profile created");
 
+            if (!Application.Current.Windows.OfType<MainWindow>().Any())
+            {
+                var New = new MainWindow();
+
+                New.Show();
+            }
+            else
+            {
+                var Main = Application.Current.Windows.OfType<MainWindow>().First();
+
+                Common.PopulateProfileList(Main.DDLProfileList);
+            }
+
             Close();
         }
 

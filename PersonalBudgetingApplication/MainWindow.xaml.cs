@@ -23,6 +23,8 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string _LoadedPage = "Default";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,10 +55,20 @@ namespace PersonalBudgetingApplication
             Win2.Show();
         }
 
-        private void Window_GotFocus(object sender, RoutedEventArgs e)
+        private void BtnChangePage_Click(object sender, RoutedEventArgs e)
         {
-            //Repopulate the Profile list when refocusing on this window
-            Common.PopulateProfileList(DDLProfileList);
+            if (_LoadedPage == "Default")
+            {
+                PrimaryFrame.Navigate(new Uri("SecondPage.xaml", UriKind.RelativeOrAbsolute));
+
+                _LoadedPage = "Second";
+            }
+            else
+            {
+                PrimaryFrame.Navigate(new Uri("DefaultPage.xaml", UriKind.RelativeOrAbsolute));
+
+                _LoadedPage = "Default";
+            }
         }
     }
 }

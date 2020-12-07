@@ -22,22 +22,27 @@ namespace PersonalBudgetingApplication.Classes
         {
             //Add the first blank value to the combo box
             var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "" } };
-            
-            var conn = CreateConnection();
-            if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
-            var cmd = conn.CreateCommand();
-
-            cmd.CommandText = "SELECT ProfileName FROM tblProfile";
-
-            var read = cmd.ExecuteReader();
-            while (read.Read())
+            using (var conn = CreateConnection())
             {
-                target.Items.Add(new ComboBoxItem() { Content = read.GetString(0) });
-            }
-            conn.Close();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT ProfileName FROM tblProfile";
 
-            
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = cmd.ExecuteReader();
+                    while (read.Read())
+                    {
+                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0) });
+                    }
+                    read.Close();
+                    conn.Close();
+                }
+            }
+
+            target.ItemsSource = Binder;
+           
         }
     }
 }
