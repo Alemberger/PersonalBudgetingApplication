@@ -8,7 +8,7 @@
         Title="Personal Budgetting" Height="900" Width="1600">
     <Grid>
         <Label Content="Overview" FontSize="32" FontWeight="Bold" ContentStringFormat="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"/>
-        <Frame Name="PrimaryFrame" NavigationUIVisibility="Hidden" Content="Place Content Here" HorizontalAlignment="Left" Height="288" Margin="10,121,0,0" VerticalAlignment="Top" Width="1562" Source="DefaultPage.xaml"/>
+        <Frame Name="PrimaryFrame" NavigationUIVisibility="Hidden" Content="Place Content Here" HorizontalAlignment="Stretch" Height="288" Margin="10,121,10,0" VerticalAlignment="Top" Source="DefaultPage.xaml"/>
         <Grid Name="NavBar" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top">
             <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="486,10,0,0" VerticalAlignment="Top" Height="36" Width="66"/>
             <ComboBox Name="DDLProfileList"  HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="99" Height="36" />

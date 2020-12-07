@@ -98,6 +98,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\ExpenseEntry.cs" />
+    <Compile Include="Classes\IncomeEntry.cs" />
+    <Compile Include="Classes\Profile.cs" />
+    <Compile Include="Classes\SavingsEntry.cs" />
     <Compile Include="ProfileCreation.xaml.cs">
       <DependentUpon>ProfileCreation.xaml</DependentUpon>
     </Compile>
