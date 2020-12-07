@@ -5,12 +5,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PersonalBudgetingApplication"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="DefaultPage">
+      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+      Title="DefaultPage" d:DesignWidth="1050.545" d:DesignHeight="721.754">
 
     <Grid>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="450" Stroke="Black" VerticalAlignment="Top" Width="800"/>
-        <TextBox HorizontalAlignment="Left" Height="121" Margin="325,128,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="138"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="139*"></RowDefinition>
+            <RowDefinition Height="12*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120*"></ColumnDefinition>
+            <ColumnDefinition Width="120*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="450" Stroke="Black" VerticalAlignment="Top" Width="526"/>
+        <TextBox Grid.Column="2" HorizontalAlignment="Stretch" Height="121" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
     </Grid>
 </Page>
