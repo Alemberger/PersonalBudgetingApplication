@@ -32,6 +32,12 @@ namespace PersonalBudgetingApplication
             //Apply Profile list to a dropdown list
 
             Common.PopulateProfileList(DDLProfileList);
+
+            if (DDLProfileList.Items.Count < 2)
+            {
+                PrimaryFrame.Navigate(new Uri("StarterPage.xaml", UriKind.RelativeOrAbsolute));
+                _LoadedPage = "Starter";
+            }
         }
 
         private void NavBarToggle_Click(object sender, RoutedEventArgs e)

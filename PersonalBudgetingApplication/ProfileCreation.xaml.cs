@@ -59,6 +59,18 @@ namespace PersonalBudgetingApplication
 
         private void BtnCancelProfile_Click(object sender, RoutedEventArgs e)
         {
+            if (!Application.Current.Windows.OfType<MainWindow>().Any())
+            {
+                var New = new MainWindow();
+
+                New.Show();
+            }
+            else
+            {
+                var Main = (MainWindow)Application.Current.MainWindow;
+
+                Common.PopulateProfileList(Main.DDLProfileList);
+            }
             Close();
         }
     }

@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PersonalBudgetingApplication.Classes
@@ -14,7 +15,15 @@ namespace PersonalBudgetingApplication.Classes
     {
         public static SQLiteConnection CreateConnection()
         {
-            var conn = new SQLiteConnection("Data Source = C:\\PersonalBudget\\BudgetDB.db;");
+            //Sets the database
+            var conn = new SQLiteConnection("Data Source = C:\\PersonalBudget\\BudgetDB.db;Version=3;");
+            try { conn.Open(); }
+            catch (SQLiteException e)
+            {
+                //Confirm that the SQLiteExcpetion is caused by the lack of database file
+                MessageBox.Show(e.Message);
+            }
+            conn.Close();
             return conn;
         }
 
