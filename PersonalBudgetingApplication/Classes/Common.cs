@@ -100,19 +100,67 @@ namespace PersonalBudgetingApplication.Classes
             target.ItemsSource = Binder;
         }
 
-        public static void ReturnToMainWindow()
+        public static void ReturnToMainWindow(Profile selected)
         {
-            try
+            if (selected.ProfileName == "" || selected.ProfileName is null)
             {
-                Application.Current.MainWindow.Show();
-                Application.Current.MainWindow.Focus();
-            }
-            catch (NullReferenceException)
-            {
-                var Main = new MainWindow();
+                try
+                {
+                    Application.Current.MainWindow.Show();
+                    Application.Current.MainWindow.Focus();
+                }
+                catch (NullReferenceException)
+                {
+                    var Main = new MainWindow();
 
-                Main.Show();
-                Main.Focus();
+                    Main.Show();
+                    Main.Focus();
+                }
+            }
+            else
+            {
+                try
+                {
+                    Application.Current.MainWindow.Show();
+                    Application.Current.MainWindow.Focus();
+
+                    var Main = (MainWindow)Application.Current.MainWindow;
+
+                    int index = 0;
+
+                    for (int i = 0; i < Main.DDLProfileList.Items.Count; i++)
+                    {
+                        var Item = (ComboBoxItem)Main.DDLProfileList.Items[i];
+
+                        if (Item.Content.ToString() == selected.ProfileName)
+                        {
+                            index = i;
+                        }
+                    }
+
+                    Main.DDLProfileList.SelectedIndex = index;
+                }
+                catch (NullReferenceException)
+                {
+                    var Main = new MainWindow();
+
+                    int index = 0;
+
+                    for (int i = 0; i < Main.DDLProfileList.Items.Count; i++)
+                    {
+                        var Item = (ComboBoxItem)Main.DDLProfileList.Items[i];
+
+                        if (Item.Content.ToString() == selected.ProfileName)
+                        {
+                            index = i;
+                        }
+                    }
+
+                    Main.DDLProfileList.SelectedIndex = index;
+
+                    Main.Show();
+                    Main.Focus();
+                }
             }
         }
     }

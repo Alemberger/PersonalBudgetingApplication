@@ -23,11 +23,7 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string _loadedPage = "Default";
-
-        private Profile _profile = null;
-
-        public string LoadedPage { get; set; }
+        public string LoadedPage { get; set; } = "Default";
 
         public Profile Profile { get; set; }
 

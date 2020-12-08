@@ -23,8 +23,6 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class IncomeEntryWindow : Window
     {
-        private Profile _profile;
-
         public Profile Profile { get; set; }
 
         public IncomeEntryWindow()
@@ -80,14 +78,14 @@ namespace PersonalBudgetingApplication
 
             MessageBox.Show("Income entry submitted");
 
-            Common.ReturnToMainWindow();
+            Common.ReturnToMainWindow(Profile);
 
             Close();
         }
 
         private void BtnIncomeEntryCancel_Click(object sender, RoutedEventArgs e)
         {
-            Common.ReturnToMainWindow();
+            Common.ReturnToMainWindow(Profile);
 
             Close();
         }

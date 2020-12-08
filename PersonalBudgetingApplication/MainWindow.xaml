@@ -8,10 +8,10 @@
         Title="Personal Budgetting" Height="900" Width="1600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*" Name="Title"></RowDefinition>
-            <RowDefinition Height="10*" Name="Navbar"></RowDefinition>
-            <RowDefinition Height="70*" Name="Main"></RowDefinition>
-            <RowDefinition Height="10*" Name="Footer"></RowDefinition>
+            <RowDefinition Height="10*" Name="TitleRow"></RowDefinition>
+            <RowDefinition Height="10*" Name="NavbarRow"></RowDefinition>
+            <RowDefinition Height="70*" Name="MainRow"></RowDefinition>
+            <RowDefinition Height="10*" Name="FooterRow"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Content="Overview" Name="LblTitle" Grid.Row="0" FontSize="32" FontWeight="Bold" ContentStringFormat="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Grid Name="NavBar" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
