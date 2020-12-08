@@ -10,7 +10,21 @@ namespace PersonalBudgetingApplication.Classes
 {
     class SavingsEntry
     {
+        private int _profileId;
+
         private double _amount;
+
+        public int ProfileId
+        {
+            get
+            {
+                return _profileId;
+            }
+            set
+            {
+                _profileId = value;
+            }
+        }
 
         public double Amount
         {

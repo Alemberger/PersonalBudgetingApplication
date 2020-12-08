@@ -5,13 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalBudgetingApplication"
         mc:Ignorable="d"
-        Title="ProfileCreation" Height="450" Width="800">
+        Title="ProfileCreation" Height="300" Width="400">
     <Grid>
-        <Label Content="Create Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="310,36,0,0" Height="42" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Name="TbProfileName" Height="23" Margin="212,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Profile Name" HorizontalAlignment="Left" Margin="128,118,0,0" VerticalAlignment="Top"/>
-        <Button Content="Create" HorizontalAlignment="Left" Margin="207,191,0,0" VerticalAlignment="Top" Width="75" Name="BtnCreateProfile" Click="BtnCreateProfile_Click"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="399,196,0,0" VerticalAlignment="Top" Width="75" Name="BtnCancelProfile" Click="BtnCancelProfile_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="80*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="40*"></ColumnDefinition>
+            <ColumnDefinition Width="40*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Create Profile" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Height="42" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" Name="TbProfileName" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <Label Content="Profile Name" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <Button Content="Create" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,30,20" VerticalAlignment="Bottom" Width="75" Name="BtnCreateProfile" Click="BtnCreateProfile_Click"/>
+        <Button Content="Cancel" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="30,0,0,20" VerticalAlignment="Bottom" Width="75" Name="BtnCancelProfile" Click="BtnCancelProfile_Click"/>
 
     </Grid>
 </Window>

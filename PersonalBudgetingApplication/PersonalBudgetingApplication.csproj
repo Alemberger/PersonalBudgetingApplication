@@ -98,10 +98,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\DatabaseInitialization.cs" />
     <Compile Include="Classes\ExpenseEntry.cs" />
     <Compile Include="Classes\IncomeEntry.cs" />
     <Compile Include="Classes\Profile.cs" />
     <Compile Include="Classes\SavingsEntry.cs" />
+    <Compile Include="IncomeEntryWindow.xaml.cs">
+      <DependentUpon>IncomeEntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProfileCreation.xaml.cs">
       <DependentUpon>ProfileCreation.xaml</DependentUpon>
     </Compile>
@@ -112,6 +116,10 @@
       <DependentUpon>StarterPage.xaml</DependentUpon>
     </Compile>
     <Page Include="DefaultPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IncomeEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

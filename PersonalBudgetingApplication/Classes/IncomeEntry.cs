@@ -8,9 +8,23 @@ namespace PersonalBudgetingApplication.Classes
 {
     class IncomeEntry
     {
+        private int _profileId;
+
         private double _amount;
 
         private IncomeType _type;
+
+        public int ProfileId
+        {
+            get
+            {
+                return _profileId;
+            }
+            set
+            {
+                _profileId = value;
+            }
+        }
 
         public double Amount
         {

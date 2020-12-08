@@ -23,11 +23,19 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string _LoadedPage = "Default";
+        private string _loadedPage = "Default";
+
+        private Profile _profile = null;
+
+        public string LoadedPage { get; set; }
+
+        public Profile Profile { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
 
             //Apply Profile list to a dropdown list
 
@@ -36,7 +44,7 @@ namespace PersonalBudgetingApplication
             if (DDLProfileList.Items.Count < 2)
             {
                 PrimaryFrame.Navigate(new Uri("StarterPage.xaml", UriKind.RelativeOrAbsolute));
-                _LoadedPage = "Starter";
+                LoadedPage = "Starter";
             }
         }
 
@@ -54,7 +62,7 @@ namespace PersonalBudgetingApplication
             }
         }
 
-        private void BtnOpenWindow_Click(object sender, RoutedEventArgs e)
+        private void BtnNewProfile_Click(object sender, RoutedEventArgs e)
         {
             var Win2 = new ProfileCreation();
 
@@ -63,18 +71,45 @@ namespace PersonalBudgetingApplication
 
         private void BtnChangePage_Click(object sender, RoutedEventArgs e)
         {
-            if (_LoadedPage == "Default")
+            if (LoadedPage == "Default")
             {
                 PrimaryFrame.Navigate(new Uri("SecondPage.xaml", UriKind.RelativeOrAbsolute));
 
-                _LoadedPage = "Second";
+                LoadedPage = "Second";
             }
             else
             {
                 PrimaryFrame.Navigate(new Uri("DefaultPage.xaml", UriKind.RelativeOrAbsolute));
 
-                _LoadedPage = "Default";
+                LoadedPage = "Default";
             }
+        }
+
+        private void BtnExecuteCommands_Click(object sender, RoutedEventArgs e)
+        {
+            if (DDLProfileList.SelectedIndex == -1 || DDLProfileList.SelectedIndex == 0)
+            {
+                MessageBox.Show("Must select a profile");
+                return;
+            }
+
+            var profile = new Profile(((ComboBoxItem)DDLProfileList.SelectedItem).Content.ToString());
+
+            var Income = new IncomeEntryWindow(profile);
+
+            Income.Show();
+        }
+
+        private void DDLProfileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var index = DDLProfileList.SelectedIndex;
+
+            if (index == -1 || index == 0) { LblTitle.Content = "Overview"; return; }
+
+            var selected = new Profile(((ComboBoxItem)DDLProfileList.Items[index]).Content.ToString());
+
+            Profile = selected;
+            LblTitle.Content = "Overview of " + Profile.ProfileName;
         }
     }
 }

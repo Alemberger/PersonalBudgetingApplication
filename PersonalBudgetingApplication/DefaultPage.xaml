@@ -18,6 +18,6 @@
             <ColumnDefinition Width="120*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="450" Stroke="Black" VerticalAlignment="Top" Width="526"/>
-        <TextBox Grid.Column="2" HorizontalAlignment="Stretch" Height="121" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
+        <TextBox Name="TbTestBox" Grid.Column="2" HorizontalAlignment="Stretch" Height="121" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
     </Grid>
 </Page>

@@ -7,16 +7,21 @@
         mc:Ignorable="d"
         Title="Personal Budgetting" Height="900" Width="1600">
     <Grid>
-        <Label Content="Overview" FontSize="32" FontWeight="Bold" ContentStringFormat="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"/>
-        <Frame Name="PrimaryFrame" NavigationUIVisibility="Hidden" Content="Place Content Here" HorizontalAlignment="Stretch" Height="288" Margin="10,121,10,0" VerticalAlignment="Top" Source="DefaultPage.xaml"/>
-        <Grid Name="NavBar" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top">
-            <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="486,10,0,0" VerticalAlignment="Top" Height="36" Width="66"/>
-            <ComboBox Name="DDLProfileList"  HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="99" Height="36" />
-            <ComboBox HorizontalAlignment="Left" Margin="263,10,0,0" VerticalAlignment="Top" Width="120"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" Name="Title"></RowDefinition>
+            <RowDefinition Height="10*" Name="Navbar"></RowDefinition>
+            <RowDefinition Height="70*" Name="Main"></RowDefinition>
+            <RowDefinition Height="10*" Name="Footer"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Content="Overview" Name="LblTitle" Grid.Row="0" FontSize="32" FontWeight="Bold" ContentStringFormat="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Name="NavBar" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
+            <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="236.5,0,0,0" VerticalAlignment="Center" Height="36" Width="66" Grid.Column="1"/>
+            <ComboBox Name="DDLProfileList" SelectionChanged="DDLProfileList_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="307.5,0,0,0" VerticalAlignment="Center" Width="120" Height="30" Grid.Column="1" />
+            <Button Content="NewProfile" Name="BtnNewProfile" Click="BtnNewProfile_Click" Margin="30,13,0,13" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="30"/>
         </Grid>
-        <Button Content="Hide" HorizontalAlignment="Right" Margin="0,70,20,0" VerticalAlignment="Top" Width="97" Height="36" Name="NavBarToggle" Click="NavBarToggle_Click"/>
-        <Button Content="Open New Window" Name="BtnOpenWindow" Click="BtnOpenWindow_Click" HorizontalAlignment="Left" Margin="90,723,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Change Page" Name="BtnChangePage" Click="BtnChangePage_Click" HorizontalAlignment="Left" Margin="90,451,0,0" VerticalAlignment="Top" Width="75"/>
+        <Frame Name="PrimaryFrame" Grid.Row="2" NavigationUIVisibility="Hidden" Content="Place Content Here" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="DefaultPage.xaml"/>
+        <Button Content="Hide" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Width="97" Height="30" Name="NavBarToggle" Click="NavBarToggle_Click"/>
+        <Button Content="Change Page" Grid.Row="3" Name="BtnChangePage" Click="BtnChangePage_Click" HorizontalAlignment="Left" Margin="90,0,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="SQLite Command" Grid.Row="3" HorizontalAlignment="Left" Margin="262,0,0,0" VerticalAlignment="Top" Width="150" Height="50" Name="BtnExecuteCommands" Click="BtnExecuteCommands_Click"/>
     </Grid>
 </Window>

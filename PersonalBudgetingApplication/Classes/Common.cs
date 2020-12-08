@@ -16,14 +16,7 @@ namespace PersonalBudgetingApplication.Classes
         public static SQLiteConnection CreateConnection()
         {
             //Sets the database
-            var conn = new SQLiteConnection("Data Source = C:\\PersonalBudget\\BudgetDB.db;Version=3;");
-            try { conn.Open(); }
-            catch (SQLiteException e)
-            {
-                //Confirm that the SQLiteExcpetion is caused by the lack of database file
-                MessageBox.Show(e.Message);
-            }
-            conn.Close();
+            var conn = new SQLiteConnection("Data Source = BudgetDB.db;Version=3;");
             return conn;
         }
 
@@ -50,8 +43,77 @@ namespace PersonalBudgetingApplication.Classes
                 }
             }
 
+            target.ItemsSource = Binder;  
+        }
+
+        public static void PopulateIncomeTypeList(ComboBox target)
+        {
+            var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "" } };
+
+            using (var conn = CreateConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "SELECT IncomeType FROM tblIncomeType ORDER BY IncomeTypeID";
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = cmd.ExecuteReader();
+
+                    while (read.Read())
+                    {
+                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0) });
+                    }
+                    read.Close();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
             target.ItemsSource = Binder;
-           
+        }
+
+        public static void PopulateExpenseTypeList(ComboBox target)
+        {
+            var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "" } };
+
+            using (var conn = CreateConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "SELECT ExpenseType FROM tblExpenseType ORDER BY ExpenseTypeID";
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = cmd.ExecuteReader();
+
+                    while (read.Read())
+                    {
+                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0) });
+                    }
+                    read.Close();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            target.ItemsSource = Binder;
+        }
+
+        public static void ReturnToMainWindow()
+        {
+            try
+            {
+                Application.Current.MainWindow.Show();
+                Application.Current.MainWindow.Focus();
+            }
+            catch (NullReferenceException)
+            {
+                var Main = new MainWindow();
+
+                Main.Show();
+                Main.Focus();
+            }
         }
     }
 }

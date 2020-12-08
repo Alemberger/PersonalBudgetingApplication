@@ -11,7 +11,7 @@ namespace PersonalBudgetingApplication.Classes
     /// <summary>
     /// This class contains methods and properties that relate to a user Profile as stored in the database schema
     /// </summary>
-    class Profile
+    public class Profile
     {
         private int _profileID;
 
