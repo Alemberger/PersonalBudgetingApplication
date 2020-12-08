@@ -17,6 +17,9 @@
         <Grid Name="NavBar" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
             <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="236.5,0,0,0" VerticalAlignment="Center" Height="36" Width="66" Grid.Column="1"/>
             <ComboBox Name="DDLProfileList" SelectionChanged="DDLProfileList_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="307.5,0,0,0" VerticalAlignment="Center" Width="120" Height="30" Grid.Column="1" />
+            <Button Name="BtnLockProfile" Height="30" Width="30" BorderThickness="0" Background="Transparent" Margin="0,0,650,0">
+                <Image Source="C:\Users\Adam\source\repos\PersonalBudgetingApplication\PersonalBudgetingApplication\img\locked-padlock.png" Height="30" Width="30"></Image>
+            </Button>
             <Button Content="NewProfile" Name="BtnNewProfile" Click="BtnNewProfile_Click" Margin="30,13,0,13" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="30"/>
         </Grid>
         <Frame Name="PrimaryFrame" Grid.Row="2" NavigationUIVisibility="Hidden" Content="Place Content Here" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="DefaultPage.xaml"/>
