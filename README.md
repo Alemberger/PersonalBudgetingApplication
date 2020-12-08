@@ -16,3 +16,5 @@ Easy Updates: First screen will contain an at-a-glance update about the current 
 
 Reports: Will be able to view expense breakdowns based on category, Income breakdowns based on category
 
+Attributions:
+Locked padlock icon made by Freepik
