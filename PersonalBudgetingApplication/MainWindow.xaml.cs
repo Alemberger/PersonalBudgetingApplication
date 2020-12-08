@@ -100,12 +100,51 @@ namespace PersonalBudgetingApplication
         {
             var index = DDLProfileList.SelectedIndex;
 
-            if (index == -1 || index == 0) { LblTitle.Content = "Overview"; return; }
+            if (index == -1 || index == 0) 
+            { 
+                LblTitle.Content = "Overview"; 
+                return; 
+            }
 
             var selected = new Profile(((ComboBoxItem)DDLProfileList.Items[index]).Content.ToString());
 
             Profile = selected;
             LblTitle.Content = "Overview of " + Profile.ProfileName;
+
+            //If the previous selected option was a blank option (index -1 or 0)
+            //Lock the profile selection, otherwise leave it unlocked
+            if (DDLProfileList.Text == "")
+            {
+                UpdateProfileLock(true);
+            }
+        }
+
+        private void UpdateProfileLock(bool locked)
+        {
+            if (locked)
+            {
+                ImgLockButton.Source = new BitmapImage(new Uri("/img/locked-padlock-shaded.png", UriKind.Relative));
+                ImgLockButton.Tag = "Locked";
+                DDLProfileList.IsEnabled = false;
+            }
+            else
+            {
+                ImgLockButton.Source = new BitmapImage(new Uri("/img/locked-padlock.png", UriKind.Relative));
+                ImgLockButton.Tag = "Unlocked";
+                DDLProfileList.IsEnabled = true;
+            }
+        }
+
+        private void BtnLockProfile_Click(object sender, RoutedEventArgs e)
+        {
+            if (ImgLockButton.Tag.ToString() == "Unlocked")
+            {
+                UpdateProfileLock(true);
+            }
+            else
+            {
+                UpdateProfileLock(false);
+            }
         }
     }
 }
