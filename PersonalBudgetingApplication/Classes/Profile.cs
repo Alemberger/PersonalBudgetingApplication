@@ -5,6 +5,8 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace PersonalBudgetingApplication.Classes
 {
@@ -13,33 +15,13 @@ namespace PersonalBudgetingApplication.Classes
     /// </summary>
     public class Profile
     {
-        private int _profileID;
 
-        private string _profileName;
+        public int ProfileID { get; set; }
 
-        public int ProfileID
-        {
-            get
-            {
-                return _profileID;
-            }
-            set
-            {
-                _profileID = value;
-            }
-        }
+        [XmlAttribute("Name")]
+        public string ProfileName { get; set; }
 
-        public string ProfileName
-        {
-            get
-            {
-                return _profileName;
-            }
-            set
-            {
-                _profileName = value;
-            }
-        }
+        public Profile() { }
 
         public Profile(int profileID)
         {

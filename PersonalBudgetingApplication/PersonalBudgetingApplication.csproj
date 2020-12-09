@@ -98,12 +98,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\DatabaseInitialization.cs" />
     <Compile Include="Classes\ExpenseEntry.cs" />
     <Compile Include="Classes\IncomeEntry.cs" />
     <Compile Include="Classes\Profile.cs" />
     <Compile Include="Classes\SavingsEntry.cs" />
+    <Compile Include="Classes\SettingSerialization.cs" />
     <Compile Include="IncomeEntryWindow.xaml.cs">
       <DependentUpon>IncomeEntryWindow.xaml</DependentUpon>
     </Compile>

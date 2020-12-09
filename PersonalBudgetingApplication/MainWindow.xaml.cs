@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 using PersonalBudgetingApplication.Classes;
 
 namespace PersonalBudgetingApplication
@@ -27,9 +29,17 @@ namespace PersonalBudgetingApplication
 
         public Profile Profile { get; set; }
 
+        private bool CheckedSettings { get; set; } = false;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            if (!CheckedSettings)
+            {
+                SettingSerialization.ReadSettings();
+                CheckedSettings = true;
+            }
 
             DataContext = this;
 
@@ -83,17 +93,14 @@ namespace PersonalBudgetingApplication
 
         private void BtnExecuteCommands_Click(object sender, RoutedEventArgs e)
         {
-            if (DDLProfileList.SelectedIndex == -1 || DDLProfileList.SelectedIndex == 0)
-            {
-                MessageBox.Show("Must select a profile");
-                return;
-            }
+            //Test the serializer
+            var test = new SettingSerialization();
 
-            var profile = new Profile(((ComboBoxItem)DDLProfileList.SelectedItem).Content.ToString());
+            test.SerializeFile();
 
-            var Income = new IncomeEntryWindow(profile);
+            var example = test.ReadXMLFile();
 
-            Income.Show();
+            MessageBox.Show(example.ProfileName + ":" + example.ProfileID);
         }
 
         private void DDLProfileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -125,12 +132,14 @@ namespace PersonalBudgetingApplication
             {
                 ImgLockButton.Source = new BitmapImage(new Uri("/img/locked-padlock-shaded.png", UriKind.Relative));
                 ImgLockButton.Tag = "Locked";
+                ImgLockButton.ToolTip = "Unlock profile selection";
                 DDLProfileList.IsEnabled = false;
             }
             else
             {
                 ImgLockButton.Source = new BitmapImage(new Uri("/img/locked-padlock.png", UriKind.Relative));
                 ImgLockButton.Tag = "Unlocked";
+                ImgLockButton.ToolTip = "Lock profile selection";
                 DDLProfileList.IsEnabled = true;
             }
         }

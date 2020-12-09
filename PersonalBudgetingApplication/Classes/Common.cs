@@ -16,7 +16,7 @@ namespace PersonalBudgetingApplication.Classes
         public static SQLiteConnection CreateConnection()
         {
             //Sets the database
-            var conn = new SQLiteConnection("Data Source = C:\\PersonalBudget\\BudgetDB.db;Version=3;");
+            var conn = new SQLiteConnection("Data Source = BudgetDB.db;Version=3;");
             return conn;
         }
 
