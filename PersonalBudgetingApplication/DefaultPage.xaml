@@ -19,12 +19,9 @@
             <ColumnDefinition Width="12*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="0" Content="Income" VerticalAlignment="Center" FontSize="50" FontWeight="Medium"></Label>
-        <DataGrid Name="GvIncome" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Date"></DataGridTextColumn>
-                <DataGridTextColumn Header="Type"></DataGridTextColumn>
-                <DataGridTextColumn Header="Amount"></DataGridTextColumn>
-            </DataGrid.Columns>
+        <DataGrid Name="GvIncome" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="True">
         </DataGrid>
+        <Button Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Expense" Name="BtnChangeGrid" FontSize="20" Padding="5" Click="BtnChangeGrid_Click" ToolTip="Change Grid" Tag="Expense"></Button>
+        <Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enter Expense" Name="BtnEnterRecord" FontSize="20" Padding="5" Click="BtnEnterRecord_Click"></Button>
     </Grid>
 </Page>

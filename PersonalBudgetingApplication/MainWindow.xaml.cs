@@ -25,7 +25,7 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string LoadedPage { get; set; } = "Default";
+        public string LoadedPage { get; set; } = "Starter";
 
         public Profile Profile { get; set; }
 
@@ -61,6 +61,12 @@ namespace PersonalBudgetingApplication
             {
                 PrimaryFrame.Navigate(new Uri("StarterPage.xaml", UriKind.RelativeOrAbsolute));
                 LoadedPage = "Starter";
+            }
+
+            if (DDLProfileList.SelectedIndex > 0)
+            {
+                PrimaryFrame.Navigate(new Uri("DefaultPage.xaml", UriKind.RelativeOrAbsolute));
+                LoadedPage = "Default";
             }
         }
 

@@ -21,9 +21,23 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class DefaultPage : Page
     {
+        public Profile Profile { get; set; }
+
+        public List<IncomeEntry> IncomeEntries { get { return GatherIncomeRecords(Profile.ProfileID); } }
+
+        public List<ExpenseEntry> ExpenseEntries { get { return GatherExpenseRecords(Profile.ProfileID); } }
+
+        public List<SavingsEntry> SavingsEntries { get { return GatherSavingsRecords(Profile.ProfileID); } }
+
         public DefaultPage()
         {
             InitializeComponent();
+
+            var Main = (MainWindow)Application.Current.MainWindow;
+
+            Profile = Main.Profile;
+
+            GvIncome.ItemsSource = IncomeEntries;
         }
 
         private List<IncomeEntry> GatherIncomeRecords(int profileId)
@@ -134,6 +148,48 @@ namespace PersonalBudgetingApplication
             }
 
             return records;
+        }
+
+        private void BtnChangeGrid_Click(object sender, RoutedEventArgs e)
+        {
+            switch (BtnChangeGrid.Tag)
+            {
+                case "Expense":
+                    //Change the grid to the expense report
+                    BtnChangeGrid.Tag = "Income";
+                    BtnChangeGrid.Content = "Income";
+                    BtnEnterRecord.Content = "Enter Income";
+                    break;
+                case "Income":
+                    //Change the grid to the income report
+                    BtnChangeGrid.Tag = "Savings";
+                    BtnChangeGrid.Content = "Savings";
+                    BtnEnterRecord.Content = "Enter Savings";
+                    break;
+                case "Savings":
+                    //Change the grid to the savings report
+                    BtnChangeGrid.Tag = "Expense";
+                    BtnChangeGrid.Content = "Expense";
+                    BtnEnterRecord.Content = "Enter Expense";
+                    break;
+                default:
+                    throw new Exception("Unknown grid target");
+            }
+        }
+
+        private void BtnEnterRecord_Click(object sender, RoutedEventArgs e)
+        {
+            switch (BtnChangeGrid.Tag)
+            {
+                case "Expense":
+                    break;
+                case "Income":
+                    var entry = new IncomeEntryWindow(Profile);
+                    entry.Show();
+                    break;
+                case "Savings":
+                    break;
+            }
         }
     }
 }

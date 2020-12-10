@@ -56,7 +56,7 @@ namespace PersonalBudgetingApplication
             Regex check = new Regex("^[0-9]+\\.[0-9]{2}$");
             if (!check.IsMatch(amount)) { MessageBox.Show("Invalid amount provided. Please provide in format ###.##"); return; }
 
-            var entry = new IncomeEntry(Convert.ToDouble(amount), (IncomeType)((ComboBoxItem)DDLIncomeType.SelectedItem).Content);
+            var entry = new IncomeEntry(Convert.ToDouble(amount), ((ComboBoxItem)DDLIncomeType.SelectedItem).Content.ToString(), TbIncomeDate.Text); ;
 
             //Submit the record
             using (var conn = Common.CreateConnection())
@@ -64,10 +64,11 @@ namespace PersonalBudgetingApplication
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "INSERT INTO tblIncome (ProfileID, Inc_Amount, Inc_Type) VALUES (@ProfileID, @Amount, @Type)";
+                    cmd.CommandText = "INSERT INTO tblIncome (ProfileID, Inc_Amount, Inc_Type, Inc_Date) VALUES (@ProfileID, @Amount, @Type, @Date)";
                     cmd.Parameters.AddWithValue("@ProfileID", Profile.ProfileID);
                     cmd.Parameters.AddWithValue("@Amount", entry.Amount);
                     cmd.Parameters.AddWithValue("@Type", (int)entry.Type);
+                    cmd.Parameters.AddWithValue("@Date", entry.Date);
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 

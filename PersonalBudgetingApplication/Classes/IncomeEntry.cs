@@ -39,10 +39,17 @@ namespace PersonalBudgetingApplication.Classes
             Amount = amount;
         }
 
-        public IncomeEntry(double amount, IncomeType type)
+        public IncomeEntry(double amount, string type, string date)
         {
             Amount = amount;
-            Type = type;
+            Date = date;
+            for (int i = 0; i < (int)IncomeType.Other; i++)
+            {
+                if (type == ((IncomeType)i).ToString())
+                {
+                    Type = (IncomeType)i;
+                }
+            }
         }
 
         public bool SubmitIncomeEntry()
