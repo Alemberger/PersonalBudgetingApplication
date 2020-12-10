@@ -130,14 +130,14 @@ namespace PersonalBudgetingApplication
         {
             if (locked)
             {
-                ImgLockButton.Source = new BitmapImage(new Uri("/img/locked-padlock-shaded.png", UriKind.Relative));
+                ImgLockButton.Source = new BitmapImage(new Uri("/img/Basicons/locked-padlock.png", UriKind.Relative));
                 ImgLockButton.Tag = "Locked";
                 ImgLockButton.ToolTip = "Unlock profile selection";
                 DDLProfileList.IsEnabled = false;
             }
             else
             {
-                ImgLockButton.Source = new BitmapImage(new Uri("/img/locked-padlock.png", UriKind.Relative));
+                ImgLockButton.Source = new BitmapImage(new Uri("/img/Basicons/unlocked-padlock.png", UriKind.Relative));
                 ImgLockButton.Tag = "Unlocked";
                 ImgLockButton.ToolTip = "Lock profile selection";
                 DDLProfileList.IsEnabled = true;
@@ -154,6 +154,12 @@ namespace PersonalBudgetingApplication
             {
                 UpdateProfileLock(false);
             }
+        }
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            //Open a settings window
+            Type.GetType("PersonalBudgettingApplication.Classes.ApplicationSettings");
         }
     }
 }
