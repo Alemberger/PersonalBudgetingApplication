@@ -70,7 +70,7 @@ namespace PersonalBudgetingApplication.Classes
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "CREATE TABLE tblIncome (IncomeID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ProfileID INTEGER NOT NULL, Inc_Amount DOUBLE NOT NULL, Inc_Type INTEGER NOT NULL, RecordBy VARCHAR(50) NULL, RecordDate VARCHAR(50) NULL);";
+                    cmd.CommandText = "CREATE TABLE tblIncome (IncomeID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ProfileID INTEGER NOT NULL, Inc_Amount DOUBLE NOT NULL, Inc_Type INTEGER NOT NULL, Inc_Date VARCHAR(50) NULL, RecordBy VARCHAR(50) NULL, RecordDate VARCHAR(50) NULL);";
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
@@ -87,7 +87,7 @@ namespace PersonalBudgetingApplication.Classes
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "CREATE TABLE tblExpense (ExpenseID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ProfileID INTEGER NOT NULL, Exp_Amount DOUBLE NOT NULL, Exp_Type INTEGER NOT NULL, RecordBy VARCHAR(50) NULL, RecordDate VARCHAR(50) NULL);";
+                    cmd.CommandText = "CREATE TABLE tblExpense (ExpenseID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ProfileID INTEGER NOT NULL, Exp_Amount DOUBLE NOT NULL, Exp_Type INTEGER NOT NULL, Exp_Date VARCHAR(50) NULL, RecordBy VARCHAR(50) NULL, RecordDate VARCHAR(50) NULL);";
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
@@ -138,7 +138,7 @@ namespace PersonalBudgetingApplication.Classes
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "CREATE TABLE tblSavings (SavingsID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ProfileID INTEGER NOT NULL, Sav_Amount DOUBLE NOT NULL, RecordBy VARCHAR(50) NULL, RecordDate VARCHAR(50) NULL);";
+                    cmd.CommandText = "CREATE TABLE tblSavings (SavingsID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ProfileID INTEGER NOT NULL, Sav_Amount DOUBLE NOT NULL, Sav_Date VARCHAR(50) NULL, RecordBy VARCHAR(50) NULL, RecordDate VARCHAR(50) NULL);";
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 

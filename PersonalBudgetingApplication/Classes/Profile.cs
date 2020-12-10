@@ -21,6 +21,21 @@ namespace PersonalBudgetingApplication.Classes
         [XmlAttribute("Name")]
         public string ProfileName { get; set; }
 
+        [XmlIgnore]
+        public List<IncomeEntry> IncomeEntries
+        {
+            get
+            {
+                return GetIncomeEntries(ProfileID);
+            }
+        }
+
+        [XmlIgnore]
+        public List<ExpenseEntry> ExpenseEntries
+        {
+            get { return GetExpenseEntries(ProfileID); }
+        }
+
         public Profile() { }
 
         public Profile(int profileID)
@@ -33,6 +48,78 @@ namespace PersonalBudgetingApplication.Classes
         {
             ProfileName = profileName;
             ProfileID = GetProfileID(profileName);
+        }
+
+        private List<IncomeEntry> GetIncomeEntries(int ProfileId)
+        {
+            var Entries = new List<IncomeEntry>();
+
+            using (var conn = Common.CreateConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "SELECT IncomeID, Inc_Amount, Inc_Type, Inc_Date FROM tblIncome WHERE ProfileID = @ProfileId";
+                    cmd.Parameters.AddWithValue("@ProfileId", ProfileId);
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = cmd.ExecuteReader();
+
+                    while (read.Read())
+                    {
+                        var entry = new IncomeEntry();
+
+                        entry.IncomeID = read.GetInt32(0);
+                        entry.ProfileId = ProfileId;
+                        entry.Amount = read.GetDouble(1);
+                        entry.Type = (IncomeType)read.GetInt32(2);
+                        entry.Date = read.GetString(3);
+
+                        Entries.Add(entry);
+                    }
+                    read.Close();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return Entries;
+        }
+
+        private List<ExpenseEntry> GetExpenseEntries(int profileId)
+        {
+            var entries = new List<ExpenseEntry>();
+
+            using (var conn = Common.CreateConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "SELECT ExpenseID, Exp_Amount, Exp_Type, Exp_Date FROM tblExpense WHERE ProfileID = @ProfileId";
+                    cmd.Parameters.AddWithValue("@ProfileId", profileId);
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = cmd.ExecuteReader();
+
+                    while (read.Read())
+                    {
+                        var entry = new ExpenseEntry();
+
+                        entry.ProfileId = profileId;
+                        entry.ExpenseId = read.GetInt32(0);
+                        entry.Amount = read.GetDouble(1);
+                        entry.Type = (ExpenseType)read.GetInt32(2);
+                        entry.Date = read.GetString(3);
+
+                        entries.Add(entry);
+                    }
+                    read.Close();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return entries;
         }
 
         private int GetProfileID(string profileName)

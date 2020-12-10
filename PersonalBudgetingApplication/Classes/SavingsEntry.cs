@@ -8,29 +8,14 @@ using System.Threading.Tasks;
 
 namespace PersonalBudgetingApplication.Classes
 {
-    class SavingsEntry
+    public class SavingsEntry
     {
-        private int _profileId;
 
-        private double _amount;
+        public int ProfileId { get; set; }
 
-        public int ProfileId
-        {
-            get
-            {
-                return _profileId;
-            }
-            set
-            {
-                _profileId = value;
-            }
-        }
+        public double Amount { get; set; }
 
-        public double Amount
-        {
-            get { return _amount; }
-            set { _amount = value; }
-        }
+        public SavingsEntry() { }
 
         public SavingsEntry(double amount)
         {

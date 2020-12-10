@@ -6,25 +6,13 @@ using System.Threading.Tasks;
 
 namespace PersonalBudgetingApplication.Classes
 {
-    class ExpenseEntry
+    public class ExpenseEntry
     {
-        private int _profileId;
-
         private double _amount;
 
-        private ExpenseType _type;
+        public int ProfileId { get; set; }
 
-        public int ProfileId
-        {
-            get
-            {
-                return _profileId;
-            }
-            set
-            {
-                _profileId = value;
-            }
-        }
+        public int ExpenseId { get; set; }
 
         public double Amount
         {
@@ -39,7 +27,11 @@ namespace PersonalBudgetingApplication.Classes
             }
         }
 
-        public ExpenseType Type { get { return _type; } set { _type = value; } }
+        public ExpenseType Type { get; set; }
+
+        public string Date { get; set; }
+
+        public ExpenseEntry() { }
 
         public ExpenseEntry(double amount)
         {
@@ -54,7 +46,7 @@ namespace PersonalBudgetingApplication.Classes
         }
     }
 
-    enum ExpenseType : int
+    public enum ExpenseType : int
     {
         Rent = 1,
         Utilities,
