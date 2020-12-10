@@ -13,7 +13,11 @@ namespace PersonalBudgetingApplication.Classes
 
         public int ProfileId { get; set; }
 
+        public int SavingsId { get; set; }
+
         public double Amount { get; set; }
+
+        public string Date { get; set; }
 
         public SavingsEntry() { }
 
