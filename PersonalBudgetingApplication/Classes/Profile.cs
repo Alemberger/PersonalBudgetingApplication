@@ -21,7 +21,7 @@ namespace PersonalBudgetingApplication.Classes
         [XmlAttribute("Name")]
         public string ProfileName { get; set; }
 
-        [XmlIgnore]
+        
         public List<IncomeEntry> IncomeEntries
         {
             get
@@ -30,7 +30,7 @@ namespace PersonalBudgetingApplication.Classes
             }
         }
 
-        [XmlIgnore]
+        
         public List<ExpenseEntry> ExpenseEntries
         {
             get { return GetExpenseEntries(ProfileID); }

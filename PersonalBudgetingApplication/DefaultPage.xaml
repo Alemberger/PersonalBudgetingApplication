@@ -10,14 +10,21 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="139*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="12*"></RowDefinition>
             <RowDefinition Height="12*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120*"></ColumnDefinition>
-            <ColumnDefinition Width="120*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="12*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="450" Stroke="Black" VerticalAlignment="Top" Width="526"/>
-        <TextBox Name="TbTestBox" Grid.Column="2" HorizontalAlignment="Stretch" Height="121" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center"/>
+        <Label Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="0" Content="Income" VerticalAlignment="Center" FontSize="50" FontWeight="Medium"></Label>
+        <DataGrid Name="GvIncome" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date"></DataGridTextColumn>
+                <DataGridTextColumn Header="Type"></DataGridTextColumn>
+                <DataGridTextColumn Header="Amount"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

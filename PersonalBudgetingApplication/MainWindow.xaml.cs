@@ -104,13 +104,9 @@ namespace PersonalBudgetingApplication
         private void BtnExecuteCommands_Click(object sender, RoutedEventArgs e)
         {
             //Test the serializer
-            var test = new SettingSerialization();
+            DatabaseInitialization.CreateFullDatabase();
 
-            test.SerializeFile();
-
-            var example = test.ReadXMLFile();
-
-            MessageBox.Show(example.ProfileName + ":" + example.ProfileID);
+            MessageBox.Show("DB Created");
         }
 
         private void DDLProfileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
