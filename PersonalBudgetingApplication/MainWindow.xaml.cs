@@ -35,17 +35,27 @@ namespace PersonalBudgetingApplication
         {
             InitializeComponent();
 
-            if (!CheckedSettings)
-            {
-                SettingSerialization.ReadSettings();
-                CheckedSettings = true;
-            }
-
-            DataContext = this;
-
             //Apply Profile list to a dropdown list
 
             Common.PopulateProfileList(DDLProfileList);
+
+            if (!CheckedSettings)
+            {
+                var applied = SettingSerialization.ReadSettings();
+
+                if (!(applied.DefaultProfile is null))
+                {
+                    foreach (ComboBoxItem item in DDLProfileList.Items)
+                    {
+                        if (item.Content.ToString() == applied.DefaultProfile.ProfileName)
+                        {
+                            DDLProfileList.SelectedItem = item;
+                            Profile = applied.DefaultProfile;
+                        }
+                    }
+                }
+                CheckedSettings = true;
+            }
 
             if (DDLProfileList.Items.Count < 2)
             {
@@ -159,7 +169,9 @@ namespace PersonalBudgetingApplication
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
             //Open a settings window
-            Type.GetType("PersonalBudgettingApplication.Classes.ApplicationSettings");
+            var Settings = new AdjustSettingsWindow();
+
+            Settings.Show();
         }
     }
 }

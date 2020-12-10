@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PersonalBudgetingApplication.Classes;
 
 namespace PersonalBudgetingApplication
 {
@@ -22,6 +23,39 @@ namespace PersonalBudgetingApplication
         public AdjustSettingsWindow()
         {
             InitializeComponent();
+
+            Common.PopulateProfileList(DDLDefaultProfile);
+
+            var applied = SettingSerialization.ReadSettings();
+
+            if(!(applied.DefaultProfile is null))
+            {
+                foreach (ComboBoxItem item in DDLDefaultProfile.Items)
+                {
+                    if (item.Content.ToString() == applied.DefaultProfile.ProfileName)
+                    {
+                        DDLDefaultProfile.SelectedItem = item;
+                    }
+                }
+            }
+        }
+
+        private void BtnCancelSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void BtnSaveSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var Settings = new ApplicationSettings();
+
+            if (DDLDefaultProfile.SelectedIndex > 0)
+            {
+                Settings.DefaultProfile = new Profile(((ComboBoxItem)DDLDefaultProfile.SelectedItem).Content.ToString());
+            }
+
+            SettingSerialization.SaveSettings(Settings);
+            Close();
         }
     }
 }

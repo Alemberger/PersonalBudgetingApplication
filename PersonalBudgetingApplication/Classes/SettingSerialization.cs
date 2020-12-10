@@ -66,5 +66,16 @@ namespace PersonalBudgetingApplication.Classes
                 return ReadSettings();
             }
         }
+
+        public static void SaveSettings(ApplicationSettings toSave)
+        {
+            var xs = new XmlSerializer(typeof(ApplicationSettings));
+
+            var Write = new StreamWriter(@"ApplicationSettings.xml");
+
+            xs.Serialize(Write, toSave);
+
+            Write.Close();
+        }
     }
 }
