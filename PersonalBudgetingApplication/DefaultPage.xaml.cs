@@ -37,7 +37,7 @@ namespace PersonalBudgetingApplication
 
             Profile = Main.Profile;
 
-            GvIncome.ItemsSource = IncomeEntries;
+            GvOverview.ItemsSource = ExpenseEntries;
         }
 
         private List<IncomeEntry> GatherIncomeRecords(int profileId)
@@ -159,6 +159,7 @@ namespace PersonalBudgetingApplication
                     BtnChangeGrid.Tag = "Income";
                     BtnChangeGrid.Content = "Income";
                     BtnEnterRecord.Content = "Enter Income";
+
                     break;
                 case "Income":
                     //Change the grid to the income report

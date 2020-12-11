@@ -121,7 +121,8 @@ namespace PersonalBudgetingApplication
 
             if (index == -1 || index == 0) 
             { 
-                LblTitle.Content = "Overview"; 
+                LblTitle.Content = "Overview";
+                Profile = null;
                 return; 
             }
 
