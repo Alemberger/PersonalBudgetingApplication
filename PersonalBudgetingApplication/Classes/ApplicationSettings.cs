@@ -18,9 +18,19 @@ namespace PersonalBudgetingApplication.Classes
     {
         public Profile DefaultProfile { get; set; }
 
+        public OverviewTable DefaultOverviewTable { get; set; } = OverviewTable.None;
+
         public ApplicationSettings()
         {
             
         }
+    }
+
+    public enum OverviewTable
+    {
+        Income = 0,
+        Expense = 1,
+        Savings = 2,
+        None = 3
     }
 }

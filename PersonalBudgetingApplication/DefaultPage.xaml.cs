@@ -40,6 +40,52 @@ namespace PersonalBudgetingApplication
             GvIncome.ItemsSource = IncomeEntries;
             GvExpenses.ItemsSource = ExpenseEntries;
             GvSavings.ItemsSource = SavingsEntries;
+
+            //Apply the default table setting
+            var saved = SettingSerialization.ReadSettings();
+
+            switch (saved.DefaultOverviewTable)
+            {
+                case OverviewTable.None:
+                    break;
+                case OverviewTable.Income:
+                    LblTitle.Content = "Income";
+                    BtnEnterRecord.Content = "Enter Income";
+                    BtnEnterRecord.Tag = "Income";
+
+                    GvSavings.Visibility = Visibility.Hidden;
+                    GvIncome.Visibility = Visibility.Visible;
+                    GvExpenses.Visibility = Visibility.Hidden;
+
+                    BtnChangeGrid.Tag = "Expense";
+                    BtnChangeGrid.Content = "Expense";
+                    BtnEnterRecord.Content = "Enter Income";
+                    break;
+                case OverviewTable.Expense:
+                    LblTitle.Content = "Expense";
+                    BtnEnterRecord.Content = "Enter Expense";
+                    BtnEnterRecord.Tag = "Expense";
+
+                    GvSavings.Visibility = Visibility.Hidden;
+                    GvIncome.Visibility = Visibility.Hidden;
+                    GvExpenses.Visibility = Visibility.Visible;
+
+                    BtnChangeGrid.Tag = "Savings";
+                    BtnChangeGrid.Content = "Savings";
+                    break;
+                case OverviewTable.Savings:
+                    LblTitle.Content = "Savings";
+                    BtnEnterRecord.Content = "Enter Savings";
+                    BtnEnterRecord.Tag = "Savings";
+
+                    GvSavings.Visibility = Visibility.Visible;
+                    GvIncome.Visibility = Visibility.Hidden;
+                    GvExpenses.Visibility = Visibility.Hidden;
+
+                    BtnChangeGrid.Tag = "Income";
+                    BtnChangeGrid.Content = "Income";
+                    break;
+            }
         }
 
         private List<IncomeEntry> GatherIncomeRecords(int profileId)

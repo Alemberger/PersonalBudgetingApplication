@@ -36,6 +36,14 @@ namespace PersonalBudgetingApplication.Classes
             get { return GetExpenseEntries(ProfileID); }
         }
 
+        public List<SavingsEntry> SavingsEntries
+        {
+            get
+            {
+                return GetSavingsEntries(ProfileID);
+            }
+        }
+
         public Profile() { }
 
         public Profile(int profileID)
@@ -114,6 +122,42 @@ namespace PersonalBudgetingApplication.Classes
 
                         entries.Add(entry);
                     }
+                    read.Close();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return entries;
+        }
+
+        private List<SavingsEntry> GetSavingsEntries(int ProfileId)
+        {
+            var entries = new List<SavingsEntry>();
+
+            using (var conn = Common.CreateConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "SELECT SavingsID, Sav_Amount, Sav_Date FROM tblSavings WHERE ProfileID = @ProfileId";
+                    cmd.Parameters.AddWithValue("@ProfileId", ProfileId);
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = cmd.ExecuteReader();
+
+                    while (read.Read())
+                    {
+                        var entry = new SavingsEntry();
+
+                        entry.ProfileId = ProfileId;
+                        entry.SavingsId = read.GetInt32(0);
+                        entry.Amount = read.GetDouble(1);
+                        entry.Date = read.GetString(2);
+
+                        entries.Add(entry);
+                    }
+
                     read.Close();
                 }
                 finally { conn.Close(); cmd.Dispose(); }
