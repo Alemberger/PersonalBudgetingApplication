@@ -109,11 +109,17 @@
     <Compile Include="Classes\Profile.cs" />
     <Compile Include="Classes\SavingsEntry.cs" />
     <Compile Include="Classes\SettingSerialization.cs" />
+    <Compile Include="ExpenseEntryWindow.xaml.cs">
+      <DependentUpon>ExpenseEntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IncomeEntryWindow.xaml.cs">
       <DependentUpon>IncomeEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProfileCreation.xaml.cs">
       <DependentUpon>ProfileCreation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SavingsEntryWindow.xaml.cs">
+      <DependentUpon>SavingsEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SecondPage.xaml.cs">
       <DependentUpon>SecondPage.xaml</DependentUpon>
@@ -126,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DefaultPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExpenseEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,6 +159,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ProfileCreation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SavingsEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

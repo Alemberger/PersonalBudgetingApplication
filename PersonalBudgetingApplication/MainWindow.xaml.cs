@@ -93,17 +93,29 @@ namespace PersonalBudgetingApplication
 
         private void BtnChangePage_Click(object sender, RoutedEventArgs e)
         {
-            if (LoadedPage == "Default")
+            if (!(Profile is null))
             {
-                PrimaryFrame.Navigate(new Uri("SecondPage.xaml", UriKind.RelativeOrAbsolute));
+                if (LoadedPage == "Default")
+                {
+                    PrimaryFrame.Navigate(new Uri("SecondPage.xaml", UriKind.RelativeOrAbsolute));
 
-                LoadedPage = "Second";
+                    LoadedPage = "Second";
+                }
+                else
+                {
+                    PrimaryFrame.Navigate(new Uri("DefaultPage.xaml", UriKind.RelativeOrAbsolute));
+
+                    LoadedPage = "Default";
+                }
             }
             else
             {
-                PrimaryFrame.Navigate(new Uri("DefaultPage.xaml", UriKind.RelativeOrAbsolute));
+                if (!(LoadedPage == "Second"))
+                {
+                    PrimaryFrame.Navigate(new Uri("SecondPage.xaml", UriKind.RelativeOrAbsolute));
 
-                LoadedPage = "Default";
+                    LoadedPage = "Second";
+                }
             }
         }
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,23 @@ namespace PersonalBudgetingApplication.Classes
             return conn;
         }
 
+        public static bool CheckAmountInput(string amount)
+        {
+            if (amount == "") { throw new Exception("No input provided"); }
+
+            bool valid = false;
+
+            //Create the regular expression to validate the input agains
+            var check = new Regex("^[0-9]+\\.[0-9]{2}$");
+
+            if (check.IsMatch(amount))
+            {
+                valid = true;
+            }
+
+            return valid;
+        }
+
         public static void PopulateProfileList(ComboBox target)
         {
             //Add the first blank value to the combo box
@@ -29,14 +47,14 @@ namespace PersonalBudgetingApplication.Classes
             {
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT ProfileName FROM tblProfile";
+                    cmd.CommandText = "SELECT ProfileName, ProfileID FROM tblProfile";
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
                     var read = cmd.ExecuteReader();
                     while (read.Read())
                     {
-                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0) });
+                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0), Tag = read.GetInt32(1).ToString() });
                     }
                     read.Close();
                     conn.Close();
@@ -48,14 +66,14 @@ namespace PersonalBudgetingApplication.Classes
 
         public static void PopulateIncomeTypeList(ComboBox target)
         {
-            var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "" } };
+            var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
 
             using (var conn = CreateConnection())
             {
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "SELECT IncomeType FROM tblIncomeType ORDER BY IncomeTypeID";
+                    cmd.CommandText = "SELECT IncomeType, IncomeTypeID FROM tblIncomeType ORDER BY IncomeTypeID";
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
@@ -63,7 +81,7 @@ namespace PersonalBudgetingApplication.Classes
 
                     while (read.Read())
                     {
-                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0) });
+                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0), Tag = read.GetInt32(1).ToString() });
                     }
                     read.Close();
                 }
@@ -75,14 +93,14 @@ namespace PersonalBudgetingApplication.Classes
 
         public static void PopulateExpenseTypeList(ComboBox target)
         {
-            var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "" } };
+            var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
 
             using (var conn = CreateConnection())
             {
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "SELECT ExpenseType FROM tblExpenseType ORDER BY ExpenseTypeID";
+                    cmd.CommandText = "SELECT ExpenseType, ExpenseTypeID FROM tblExpenseType ORDER BY ExpenseTypeID";
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
@@ -90,7 +108,7 @@ namespace PersonalBudgetingApplication.Classes
 
                     while (read.Read())
                     {
-                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0) });
+                        Binder.Add(new ComboBoxItem() { Content = read.GetString(0), Tag = read.GetInt32(1).ToString() });
                     }
                     read.Close();
                 }
@@ -139,6 +157,11 @@ namespace PersonalBudgetingApplication.Classes
                     }
 
                     Main.DDLProfileList.SelectedIndex = index;
+
+                    if (Main.LoadedPage == "Default")
+                    {
+                        Main.PrimaryFrame.Navigate(new Uri("DefaultPage.xaml", UriKind.RelativeOrAbsolute));
+                    }
                 }
                 catch (NullReferenceException)
                 {
