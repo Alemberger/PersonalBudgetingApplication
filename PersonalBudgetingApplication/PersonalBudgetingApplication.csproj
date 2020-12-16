@@ -104,9 +104,12 @@
     <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\DatabaseInitialization.cs" />
+    <Compile Include="Classes\ExpenseEntries.cs" />
     <Compile Include="Classes\ExpenseEntry.cs" />
+    <Compile Include="Classes\IncomeEntries.cs" />
     <Compile Include="Classes\IncomeEntry.cs" />
     <Compile Include="Classes\Profile.cs" />
+    <Compile Include="Classes\SavingsEntries.cs" />
     <Compile Include="Classes\SavingsEntry.cs" />
     <Compile Include="Classes\SettingSerialization.cs" />
     <Compile Include="ExpenseEntryWindow.xaml.cs">

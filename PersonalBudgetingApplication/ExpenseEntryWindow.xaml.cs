@@ -53,7 +53,7 @@ namespace PersonalBudgetingApplication
 
             if (!Common.CheckAmountInput(amount)) { MessageBox.Show("Invalid amount provided. Please provide in format ###.##"); return; }
 
-            var entry = new ExpenseEntry() { Amount = Convert.ToDouble(amount), Type = (ExpenseType)Convert.ToInt32(((ComboBoxItem)DDLExpenseType.SelectedItem).Tag), Date = TbExpenseDate.Text };
+            var entry = new ExpenseEntry() { Amount = Convert.ToDouble(amount), Type = (ExpenseType)Convert.ToInt32(((ComboBoxItem)DDLExpenseType.SelectedItem).Tag), Date = DateTime.Parse(TbExpenseDate.Text) };
 
             using (var conn = Common.CreateConnection())
             {

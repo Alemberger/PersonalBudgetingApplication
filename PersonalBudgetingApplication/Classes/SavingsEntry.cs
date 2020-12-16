@@ -17,7 +17,7 @@ namespace PersonalBudgetingApplication.Classes
 
         public double Amount { get; set; }
 
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         public SavingsEntry() { }
 

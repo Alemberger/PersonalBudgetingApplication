@@ -28,7 +28,7 @@ namespace PersonalBudgetingApplication.Classes
 
         public IncomeType Type { get; set; }
 
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         public int IncomeID { get; set; }
 
@@ -42,7 +42,7 @@ namespace PersonalBudgetingApplication.Classes
         public IncomeEntry(double amount, string type, string date)
         {
             Amount = amount;
-            Date = date;
+            Date = DateTime.Parse(date);
             for (int i = 0; i < (int)IncomeType.Other; i++)
             {
                 if (type == ((IncomeType)i).ToString())

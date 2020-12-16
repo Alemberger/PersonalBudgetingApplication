@@ -49,7 +49,7 @@ namespace PersonalBudgetingApplication
 
             if (!Common.CheckAmountInput(amount)) { MessageBox.Show("Please provide the amount in this format: ###.##"); return; }
 
-            var entry = new SavingsEntry() { Amount = Convert.ToDouble(amount), Date = TbSavingsDate.Text };
+            var entry = new SavingsEntry() { Amount = Convert.ToDouble(amount), Date = DateTime.Parse(TbSavingsDate.Text) };
 
             using (var conn = Common.CreateConnection())
             {
@@ -59,7 +59,7 @@ namespace PersonalBudgetingApplication
                     cmd.CommandText = "INSERT INTO tblSavings (ProfileID, Sav_Amount, Sav_Date) VALUES (@ProfileID, @Amount, @Date)";
                     cmd.Parameters.AddWithValue("@ProfileID", Profile.ProfileID);
                     cmd.Parameters.AddWithValue("@Amount", entry.Amount);
-                    cmd.Parameters.AddWithValue("@Date", entry.Date);
+                    cmd.Parameters.AddWithValue("@Date", entry.Date.ToString());
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 

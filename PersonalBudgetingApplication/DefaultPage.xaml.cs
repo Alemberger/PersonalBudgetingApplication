@@ -23,11 +23,11 @@ namespace PersonalBudgetingApplication
     {
         public Profile Profile { get; set; }
 
-        public List<IncomeEntry> IncomeEntries { get { return GatherIncomeRecords(Profile.ProfileID); } }
+        public List<IncomeEntry> IncomeEntries { get { return new IncomeEntries(Profile); } }
 
-        public List<ExpenseEntry> ExpenseEntries { get { return GatherExpenseRecords(Profile.ProfileID); } }
+        public List<ExpenseEntry> ExpenseEntries { get { return new ExpenseEntries(Profile); } }
 
-        public List<SavingsEntry> SavingsEntries { get { return GatherSavingsRecords(Profile.ProfileID); } }
+        public List<SavingsEntry> SavingsEntries { get { return new SavingsEntries(Profile); } }
 
         public DefaultPage()
         {
@@ -111,7 +111,7 @@ namespace PersonalBudgetingApplication
                             ProfileId = profileId,
                             IncomeID = read.GetInt32(0),
                             Amount = read.GetDouble(1),
-                            Date = read.GetString(3),
+                            Date = DateTime.Parse(read.GetString(3)),
                             Type = (IncomeType)read.GetInt32(2)
                         };
 
@@ -122,41 +122,7 @@ namespace PersonalBudgetingApplication
                 finally { conn.Close(); cmd.Dispose(); } 
             }
 
-            return records;
-        }
-
-        private List<SavingsEntry> GatherSavingsRecords(int profileId)
-        {
-            var records = new List<SavingsEntry>();
-
-            using (var conn = Common.CreateConnection())
-            {
-                var cmd = conn.CreateCommand();
-                try
-                {
-                    cmd.CommandText = "SELECT SavingsID, Sav_Amount, Sav_Date FROM tblSavings WHERE ProfileID = @ProfileID";
-                    cmd.Parameters.AddWithValue("@ProfileID", profileId);
-
-                    if (conn.State == System.Data.ConnectionState.Closed) { conn.Open(); }
-
-                    var read = cmd.ExecuteReader();
-
-                    while (read.Read())
-                    {
-                        var entry = new SavingsEntry()
-                        {
-                            ProfileId = profileId,
-                            SavingsId = read.GetInt32(0),
-                            Amount = read.GetDouble(1),
-                            Date = read.GetString(2)
-                        };
-
-                        records.Add(entry);
-                    }
-                    read.Close();
-                }
-                finally { conn.Close(); cmd.Dispose(); }
-            }
+            
 
             return records;
         }
@@ -185,7 +151,7 @@ namespace PersonalBudgetingApplication
                             ProfileId = profileId,
                             Amount = read.GetDouble(1),
                             Type = (ExpenseType)read.GetInt32(2),
-                            Date = read.GetString(3)
+                            Date = DateTime.Parse(read.GetString(3))
                         };
 
                         records.Add(entry);
@@ -329,6 +295,17 @@ namespace PersonalBudgetingApplication
             GvExpenses.ItemsSource = ExpenseEntries;
             GvIncome.ItemsSource = IncomeEntries;
             GvSavings.ItemsSource = SavingsEntries;
+        }
+
+        private void GvExpenses_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            string direction = e.Column.SortDirection.ToString();
+
+            if (direction == "") { direction = "Ascending"; }
+            else if (direction == "Ascending") { direction = "Descending"; }
+            else if (direction == "Descending") { direction = "Ascending"; }
+
+            MessageBox.Show(string.Format("sorting grid by '{0}' column in {1} order", e.Column.SortMemberPath, direction));
         }
     }
 }

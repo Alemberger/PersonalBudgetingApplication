@@ -82,7 +82,7 @@ namespace PersonalBudgetingApplication.Classes
                         entry.ProfileId = ProfileId;
                         entry.Amount = read.GetDouble(1);
                         entry.Type = (IncomeType)read.GetInt32(2);
-                        entry.Date = read.GetString(3);
+                        entry.Date = DateTime.Parse(read.GetString(3));
 
                         Entries.Add(entry);
                     }
@@ -118,7 +118,7 @@ namespace PersonalBudgetingApplication.Classes
                         entry.ExpenseId = read.GetInt32(0);
                         entry.Amount = read.GetDouble(1);
                         entry.Type = (ExpenseType)read.GetInt32(2);
-                        entry.Date = read.GetString(3);
+                        entry.Date = DateTime.Parse(read.GetString(3));
 
                         entries.Add(entry);
                     }
@@ -153,7 +153,7 @@ namespace PersonalBudgetingApplication.Classes
                         entry.ProfileId = ProfileId;
                         entry.SavingsId = read.GetInt32(0);
                         entry.Amount = read.GetDouble(1);
-                        entry.Date = read.GetString(2);
+                        entry.Date = DateTime.Parse(read.GetString(2));
 
                         entries.Add(entry);
                     }
