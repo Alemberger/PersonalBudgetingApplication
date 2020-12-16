@@ -19,21 +19,21 @@
             <ColumnDefinition Width="12*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Name="LblTitle" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="0" Content="Income" VerticalAlignment="Center" FontSize="50" FontWeight="Medium"></Label>
-        <DataGrid Name="GvExpenses" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MinHeight="150" MaxWidth="500" MaxHeight="250" Visibility="Hidden" HorizontalScrollBarVisibility="Hidden" IsReadOnly="True" Sorting="GvExpenses_Sorting">
+        <DataGrid Name="GvExpenses" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MinHeight="150" MaxWidth="500" MaxHeight="250" Visibility="Hidden" HorizontalScrollBarVisibility="Hidden" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="10*" Header="Date" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
                 <DataGridTextColumn Width="10*" Header="Type" Binding="{Binding Path=Type}"></DataGridTextColumn>
                 <DataGridTextColumn Width="10*" Header="Amount" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="GvIncome" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MinHeight="150" MaxWidth="500" MaxHeight="250" HorizontalScrollBarVisibility="Hidden" IsReadOnly="True" CanUserSortColumns="False">
+        <DataGrid Name="GvIncome" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MinHeight="150" MaxWidth="500" MaxHeight="250" HorizontalScrollBarVisibility="Hidden" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="10*" Header="Date" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
                 <DataGridTextColumn Width="10*" Header="Type" Binding="{Binding Path=Type}"></DataGridTextColumn>
                 <DataGridTextColumn Width="10*" Header="Amount" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="GvSavings" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MaxWidth="500" MaxHeight="250" MinHeight="150" HorizontalScrollBarVisibility="Hidden" Visibility="Hidden" IsReadOnly="True" CanUserSortColumns="False">
+        <DataGrid Name="GvSavings" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MaxWidth="500" MaxHeight="250" MinHeight="150" HorizontalScrollBarVisibility="Hidden" Visibility="Hidden" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="10*"  Header="Date" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
                 <DataGridTextColumn Width="10*" Header="Amount" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>

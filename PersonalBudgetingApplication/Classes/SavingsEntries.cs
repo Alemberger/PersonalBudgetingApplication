@@ -15,6 +15,7 @@ namespace PersonalBudgetingApplication.Classes
         public SavingsEntries(Profile profile)
         {
             GatherSavingsEntries(profile.ProfileID);
+            
         }
 
         private void GatherSavingsEntries(int profileId)
