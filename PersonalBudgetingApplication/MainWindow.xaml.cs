@@ -35,6 +35,12 @@ namespace PersonalBudgetingApplication
         {
             InitializeComponent();
 
+            if (!DataAccess.CheckDBExists())
+            {
+                DataAccess.CreateDB();
+                DataAccess.CreateTables();
+            }
+
             //Apply Profile list to a dropdown list
 
             Common.PopulateProfileList(DDLProfileList);
@@ -122,9 +128,15 @@ namespace PersonalBudgetingApplication
         private void BtnExecuteCommands_Click(object sender, RoutedEventArgs e)
         {
             //Test the serializer
-            DatabaseInitialization.CreateFullDatabase();
+            double test = 9 - (9 % 2);
 
-            MessageBox.Show("DB Created");
+            //Use this equation to figure out how many interest records to run
+            double time = 10.0 / 12.0;
+            double compounds = 1.0 / 365.0;
+
+            test = (time - (time % compounds)) / compounds;
+
+            MessageBox.Show(test.ToString());
         }
 
         private void DDLProfileList_SelectionChanged(object sender, SelectionChangedEventArgs e)

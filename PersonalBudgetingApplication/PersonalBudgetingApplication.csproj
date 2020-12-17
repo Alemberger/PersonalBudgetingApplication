@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\DataAccess.cs" />
     <Compile Include="Classes\DatabaseInitialization.cs" />
     <Compile Include="Classes\ExpenseEntries.cs" />
     <Compile Include="Classes\ExpenseEntry.cs" />
