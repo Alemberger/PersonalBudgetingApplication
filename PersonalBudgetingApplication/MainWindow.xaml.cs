@@ -43,6 +43,10 @@ namespace PersonalBudgetingApplication
 
             //Apply Profile list to a dropdown list
 
+            var Populater = new ListPopulaters();
+
+            Populater.PopulateDebtsList(DDLTypeTest, 1);
+
             Common.PopulateProfileList(DDLProfileList);
 
             if (!CheckedSettings)
@@ -136,7 +140,7 @@ namespace PersonalBudgetingApplication
 
             test = (time - (time % compounds)) / compounds;
 
-            MessageBox.Show(test.ToString());
+            MessageBox.Show(DataAccess.CheckDBExists().ToString());
         }
 
         private void DDLProfileList_SelectionChanged(object sender, SelectionChangedEventArgs e)

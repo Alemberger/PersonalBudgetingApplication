@@ -109,6 +109,7 @@
     <Compile Include="Classes\ExpenseEntry.cs" />
     <Compile Include="Classes\IncomeEntries.cs" />
     <Compile Include="Classes\IncomeEntry.cs" />
+    <Compile Include="Classes\ListPopulaters.cs" />
     <Compile Include="Classes\Profile.cs" />
     <Compile Include="Classes\SavingsEntries.cs" />
     <Compile Include="Classes\SavingsEntry.cs" />
