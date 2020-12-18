@@ -23,20 +23,39 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class ExpenseEntryWindow : Window
     {
+        public Account Account { get; set; }
+
         public Profile Profile { get; set; }
 
         public ExpenseEntryWindow()
         {
             InitializeComponent();
 
-            Common.PopulateExpenseTypeList(DDLExpenseType);
+            var populater = new ListPopulaters();
+
+            populater.PopulateExpenseTypeList(DDLExpenseType);
         }
 
-        public ExpenseEntryWindow(Profile profile)
+        public ExpenseEntryWindow(Account account)
         {
             InitializeComponent();
 
-            Common.PopulateExpenseTypeList(DDLExpenseType);
+            var populater = new ListPopulaters();
+
+            populater.PopulateExpenseTypeList(DDLExpenseType);
+
+            Account = account;
+        }
+
+        public ExpenseEntryWindow(Account account, Profile profile)
+        {
+            InitializeComponent();
+
+            var populater = new ListPopulaters();
+
+            populater.PopulateExpenseTypeList(DDLExpenseType);
+
+            Account = account;
 
             Profile = profile;
         }
@@ -53,15 +72,15 @@ namespace PersonalBudgetingApplication
 
             if (!Common.CheckAmountInput(amount)) { MessageBox.Show("Invalid amount provided. Please provide in format ###.##"); return; }
 
-            var entry = new ExpenseEntry() { Amount = Convert.ToDouble(amount), Type = (ExpenseType)Convert.ToInt32(((ComboBoxItem)DDLExpenseType.SelectedItem).Tag), Date = DateTime.Parse(TbExpenseDate.Text) };
+            var entry = new Expense() { Amount = Convert.ToDouble(amount), Type = (ExpenseType)Convert.ToInt32(((ComboBoxItem)DDLExpenseType.SelectedItem).Tag), Date = DateTime.Parse(TbExpenseDate.Text) };
 
             using (var conn = Common.CreateConnection())
             {
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "INSERT INTO tblExpense (ProfileID, Exp_Amount, Exp_Type, Exp_Date) VALUES (@ProfileID, @Amount, @Type, @Date)";
-                    cmd.Parameters.AddWithValue("@ProfileID", Profile.ProfileID);
+                    cmd.CommandText = "INSERT INTO tblExpense (AccountID, Exp_Amount, Exp_Type, Exp_Date, RecordBy, RecordDate) VALUES (@AccountID, @Amount, @Type, @Date)";
+                    cmd.Parameters.AddWithValue("@AccountID", Account.ID);
                     cmd.Parameters.AddWithValue("@Amount", entry.Amount);
                     cmd.Parameters.AddWithValue("@Type", (int)entry.Type);
                     cmd.Parameters.AddWithValue("@Date", entry.Date);

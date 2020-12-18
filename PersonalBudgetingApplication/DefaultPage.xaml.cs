@@ -23,12 +23,6 @@ namespace PersonalBudgetingApplication
     {
         public Profile Profile { get; set; }
 
-        public List<IncomeEntry> IncomeEntries { get { return new IncomeEntries(Profile); } }
-
-        public List<ExpenseEntry> ExpenseEntries { get { return new ExpenseEntries(Profile); } }
-
-        public List<SavingsEntry> SavingsEntries { get { return new SavingsEntries(Profile); } }
-
         public DefaultPage()
         {
             InitializeComponent();
@@ -36,10 +30,6 @@ namespace PersonalBudgetingApplication
             var Main = (MainWindow)Application.Current.MainWindow;
 
             Profile = Main.Profile;
-
-            GvIncome.ItemsSource = IncomeEntries;
-            GvExpenses.ItemsSource = ExpenseEntries;
-            GvSavings.ItemsSource = SavingsEntries;
 
             //Apply the default table setting
             var saved = SettingSerialization.ReadSettings();
@@ -192,23 +182,7 @@ namespace PersonalBudgetingApplication
 
                     break;
                 case "Savings":
-                    var savingsFound = false;
-
-                    foreach (Window check in Application.Current.Windows)
-                    {
-                        if (check.GetType() == typeof(SavingsEntryWindow))
-                        {
-                            check.Show();
-                            check.Focus();
-                            savingsFound = true;
-                        }
-                    }
-
-                    if (!savingsFound)
-                    {
-                        var window = new SavingsEntryWindow(Profile);
-                        window.Show();
-                    }
+                    MessageBox.Show("Broken");
 
                     break;
             }
@@ -216,9 +190,7 @@ namespace PersonalBudgetingApplication
 
         private void BtnRefreshGrids_Click(object sender, RoutedEventArgs e)
         {
-            GvExpenses.ItemsSource = ExpenseEntries;
-            GvIncome.ItemsSource = IncomeEntries;
-            GvSavings.ItemsSource = SavingsEntries;
+            MessageBox.Show("Broken");
         }
     }
 }

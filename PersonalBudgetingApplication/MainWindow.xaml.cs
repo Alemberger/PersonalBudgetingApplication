@@ -38,7 +38,9 @@ namespace PersonalBudgetingApplication
             if (!DataAccess.CheckDBExists())
             {
                 DataAccess.CreateDB();
-                DataAccess.CreateTables();
+                var factory = new DBTableCreator(true);
+
+                if (factory.Created == false) { MessageBox.Show("Failed to create tables"); }
             }
 
             //Apply Profile list to a dropdown list

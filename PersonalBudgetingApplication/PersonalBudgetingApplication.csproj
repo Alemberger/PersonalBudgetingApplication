@@ -101,18 +101,18 @@
     <Compile Include="AdjustSettingsWindow.xaml.cs">
       <DependentUpon>AdjustSettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Account.cs" />
     <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\DataAccess.cs" />
-    <Compile Include="Classes\DatabaseInitialization.cs" />
-    <Compile Include="Classes\ExpenseEntries.cs" />
-    <Compile Include="Classes\ExpenseEntry.cs" />
-    <Compile Include="Classes\IncomeEntries.cs" />
-    <Compile Include="Classes\IncomeEntry.cs" />
+    <Compile Include="Classes\DBTableCreator.cs" />
+    <Compile Include="Classes\Debt.cs" />
+    <Compile Include="Classes\DebtInterest.cs" />
+    <Compile Include="Classes\DebtPayment.cs" />
+    <Compile Include="Classes\Expense.cs" />
+    <Compile Include="Classes\Income.cs" />
     <Compile Include="Classes\ListPopulaters.cs" />
     <Compile Include="Classes\Profile.cs" />
-    <Compile Include="Classes\SavingsEntries.cs" />
-    <Compile Include="Classes\SavingsEntry.cs" />
     <Compile Include="Classes\SettingSerialization.cs" />
     <Compile Include="ExpenseEntryWindow.xaml.cs">
       <DependentUpon>ExpenseEntryWindow.xaml</DependentUpon>
@@ -122,9 +122,6 @@
     </Compile>
     <Compile Include="ProfileCreation.xaml.cs">
       <DependentUpon>ProfileCreation.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SavingsEntryWindow.xaml.cs">
-      <DependentUpon>SavingsEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SecondPage.xaml.cs">
       <DependentUpon>SecondPage.xaml</DependentUpon>
@@ -164,10 +161,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ProfileCreation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SavingsEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

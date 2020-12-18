@@ -43,7 +43,7 @@ namespace PersonalBudgetingApplication.Classes
             //Add the first blank value to the combo box
             var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "" } };
 
-            using (var conn = CreateConnection())
+            using (var conn = DataAccess.EstablishConnection())
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -68,7 +68,7 @@ namespace PersonalBudgetingApplication.Classes
         {
             var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
 
-            using (var conn = CreateConnection())
+            using (var conn = DataAccess.EstablishConnection())
             {
                 var cmd = conn.CreateCommand();
                 try
@@ -95,7 +95,7 @@ namespace PersonalBudgetingApplication.Classes
         {
             var Binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
 
-            using (var conn = CreateConnection())
+            using (var conn = DataAccess.EstablishConnection())
             {
                 var cmd = conn.CreateCommand();
                 try

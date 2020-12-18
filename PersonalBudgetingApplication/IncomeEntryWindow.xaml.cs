@@ -23,20 +23,39 @@ namespace PersonalBudgetingApplication
     /// </summary>
     public partial class IncomeEntryWindow : Window
     {
+        public Account Account { get; set; }
+        
         public Profile Profile { get; set; }
 
         public IncomeEntryWindow()
         {
             InitializeComponent();
 
-            Common.PopulateIncomeTypeList(DDLIncomeType);
+            var populater = new ListPopulaters();
+
+            populater.PopulateIncomeTypeList(DDLIncomeType);
         }
 
-        public IncomeEntryWindow(Profile profile)
+        public IncomeEntryWindow(Account account)
         {
             InitializeComponent();
 
-            Common.PopulateIncomeTypeList(DDLIncomeType);
+            var populater = new ListPopulaters();
+
+            populater.PopulateIncomeTypeList(DDLIncomeType);
+
+            Account = account;
+        }
+
+        public IncomeEntryWindow(Account account, Profile profile)
+        {
+            InitializeComponent();
+
+            var populater = new ListPopulaters();
+
+            populater.PopulateIncomeTypeList(DDLIncomeType);
+
+            Account = account;
 
             Profile = profile;
         }
@@ -56,7 +75,7 @@ namespace PersonalBudgetingApplication
             Regex check = new Regex("^[0-9]+\\.[0-9]{2}$");
             if (!check.IsMatch(amount)) { MessageBox.Show("Invalid amount provided. Please provide in format ###.##"); return; }
 
-            var entry = new IncomeEntry(Convert.ToDouble(amount), ((ComboBoxItem)DDLIncomeType.SelectedItem).Content.ToString(), TbIncomeDate.Text); ;
+            var entry = new Income() { Amount = Convert.ToDouble(amount), Type = (IncomeType)((ComboBoxItem)DDLIncomeType.SelectedItem).Content, Date = DateTime.Parse(TbIncomeDate.Text) } ;
 
             //Submit the record
             using (var conn = Common.CreateConnection())
@@ -64,8 +83,8 @@ namespace PersonalBudgetingApplication
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "INSERT INTO tblIncome (ProfileID, Inc_Amount, Inc_Type, Inc_Date) VALUES (@ProfileID, @Amount, @Type, @Date)";
-                    cmd.Parameters.AddWithValue("@ProfileID", Profile.ProfileID);
+                    cmd.CommandText = "INSERT INTO tblIncomes (AccountID, Inc_Amount, Inc_Type, Inc_Date, RecordBy, RecordDate) VALUES (@AccountID, @Amount, @Type, @Date, @RecordBy, @RecordDate)";
+                    cmd.Parameters.AddWithValue("@ProfileID", Account.ID);
                     cmd.Parameters.AddWithValue("@Amount", entry.Amount);
                     cmd.Parameters.AddWithValue("@Type", (int)entry.Type);
                     cmd.Parameters.AddWithValue("@Date", entry.Date);
