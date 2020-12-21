@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:PersonalBudgetingApplication"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

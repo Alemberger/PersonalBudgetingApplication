@@ -102,6 +102,7 @@
       <DependentUpon>AdjustSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Account.cs" />
+    <Compile Include="Classes\AccountOverviewTable.cs" />
     <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\DataAccess.cs" />

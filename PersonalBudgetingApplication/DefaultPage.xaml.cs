@@ -23,6 +23,8 @@ namespace PersonalBudgetingApplication
     {
         public Profile Profile { get; set; }
 
+        public OverviewTable OpenTable { get; set; } = OverviewTable.Accounts;
+
         public DefaultPage()
         {
             InitializeComponent();
@@ -34,163 +36,124 @@ namespace PersonalBudgetingApplication
             //Apply the default table setting
             var saved = SettingSerialization.ReadSettings();
 
-            switch (saved.DefaultOverviewTable)
+            if (saved.DefaultOverviewTable != OverviewTable.None)
             {
-                case OverviewTable.None:
+                ChangeGrids(saved.DefaultOverviewTable);
+            }
+
+            DDLOptions.ItemsSource = Profile.ListAccounts();
+        }
+
+        private void ChangeGrids(OverviewTable target)
+        {
+            switch (target)
+            {
+                case OverviewTable.Accounts:
+                    LblTitle.Content = "Accounts";
+                    BtnNewOption.Content = "New Account";
+                    OpenTable = OverviewTable.Accounts;
+
+                    GvAccounts.Visibility = Visibility.Visible;
+                    GvDebts.Visibility = Visibility.Hidden;
+
+                    BtnChangeGrid.Tag = "Debt";
+                    BtnChangeGrid.Content = "Debts";
+
+                    BtnEnterPositive.Content = "Enter Income";
+                    BtnEnterPositive.Tag = "Account";
+                    BtnEnterNegative.Content = "Enter Expense";
+                    BtnEnterNegative.Tag = "Account";
+
+                    DDLOptions.ItemsSource = Profile.ListAccounts();
                     break;
-                case OverviewTable.Income:
-                    LblTitle.Content = "Income";
-                    BtnEnterRecord.Content = "Enter Income";
-                    BtnEnterRecord.Tag = "Income";
+                case OverviewTable.Debts:
+                    LblTitle.Content = "Debts";
+                    BtnNewOption.Content = "New Debt";
+                    OpenTable = OverviewTable.Debts;
 
-                    GvSavings.Visibility = Visibility.Hidden;
-                    GvIncome.Visibility = Visibility.Visible;
-                    GvExpenses.Visibility = Visibility.Hidden;
+                    GvAccounts.Visibility = Visibility.Hidden;
+                    GvDebts.Visibility = Visibility.Visible;
 
-                    BtnChangeGrid.Tag = "Expense";
-                    BtnChangeGrid.Content = "Expense";
-                    BtnEnterRecord.Content = "Enter Income";
-                    break;
-                case OverviewTable.Expense:
-                    LblTitle.Content = "Expense";
-                    BtnEnterRecord.Content = "Enter Expense";
-                    BtnEnterRecord.Tag = "Expense";
+                    BtnChangeGrid.Tag = "Account";
+                    BtnChangeGrid.Content = "Accounts";
 
-                    GvSavings.Visibility = Visibility.Hidden;
-                    GvIncome.Visibility = Visibility.Hidden;
-                    GvExpenses.Visibility = Visibility.Visible;
+                    BtnEnterPositive.Content = "Enter Payment";
+                    BtnEnterPositive.Tag = "Debt";
+                    BtnEnterNegative.Content = "Update Interest";
+                    BtnEnterNegative.Tag = "Debt";
 
-                    BtnChangeGrid.Tag = "Savings";
-                    BtnChangeGrid.Content = "Savings";
-                    break;
-                case OverviewTable.Savings:
-                    LblTitle.Content = "Savings";
-                    BtnEnterRecord.Content = "Enter Savings";
-                    BtnEnterRecord.Tag = "Savings";
-
-                    GvSavings.Visibility = Visibility.Visible;
-                    GvIncome.Visibility = Visibility.Hidden;
-                    GvExpenses.Visibility = Visibility.Hidden;
-
-                    BtnChangeGrid.Tag = "Income";
-                    BtnChangeGrid.Content = "Income";
+                    DDLOptions.ItemsSource = Profile.ListDebts();
                     break;
             }
         }
 
         private void BtnChangeGrid_Click(object sender, RoutedEventArgs e)
         {
-            switch (BtnChangeGrid.Tag)
+            switch (BtnChangeGrid.Tag.ToString())
             {
-                case "Expense":
-                    //Change the grid to the expense report
-                    //Update the control text to represent the expense related items
-                    LblTitle.Content = "Expense";
-                    BtnEnterRecord.Content = "Enter Expense";
-                    BtnEnterRecord.Tag = "Expense";
-
-                    //Hide the non-expense Grids and show the expense grid
-                    GvSavings.Visibility = Visibility.Hidden;
-                    GvIncome.Visibility = Visibility.Hidden;
-                    GvExpenses.Visibility = Visibility.Visible;
-
-                    //Set the change grid button to load savings next
-                    BtnChangeGrid.Tag = "Savings";
-                    BtnChangeGrid.Content = "Savings";
-
+                case "Debt":
+                    ChangeGrids(OverviewTable.Debts);
                     break;
-                case "Income":
-                    //Change the grid to the income report
-                    LblTitle.Content = "Income";
-                    BtnEnterRecord.Content = "Enter Income";
-                    BtnEnterRecord.Tag = "Income";
-
-                    GvSavings.Visibility = Visibility.Hidden;
-                    GvIncome.Visibility = Visibility.Visible;
-                    GvExpenses.Visibility = Visibility.Hidden;
-
-                    BtnChangeGrid.Tag = "Expense";
-                    BtnChangeGrid.Content = "Expense";
-                    BtnEnterRecord.Content = "Enter Income";
+                case "Account":
+                    ChangeGrids(OverviewTable.Accounts);
                     break;
-                case "Savings":
-                    //Change the grid to the savings report
-                    //Update the control text to represent the savings related items
-                    LblTitle.Content = "Savings";
-                    BtnEnterRecord.Content = "Enter Savings";
-                    BtnEnterRecord.Tag = "Savings";
-
-                    //Hide the non-savings grids and show the savings grid
-                    GvSavings.Visibility = Visibility.Visible;
-                    GvIncome.Visibility = Visibility.Hidden;
-                    GvExpenses.Visibility = Visibility.Hidden;
-
-
-                    //Set the change grid button to load income next
-                    BtnChangeGrid.Tag = "Income";
-                    BtnChangeGrid.Content = "Income";
-                    break;
-                default:
-                    throw new Exception("Unknown grid target");
             }
         }
 
-        private void BtnEnterRecord_Click(object sender, RoutedEventArgs e)
+        private void BtnEnterPositive_Click(object sender, RoutedEventArgs e)
         {
-            if (Profile is null) { MessageBox.Show("Select a profile"); return; }
-
-            switch (BtnEnterRecord.Tag)
+            if (DDLOptions.SelectedIndex == -1 || DDLOptions.SelectedIndex == 0)
             {
-                case "Expense":
-                    var expenseFound = false;
-
-                    foreach (Window check in Application.Current.Windows)
-                    {
-                        if (check.GetType() == typeof(ExpenseEntryWindow))
-                        {
-                            check.Show();
-                            check.Focus();
-                            expenseFound = true;
-                        }
-                    }
-
-                    if (!expenseFound)
-                    {
-                        var window = new ExpenseEntryWindow(Profile);
-                        window.Show();
-                    }
-
-                    break;
-                case "Income":
-                    var incomeFound = false;
-
-                    foreach (Window check in Application.Current.Windows)
-                    {
-                        if (check.GetType() == typeof(IncomeEntryWindow))
-                        {
-                            check.Show();
-                            check.Focus();
-                            incomeFound = true;
-                        }
-                    }
-
-                    if (!incomeFound)
-                    {
-                        var window = new IncomeEntryWindow(Profile);
-                        window.Show();
-                    }
-
-                    break;
-                case "Savings":
-                    MessageBox.Show("Broken");
-
-                    break;
+                MessageBox.Show("Must select an account or debt");
+                return;
             }
+
+            if (OpenTable == OverviewTable.Accounts)
+            {
+                var account = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
+
+                var window = new IncomeEntryWindow(account, Profile);
+
+                window.Show();
+            }
+            else if (OpenTable == OverviewTable.Debts)
+            {
+                var account = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
+
+                var window = new ExpenseEntryWindow(account, Profile);
+
+                window.Show();
+            }
+            else { throw new Exception("Unknown Table"); }
+        }
+
+        private void BtnEnterNegative_Click(object sender, RoutedEventArgs e)
+        {
+            if (DDLOptions.SelectedIndex == -1 || DDLOptions.SelectedIndex == 0)
+            {
+                MessageBox.Show("Must select an account or debt");
+                return;
+            }
+
+            if (OpenTable == OverviewTable.Accounts)
+            {
+
+            }
+            else if (OpenTable == OverviewTable.Debts)
+            {
+
+            }
+            else { throw new Exception("Unknown Table"); }
         }
 
         private void BtnRefreshGrids_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Broken");
+        }
+
+        private void BtnNewOption_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

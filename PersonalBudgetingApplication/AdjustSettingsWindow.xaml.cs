@@ -24,9 +24,11 @@ namespace PersonalBudgetingApplication
         {
             InitializeComponent();
 
-            Common.PopulateProfileList(DDLDefaultProfile);
+            var populater = new ListPopulaters();
 
-            PopulateOverviewTableList(DDLDefaultOverviewTable);
+            populater.PopulateProfileList(DDLDefaultProfile);
+
+            populater.PopulateOverviewTableList(DDLDefaultOverviewTable);
 
             var applied = SettingSerialization.ReadSettings();
 
@@ -56,13 +58,6 @@ namespace PersonalBudgetingApplication
                     }
                 }
             }
-        }
-
-        private void PopulateOverviewTableList(ComboBox target)
-        {
-            var binder = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" }, new ComboBoxItem() { Content = "Income", Tag = "0" }, new ComboBoxItem() { Content = "Expense", Tag = "1" }, new ComboBoxItem() { Content = "Savings", Tag = "2" } };
-
-            target.ItemsSource = binder;
         }
 
         private void BtnCancelSettings_Click(object sender, RoutedEventArgs e)

@@ -5,6 +5,8 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace PersonalBudgetingApplication.Classes
 {
@@ -13,7 +15,7 @@ namespace PersonalBudgetingApplication.Classes
     /// </summary>
     public class Debt
     {
-        public int ID { get; set; }
+        public int ID { get; set; } = -1;
 
         public int ProfileID { get; set; }
 
@@ -33,6 +35,7 @@ namespace PersonalBudgetingApplication.Classes
 
         public DateTime RecordDate { get; set; }
 
+        [XmlIgnore]
         public List<DebtPayment> Payments
         {
             get
@@ -41,6 +44,7 @@ namespace PersonalBudgetingApplication.Classes
             }
         }
 
+        [XmlIgnore]
         public List<DebtInterest> DebtInterests
         {
             get

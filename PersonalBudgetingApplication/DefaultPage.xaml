@@ -18,29 +18,31 @@
             <ColumnDefinition Width="6*"></ColumnDefinition>
             <ColumnDefinition Width="12*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Name="LblTitle" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="0" Content="Income" VerticalAlignment="Center" FontSize="50" FontWeight="Medium"></Label>
-        <DataGrid Name="GvExpenses" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MinHeight="150" MaxWidth="500" MaxHeight="250" Visibility="Hidden" HorizontalScrollBarVisibility="Hidden" IsReadOnly="True">
+        <Label Name="LblTitle" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="0" Content="Accounts" VerticalAlignment="Center" FontSize="50" FontWeight="Medium"></Label>
+        <DataGrid Name="GvAccounts" AutoGenerateColumns="False" IsReadOnly="True" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="10*" Header="Date" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
-                <DataGridTextColumn Width="10*" Header="Type" Binding="{Binding Path=Type}"></DataGridTextColumn>
-                <DataGridTextColumn Width="10*" Header="Amount" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Balance" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Income Amount" Binding="{Binding Path=IncomeAmount, StringFormat=C}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Income Type" Binding="{Binding Path=IncomeType}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Expense Amount" Binding="{Binding Path=ExpenseAmount, StringFormat=C}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Expense Type" Binding="{Binding Path=ExpenseType}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="GvIncome" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MinHeight="150" MaxWidth="500" MaxHeight="250" HorizontalScrollBarVisibility="Hidden" IsReadOnly="True">
+        <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="10*" Header="Date" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
-                <DataGridTextColumn Width="10*" Header="Type" Binding="{Binding Path=Type}"></DataGridTextColumn>
-                <DataGridTextColumn Width="10*" Header="Amount" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Principal}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Intrest Accrued" Binding="{Binding Path=InterestAccrued}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Payment Made" Binding="{Binding Path=PaymentMade}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="GvSavings" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" MaxWidth="500" MaxHeight="250" MinHeight="150" HorizontalScrollBarVisibility="Hidden" Visibility="Hidden" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="10*"  Header="Date" Binding="{Binding Path=Date, StringFormat=d}"></DataGridTextColumn>
-                <DataGridTextColumn Width="10*" Header="Amount" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ComboBox Name="DDLOptions" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="100,0,0,0"></ComboBox>
+        <Button Name="BtnNewOption" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="90" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="New Account" Click="BtnNewOption_Click"></Button>
         <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="30" Content="Refresh" Name="BtnRefreshGrids" Click="BtnRefreshGrids_Click"></Button>
-        <Button Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Expense" Name="BtnChangeGrid" FontSize="20" Padding="5" Click="BtnChangeGrid_Click" ToolTip="Change Grid" Tag="Expense"></Button>
-        <Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enter Income" Name="BtnEnterRecord" FontSize="20" Padding="5" Click="BtnEnterRecord_Click" Tag="Income"></Button>
+        
+        <Button Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Debts" Name="BtnChangeGrid" FontSize="20" Padding="5" Click="BtnChangeGrid_Click" ToolTip="Change Grid" Tag="Debt"></Button>
+        <Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enter Income" Name="BtnEnterPositive" FontSize="20" Margin="0,0,0,50" Padding="5" Click="BtnEnterPositive_Click" Tag="Account"></Button>
+        <Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enter Expense" Name="BtnEnterNegative" FontSize="20" Margin="0,50,0,0" Padding="5" Click="BtnEnterNegative_Click" Tag="Account"></Button>
     </Grid>
 </Page>

@@ -16,7 +16,7 @@
         <Label Content="Overview" Name="LblTitle" Grid.Row="0" FontSize="32" FontWeight="Bold" ContentStringFormat="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Grid Name="NavBar" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
             <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="236.5,0,0,0" VerticalAlignment="Center" Height="36" Width="66" Grid.Column="1"/>
-            <ComboBox Name="DDLProfileList" ToolTip="Select a profile" SelectionChanged="DDLProfileList_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="307.5,0,0,0" VerticalAlignment="Center" Width="120" Height="30" Grid.Column="1" />
+            <ComboBox Name="DDLProfileList" ToolTip="Select a profile"  SelectionChanged="DDLProfileList_SelectionChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="307.5,0,0,0" VerticalAlignment="Center" Width="120" Height="30" Grid.Column="1"></ComboBox>
             <Button Name="BtnLockProfile" Height="20" Width="20" BorderThickness="0" ToolTip="Lock Selected Profile" Background="Transparent" Margin="0,0,650,0" Click="BtnLockProfile_Click">
                 <Image Name="ImgLockButton" Source="img/Basicons/unlocked-padlock.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Tag="Unlocked"></Image>
             </Button>
@@ -29,6 +29,6 @@
         <Button Content="Hide" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Width="97" Height="30" Name="NavBarToggle" Click="NavBarToggle_Click"/>
         <Button Content="Change Page" Grid.Row="3" Name="BtnChangePage" Click="BtnChangePage_Click" HorizontalAlignment="Left" Margin="90,0,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="SQLite Command" Grid.Row="3" HorizontalAlignment="Left" Margin="262,0,0,0" VerticalAlignment="Top" Width="150" Height="50" Name="BtnExecuteCommands" Click="BtnExecuteCommands_Click"/>
-        <ComboBox Name="DDLTypeTest" Width="100" Height="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></ComboBox>
+        
     </Grid>
 </Window>

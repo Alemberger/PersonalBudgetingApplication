@@ -14,12 +14,6 @@ namespace PersonalBudgetingApplication.Classes
 {
     class Common
     {
-        public static SQLiteConnection CreateConnection()
-        {
-            //Sets the database connection
-            var conn = new SQLiteConnection("Data Source = BudgetDB.db;Version=3;");
-            return conn;
-        }
 
         public static bool CheckAmountInput(string amount)
         {

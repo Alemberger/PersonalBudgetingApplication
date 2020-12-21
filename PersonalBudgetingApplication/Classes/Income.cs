@@ -10,7 +10,7 @@ namespace PersonalBudgetingApplication.Classes
 {
     public class Income
     {
-        public int ID { get; set; }
+        public int ID { get; set; } = -1;
 
         public int AccountID { get; set; }
 

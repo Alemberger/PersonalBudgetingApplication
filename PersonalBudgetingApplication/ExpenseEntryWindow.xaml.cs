@@ -74,7 +74,7 @@ namespace PersonalBudgetingApplication
 
             var entry = new Expense() { Amount = Convert.ToDouble(amount), Type = (ExpenseType)Convert.ToInt32(((ComboBoxItem)DDLExpenseType.SelectedItem).Tag), Date = DateTime.Parse(TbExpenseDate.Text) };
 
-            using (var conn = Common.CreateConnection())
+            using (var conn = DataAccess.EstablishConnection())
             {
                 var cmd = conn.CreateCommand();
                 try

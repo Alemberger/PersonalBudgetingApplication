@@ -29,7 +29,7 @@ namespace PersonalBudgetingApplication
 
         private void BtnCreateProfile_Click(object sender, RoutedEventArgs e)
         {
-            var conn = Common.CreateConnection();
+            var conn = DataAccess.EstablishConnection();
 
             var cmd = conn.CreateCommand();
 

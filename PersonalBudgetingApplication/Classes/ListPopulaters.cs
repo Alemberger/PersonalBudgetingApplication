@@ -11,6 +11,8 @@ namespace PersonalBudgetingApplication.Classes
 {
     class ListPopulaters : DataAccess
     {
+        public ListPopulaters() { }
+
         public void PopulateProfileList(ComboBox target)
         {
             var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
@@ -113,6 +115,18 @@ namespace PersonalBudgetingApplication.Classes
                     read.Close();
                 }
                 finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            target.ItemsSource = results;
+        }
+
+        public void PopulateOverviewTableList(ComboBox target)
+        {
+            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            foreach (var item in Enum.GetValues(typeof(OverviewTable)))
+            {
+                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
             }
 
             target.ItemsSource = results;

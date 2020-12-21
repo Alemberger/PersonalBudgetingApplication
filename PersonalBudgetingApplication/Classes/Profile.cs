@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -15,7 +16,7 @@ namespace PersonalBudgetingApplication.Classes
     /// </summary>
     public class Profile
     {
-        public int ProfileID { get; set; }
+        public int ProfileID { get; set; } = -1;
 
         [XmlAttribute("Name")]
         public string ProfileName { get; set; }
@@ -55,7 +56,7 @@ namespace PersonalBudgetingApplication.Classes
         private int GetProfileID(string profileName)
         {
             int id = -1;
-            using (var conn = Common.CreateConnection())
+            using (var conn = DataAccess.EstablishConnection())
             {
                 var cmd = conn.CreateCommand();
                 try
@@ -82,7 +83,7 @@ namespace PersonalBudgetingApplication.Classes
         private string GetProfileName(int profileID)
         {
             string name = "";
-            using (var conn = Common.CreateConnection())
+            using (var conn = DataAccess.EstablishConnection())
             {
                 var cmd = conn.CreateCommand();
                 try
@@ -164,6 +165,48 @@ namespace PersonalBudgetingApplication.Classes
             }
 
             return debts;
+        }
+
+        public List<ComboBoxItem> ListAccounts()
+        {
+            var items = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            List<Account> accounts = new List<Account>();
+            try
+            {
+                accounts = Accounts;
+            }
+            catch (NullReferenceException) { return items; }
+
+            for (int i = 0; i < accounts.Count; i++)
+            {
+                var account = accounts[i];
+
+                items.Add(new ComboBoxItem() { Content = account.Name, Tag = account.ID.ToString() });
+            }
+
+            return items;
+        }
+
+        public List<ComboBoxItem> ListDebts()
+        {
+            var items = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            List<Debt> debts = new List<Debt>();
+            try
+            {
+                debts = Debts;
+            }
+            catch (NullReferenceException) { return items; }
+
+            for (int i = 0; i < debts.Count; i++)
+            {
+                var debt = debts[i];
+
+                items.Add(new ComboBoxItem() { Content = debt.Name, Tag = debt.ID.ToString() });
+            }
+
+            return items;
         }
     }
 }

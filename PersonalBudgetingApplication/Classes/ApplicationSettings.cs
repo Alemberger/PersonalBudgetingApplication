@@ -28,9 +28,8 @@ namespace PersonalBudgetingApplication.Classes
 
     public enum OverviewTable
     {
-        Income = 0,
-        Expense = 1,
-        Savings = 2,
-        None = 3
+        None = 0,
+        Accounts,
+        Debts
     }
 }

@@ -78,7 +78,7 @@ namespace PersonalBudgetingApplication
             var entry = new Income() { Amount = Convert.ToDouble(amount), Type = (IncomeType)((ComboBoxItem)DDLIncomeType.SelectedItem).Content, Date = DateTime.Parse(TbIncomeDate.Text) } ;
 
             //Submit the record
-            using (var conn = Common.CreateConnection())
+            using (var conn = DataAccess.EstablishConnection())
             {
                 var cmd = conn.CreateCommand();
                 try

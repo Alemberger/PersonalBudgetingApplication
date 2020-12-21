@@ -18,7 +18,7 @@ namespace PersonalBudgetingApplication.Classes
     /// </summary>
     public class Account
     {
-        public int ID { get; set; }
+        public int ID { get; set; } = -1;
 
         public int ProfileID { get; set; }
 
