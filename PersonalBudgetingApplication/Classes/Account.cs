@@ -148,5 +148,41 @@ namespace PersonalBudgetingApplication.Classes
 
             return expenses;
         }
+
+        public bool SubmitAccount()
+        {
+            try
+            {
+                if (ProfileID < 1) { return false; }
+                if (Name == "") { return false; }
+                if (Amount < 0.00) { return false; }
+                if (LastUpdateDate < DateTime.Parse("2000/01/01")) { return false; }
+                if (RecordBy == "") { return false; }
+                if (RecordDate < DateTime.Parse("2000/01/01")) { return false; }
+            }
+            catch (NullReferenceException) { return false; }
+
+            using (var conn = DataAccess.EstablishConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "INSERT INTO tblAccounts (ProfileID, Acc_Name, Acc_Amount, Acc_LastUpdateDate, RecordBy, RecordDate) VALUES (@ProfileID, @Name, @Amount, @LastUpdateDate, @RecordBy, @RecordDate)";
+                    cmd.Parameters.Add("@ProfileID", DbType.Int32).Value = ProfileID;
+                    cmd.Parameters.Add("@Name", DbType.String).Value = Name;
+                    cmd.Parameters.Add("@Amount", DbType.Double).Value = Amount;
+                    cmd.Parameters.Add("@LastUpdateDate", DbType.String).Value = LastUpdateDate.ToString("MM/dd/yyyy");
+                    cmd.Parameters.Add("@RecordBy", DbType.String).Value = RecordBy;
+                    cmd.Parameters.Add("@RecordDate", DbType.String).Value = RecordDate.ToString("MM/dd/yyyy HH:mm");
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    cmd.ExecuteNonQuery();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return true;
+        }
     }
 }

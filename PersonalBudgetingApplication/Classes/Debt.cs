@@ -45,7 +45,7 @@ namespace PersonalBudgetingApplication.Classes
         }
 
         [XmlIgnore]
-        public List<DebtInterest> DebtInterests
+        public List<DebtIncrease> DebtInterests
         {
             get
             {
@@ -85,16 +85,16 @@ namespace PersonalBudgetingApplication.Classes
             return payments;
         }
 
-        private List<DebtInterest> GetDebtInterests(int debtId)
+        private List<DebtIncrease> GetDebtInterests(int debtId)
         {
-            var debtInterests = new List<DebtInterest>();
+            var debtInterests = new List<DebtIncrease>();
 
             using (var conn = DataAccess.EstablishConnection())
             {
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "SELECT InterestID, Int_Amount, Int_Date, recordBy, RecordDate FROM tblDebtInterests WHERE DebtID = @DebtID";
+                    cmd.CommandText = "SELECT InterestID, Inc_Amount, Inc_Date, Inc_Type, recordBy, RecordDate FROM tblDebtIncreases WHERE DebtID = @DebtID";
                     cmd.Parameters.AddWithValue("@DebtID", debtId);
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
@@ -103,7 +103,7 @@ namespace PersonalBudgetingApplication.Classes
 
                     while (read.Read())
                     {
-                        var interest = new DebtInterest() { ID = read.GetInt32(0), DebtID = debtId, Amount = read.GetDouble(1), Date = DateTime.Parse(read.GetString(2)), RecordBy = read.GetString(3), RecordDate = DateTime.Parse(read.GetString(4)) };
+                        var interest = new DebtIncrease() { ID = read.GetInt32(0), DebtID = debtId, Amount = read.GetDouble(1), Date = DateTime.Parse(read.GetString(2)), RecordBy = read.GetString(3), RecordDate = DateTime.Parse(read.GetString(4)) };
 
                         debtInterests.Add(interest);
                     }

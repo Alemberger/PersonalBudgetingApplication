@@ -140,7 +140,7 @@ namespace PersonalBudgetingApplication
 
             test = (time - (time % compounds)) / compounds;
 
-            MessageBox.Show("Nothing Done");
+            MessageBox.Show("No Command");
         }
 
         private void DDLProfileList_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -98,23 +98,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccountEntryWindow.xaml.cs">
+      <DependentUpon>AccountEntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdjustSettingsWindow.xaml.cs">
       <DependentUpon>AdjustSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Account.cs" />
+    <Compile Include="Classes\AccountOverviewItem.cs" />
     <Compile Include="Classes\AccountOverviewTable.cs" />
     <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\DataAccess.cs" />
     <Compile Include="Classes\DBTableCreator.cs" />
     <Compile Include="Classes\Debt.cs" />
-    <Compile Include="Classes\DebtInterest.cs" />
+    <Compile Include="Classes\DebtIncrease.cs" />
     <Compile Include="Classes\DebtPayment.cs" />
     <Compile Include="Classes\Expense.cs" />
     <Compile Include="Classes\Income.cs" />
     <Compile Include="Classes\ListPopulaters.cs" />
     <Compile Include="Classes\Profile.cs" />
     <Compile Include="Classes\SettingSerialization.cs" />
+    <Compile Include="DebtEntryWindow.xaml.cs">
+      <DependentUpon>DebtEntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExpenseEntryWindow.xaml.cs">
       <DependentUpon>ExpenseEntryWindow.xaml</DependentUpon>
     </Compile>
@@ -130,7 +137,15 @@
     <Compile Include="StarterPage.xaml.cs">
       <DependentUpon>StarterPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="AccountEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdjustSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DebtEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -22,7 +22,7 @@
         <DataGrid Name="GvAccounts" AutoGenerateColumns="False" IsReadOnly="True" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Balance" Binding="{Binding Path=Amount, StringFormat=C}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Balance" Binding="{Binding Path=Balance, StringFormat=C}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Income Amount" Binding="{Binding Path=IncomeAmount, StringFormat=C}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Income Type" Binding="{Binding Path=IncomeType}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Expense Amount" Binding="{Binding Path=ExpenseAmount, StringFormat=C}"></DataGridTextColumn>

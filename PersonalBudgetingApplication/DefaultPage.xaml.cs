@@ -153,7 +153,18 @@ namespace PersonalBudgetingApplication
 
         private void BtnNewOption_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (OpenTable == OverviewTable.Accounts)
+            {
+                var window = new AccountEntryWindow(Profile);
+
+                window.Show();
+            }
+            else if (OpenTable == OverviewTable.Debts)
+            {
+                var window = new DebtEntryWindow(Profile);
+
+                window.Show();
+            }
         }
     }
 }

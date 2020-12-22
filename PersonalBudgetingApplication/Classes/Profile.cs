@@ -125,7 +125,7 @@ namespace PersonalBudgetingApplication.Classes
 
                     while (read.Read())
                     {
-                        var account = new Account() { ID = read.GetInt32(0), ProfileID = profileId, Name = read.GetString(1), Amount = read.GetDouble(2), LastUpdateDate = DateTime.Parse(read.GetString(3)), RecordBy = read.GetString(4), RecordDate = DateTime.Parse(read.GetString(4)) };
+                        var account = new Account() { ID = read.GetInt32(0), ProfileID = profileId, Name = read.GetString(1), Amount = read.GetDouble(2), LastUpdateDate = DateTime.Parse(read.GetString(3)), RecordBy = read.GetString(4), RecordDate = DateTime.Parse(read.GetString(5)) };
 
                         accounts.Add(account);
                     }
