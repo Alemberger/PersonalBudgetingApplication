@@ -29,6 +29,18 @@ namespace PersonalBudgetingApplication.Classes
             GetDebtPayment(paymentId);
         }
 
+        public DebtPayment Transfer()
+        {
+            return new DebtPayment(ID)
+            {
+                DebtID = DebtID,
+                Amount = Amount,
+                Date = Date,
+                RecordBy = RecordBy,
+                RecordDate = RecordDate
+            };
+        }
+
         private void GetDebtPayment(int paymentId)
         {
             using (var conn = DataAccess.EstablishConnection())

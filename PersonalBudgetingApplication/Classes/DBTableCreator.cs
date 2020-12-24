@@ -85,7 +85,7 @@ namespace PersonalBudgetingApplication.Classes
 
         private void CreateIncreaseTable()
         {
-            var query = "CREATE TALBE IF NOT EXISTS tblDebtIncreases (IncreaseID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DebtID INTEGER NOT NULL, Inc_Amount REAL NOT NULL, Inc_Date TEXT NOT NULL, Inc_Type INTEGER NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
+            var query = "CREATE TABLE IF NOT EXISTS tblDebtIncreases (IncreaseID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DebtID INTEGER NOT NULL, Inc_Amount REAL NOT NULL, Inc_Date TEXT NOT NULL, Inc_Type INTEGER NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
 
             ExecuteNonQuery(query);
         }

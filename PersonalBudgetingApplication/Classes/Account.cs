@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Serialization;
+using PersonalBudgetingApplication.Classes.Sorting;
 
 namespace PersonalBudgetingApplication.Classes
 {
@@ -66,7 +67,7 @@ namespace PersonalBudgetingApplication.Classes
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "SELECT AccoutID, ProfileID, Acc_Name, Acc_Amount, Acc_LastUpdateDate, RecordBy, RecordDate FROM tblAccounts WHERE AccountID = @AccountID";
+                    cmd.CommandText = "SELECT AccountID, ProfileID, Acc_Name, Acc_Amount, Acc_LastUpdateDate, RecordBy, RecordDate FROM tblAccounts WHERE AccountID = @AccountID";
                     cmd.Parameters.AddWithValue("@AccountID", accountId);
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
@@ -81,12 +82,145 @@ namespace PersonalBudgetingApplication.Classes
                         Amount = read.GetDouble(3);
                         LastUpdateDate = DateTime.Parse(read.GetString(4));
                         RecordBy = read.GetString(5);
-                        RecordDate = DateTime.Parse(read.GetString(5));
+                        RecordDate = DateTime.Parse(read.GetString(6));
                     }
                     read.Close();
                 }
                 finally { conn.Close(); cmd.Dispose(); }
             }
+        }
+
+        public bool SubmitAccountRecord()
+        {
+            //Validation
+            try
+            {
+                if (ProfileID < 1) { return false; }
+                Amount.ToString();
+                if (Name == "") { return false; }
+                if (LastUpdateDate < new DateTime(2000, 1, 1)) { return false; }
+                if (RecordBy == "") { return false; }
+                if (RecordDate < new DateTime(2000, 1, 1)) { return false; }
+            }
+            catch (NullReferenceException) { return false; }
+
+            using (var conn = DataAccess.EstablishConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "INSERT INTO tblAccounts (ProfileID, Acc_Name, Acc_Amount, Acc_LastUpdateDate, RecordBy, RecordDate) VALUES (@ProfileID, @Name, @Amount, @LastUpdateDate, @RecordBy, @RecordDate)";
+                    cmd.Parameters.Add("@ProfileID", DbType.Int32).Value = ProfileID;
+                    cmd.Parameters.Add("@Name", DbType.String).Value = Name;
+                    cmd.Parameters.Add("@Amount", DbType.Double).Value = Amount;
+                    cmd.Parameters.Add("@LastUpdateDate", DbType.String).Value = LastUpdateDate.ToString("MM/dd/yyyy");
+                    cmd.Parameters.Add("@RecordBy", DbType.String).Value = RecordBy;
+                    cmd.Parameters.Add("@RecordDate", DbType.String).Value = RecordDate.ToString("yyyy-MM-dd HH:mm");
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    cmd.ExecuteNonQuery();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return true;
+        }
+
+        public bool UpdateAccountBalance(double change, DateTime updateDate)
+        {
+            try
+            {
+                if (ID < 1) { return false; }
+                Amount.ToString();
+            }
+            catch (NullReferenceException) { return false; }
+
+            var newAmount = Amount + change;
+
+            if (updateDate > LastUpdateDate)
+            {
+                LastUpdateDate = updateDate;
+            }
+
+            using (var conn = DataAccess.EstablishConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "UPDATE tblAccounts SET Acc_Amount = @Amount, Acc_LastUpdateDate = @LastUpdateDate, RecordBy = @RecordBy, RecordDate = @RecordDate WHERE AccountID = @AccountID";
+                    cmd.Parameters.Add("@Amount", DbType.Double).Value = newAmount;
+                    cmd.Parameters.Add("@LastUpdateDate", DbType.String).Value = LastUpdateDate.ToString("MM/dd/yyyy");
+                    cmd.Parameters.Add("@RecordBy", DbType.String).Value = RecordBy;
+                    cmd.Parameters.Add("@RecordDate", DbType.String).Value = RecordDate.ToString("yyyy-MM-dd HH:mm");
+                    cmd.Parameters.Add("@AccountID", DbType.Int32).Value = ID;
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    cmd.ExecuteNonQuery();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return true;
+        }
+
+        public DateTime GetEarliestDate()
+        {
+            var date = LastUpdateDate;
+
+            foreach (Income record in Incomes)
+            {
+                if (record.Date.Date < date.Date)
+                {
+                    date = record.Date;
+                }
+            }
+
+            foreach (Expense record in Expenses)
+            {
+                if (record.Date.Date < date.Date)
+                {
+                    date = record.Date;
+                }
+            }
+
+            return date;
+        }
+
+        public int GetDateRangeInDays(DateTime earlyDate, DateTime lateDate)
+        {
+            return Common.CalculateDifferenceInDays(earlyDate, lateDate);
+        }
+
+        public List<Income> GetIncomesforDateList(DateTime date)
+        {
+            var dateIncomes = new List<Income>();
+
+            foreach (Income item in Incomes)
+            {
+                if (date.Date == item.Date.Date)
+                {
+                    dateIncomes.Add(item.Transfer());
+                }
+            }
+
+            return dateIncomes;
+        }
+
+        public List<Expense> GetExpensesforDateList(DateTime date)
+        {
+            var dateExpenses = new List<Expense>();
+
+            foreach (Expense item in Expenses)
+            {
+                if (date.Date == item.Date.Date)
+                {
+                    dateExpenses.Add(item.Transfer());
+                }
+            }
+
+            return dateExpenses;
         }
 
         private List<Income> GetIncomes(int accountId)
@@ -115,6 +249,10 @@ namespace PersonalBudgetingApplication.Classes
                 }
                 finally { conn.Close(); cmd.Dispose(); }
             }
+
+            var sorter = new IncomeSorter(incomes);
+
+            incomes = sorter.SortByDateDescending();
 
             return incomes;
         }

@@ -19,21 +19,22 @@
             <ColumnDefinition Width="12*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Name="LblTitle" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="0" Content="Accounts" VerticalAlignment="Center" FontSize="50" FontWeight="Medium"></Label>
-        <DataGrid Name="GvAccounts" AutoGenerateColumns="False" IsReadOnly="True" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+        <DataGrid Name="GvAccounts" AutoGenerateColumns="False" IsReadOnly="True" VerticalAlignment="Top" Margin="0,50,0,50" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=DateString}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Balance" Binding="{Binding Path=Balance, StringFormat=C}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Income Amount" Binding="{Binding Path=IncomeAmount, StringFormat=C}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Income Type" Binding="{Binding Path=IncomeType}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Income Type" Binding="{Binding Path=IncomeTypeName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Expense Amount" Binding="{Binding Path=ExpenseAmount, StringFormat=C}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Expense Type" Binding="{Binding Path=ExpenseType}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Expense Type" Binding="{Binding Path=ExpenseTypeName}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=DateString}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Path=Principal}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Intrest Accrued" Binding="{Binding Path=InterestAccrued}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Intrest Accrued" Binding="{Binding Path=IncreaseAmount}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Increase Type" Binding="{Binding Path=IncreaseTypeName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Payment Made" Binding="{Binding Path=PaymentMade}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

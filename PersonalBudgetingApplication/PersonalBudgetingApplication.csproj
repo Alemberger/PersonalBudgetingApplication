@@ -113,12 +113,16 @@
     <Compile Include="Classes\DBTableCreator.cs" />
     <Compile Include="Classes\Debt.cs" />
     <Compile Include="Classes\DebtIncrease.cs" />
+    <Compile Include="Classes\DebtOverviewItem.cs" />
+    <Compile Include="Classes\DebtOverviewTable.cs" />
     <Compile Include="Classes\DebtPayment.cs" />
     <Compile Include="Classes\Expense.cs" />
     <Compile Include="Classes\Income.cs" />
+    <Compile Include="Classes\Sorting\IncomeSorter.cs" />
     <Compile Include="Classes\ListPopulaters.cs" />
     <Compile Include="Classes\Profile.cs" />
     <Compile Include="Classes\SettingSerialization.cs" />
+    <Compile Include="Classes\Sorting\Sorter.cs" />
     <Compile Include="DebtEntryWindow.xaml.cs">
       <DependentUpon>DebtEntryWindow.xaml</DependentUpon>
     </Compile>

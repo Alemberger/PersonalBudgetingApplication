@@ -75,26 +75,12 @@ namespace PersonalBudgetingApplication
             Regex check = new Regex("^[0-9]+\\.[0-9]{2}$");
             if (!check.IsMatch(amount)) { MessageBox.Show("Invalid amount provided. Please provide in format ###.##"); return; }
 
-            var entry = new Income() { Amount = Convert.ToDouble(amount), Type = (IncomeType)((ComboBoxItem)DDLIncomeType.SelectedItem).Content, Date = DateTime.Parse(TbIncomeDate.Text) } ;
+            var entry = new Income() { AccountID = Account.ID, Amount = Convert.ToDouble(amount), Type = (IncomeType)Convert.ToInt32(((ComboBoxItem)DDLIncomeType.SelectedItem).Tag), Date = DateTime.Parse(TbIncomeDate.Text), RecordBy = Profile.ProfileName, RecordDate = DateTime.Now } ;
 
             //Submit the record
-            using (var conn = DataAccess.EstablishConnection())
-            {
-                var cmd = conn.CreateCommand();
-                try
-                {
-                    cmd.CommandText = "INSERT INTO tblIncomes (AccountID, Inc_Amount, Inc_Type, Inc_Date, RecordBy, RecordDate) VALUES (@AccountID, @Amount, @Type, @Date, @RecordBy, @RecordDate)";
-                    cmd.Parameters.AddWithValue("@ProfileID", Account.ID);
-                    cmd.Parameters.AddWithValue("@Amount", entry.Amount);
-                    cmd.Parameters.AddWithValue("@Type", (int)entry.Type);
-                    cmd.Parameters.AddWithValue("@Date", entry.Date);
+            entry.SubmitRecord();
 
-                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
-
-                    cmd.ExecuteNonQuery();
-                }
-                finally { conn.Close(); cmd.Dispose(); }
-            }
+            Account.UpdateAccountBalance(entry.Amount, entry.Date);
 
             MessageBox.Show("Income entry submitted");
 

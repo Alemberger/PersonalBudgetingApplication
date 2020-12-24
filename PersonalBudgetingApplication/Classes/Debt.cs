@@ -40,22 +40,80 @@ namespace PersonalBudgetingApplication.Classes
         {
             get
             {
-                return GetDebtPayments(ID);
+                return GetDebtPayments();
             }
         }
 
         [XmlIgnore]
-        public List<DebtIncrease> DebtInterests
+        public List<DebtIncrease> DebtIncreases
         {
             get
             {
-                return GetDebtInterests(ID);
+                return GetDebtIncreases();
             }
         }
 
         public Debt() { }
 
-        private List<DebtPayment> GetDebtPayments(int debtId)
+        public DateTime GetEarliestDate()
+        {
+            var date = LastUpdateDate;
+
+            foreach (DebtIncrease item in DebtIncreases)
+            {
+                if (item.Date.Date < date.Date)
+                {
+                    date = item.Date;
+                }
+            }
+
+            foreach (DebtPayment item in Payments)
+            {
+                if (item.Date.Date < date.Date)
+                {
+                    date = item.Date;
+                }
+            }
+
+            return date;
+        }
+
+        public List<DebtPayment> GetDebtPaymentsForDate(DateTime date)
+        {
+            var datePayments = new List<DebtPayment>();
+
+            foreach (DebtPayment item in Payments)
+            {
+                if (item.Date.Date == date.Date)
+                {
+                    datePayments.Add(item.Transfer());
+                }
+            }
+
+            return datePayments;
+        }
+
+        public List<DebtIncrease> GetDebtIncreasesForDate(DateTime date)
+        {
+            var dateIncreases = new List<DebtIncrease>();
+
+            foreach (DebtIncrease item in DebtIncreases)
+            {
+                if (item.Date.Date == date.Date)
+                {
+                    dateIncreases.Add(item.Transfer());
+                }
+            }
+
+            return dateIncreases;
+        }
+
+        public int CalculateDateRange()
+        {
+            return Common.CalculateDifferenceInDays(GetEarliestDate(), LastUpdateDate);
+        }
+
+        private List<DebtPayment> GetDebtPayments()
         {
             var payments = new List<DebtPayment>();
 
@@ -65,7 +123,7 @@ namespace PersonalBudgetingApplication.Classes
                 try
                 {
                     cmd.CommandText = "SELECT PaymentID, Pmt_Amount, Pmt_Date, RecordBy, RecordDate FROM tblDebtPayments WHERE DebtID = @DebtID";
-                    cmd.Parameters.AddWithValue("@DebtID", debtId);
+                    cmd.Parameters.AddWithValue("@DebtID", ID);
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
@@ -73,7 +131,7 @@ namespace PersonalBudgetingApplication.Classes
 
                     while (read.Read())
                     {
-                        var payment = new DebtPayment() { ID = read.GetInt32(0), DebtID = debtId, Amount = read.GetDouble(1), Date = DateTime.Parse(read.GetString(2)), RecordBy = read.GetString(3), RecordDate = DateTime.Parse(read.GetString(4)) };
+                        var payment = new DebtPayment() { ID = read.GetInt32(0), DebtID = ID, Amount = read.GetDouble(1), Date = DateTime.Parse(read.GetString(2)), RecordBy = read.GetString(3), RecordDate = DateTime.Parse(read.GetString(4)) };
 
                         payments.Add(payment);
                     }
@@ -85,7 +143,7 @@ namespace PersonalBudgetingApplication.Classes
             return payments;
         }
 
-        private List<DebtIncrease> GetDebtInterests(int debtId)
+        private List<DebtIncrease> GetDebtIncreases()
         {
             var debtInterests = new List<DebtIncrease>();
 
@@ -95,7 +153,7 @@ namespace PersonalBudgetingApplication.Classes
                 try
                 {
                     cmd.CommandText = "SELECT InterestID, Inc_Amount, Inc_Date, Inc_Type, recordBy, RecordDate FROM tblDebtIncreases WHERE DebtID = @DebtID";
-                    cmd.Parameters.AddWithValue("@DebtID", debtId);
+                    cmd.Parameters.AddWithValue("@DebtID", ID);
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
 
@@ -103,7 +161,7 @@ namespace PersonalBudgetingApplication.Classes
 
                     while (read.Read())
                     {
-                        var interest = new DebtIncrease() { ID = read.GetInt32(0), DebtID = debtId, Amount = read.GetDouble(1), Date = DateTime.Parse(read.GetString(2)), RecordBy = read.GetString(3), RecordDate = DateTime.Parse(read.GetString(4)) };
+                        var interest = new DebtIncrease() { ID = read.GetInt32(0), DebtID = ID, Amount = read.GetDouble(1), Date = DateTime.Parse(read.GetString(2)), RecordBy = read.GetString(3), RecordDate = DateTime.Parse(read.GetString(4)) };
 
                         debtInterests.Add(interest);
                     }
@@ -119,8 +177,9 @@ namespace PersonalBudgetingApplication.Classes
     public enum InterestType
     {
         Unspecified = 0,
-        Static,
-        Compound
+        Charge,
+        StaticInterest,
+        CompoundInterest
     }
 
     public enum CompoundNumberApplied

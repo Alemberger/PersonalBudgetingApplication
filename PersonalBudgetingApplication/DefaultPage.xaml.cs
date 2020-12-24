@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PersonalBudgetingApplication.Classes;
+using PersonalBudgetingApplication.Classes.Sorting;
 
 namespace PersonalBudgetingApplication
 {
@@ -118,11 +119,6 @@ namespace PersonalBudgetingApplication
             }
             else if (OpenTable == OverviewTable.Debts)
             {
-                var account = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
-
-                var window = new ExpenseEntryWindow(account, Profile);
-
-                window.Show();
             }
             else { throw new Exception("Unknown Table"); }
         }
@@ -137,7 +133,11 @@ namespace PersonalBudgetingApplication
 
             if (OpenTable == OverviewTable.Accounts)
             {
+                var account = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
 
+                var window = new ExpenseEntryWindow(account, Profile);
+
+                window.Show();
             }
             else if (OpenTable == OverviewTable.Debts)
             {
@@ -148,7 +148,20 @@ namespace PersonalBudgetingApplication
 
         private void BtnRefreshGrids_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Broken");
+            if (OpenTable == OverviewTable.Accounts)
+            {
+                if (DDLOptions.SelectedIndex > 0)
+                {
+                    GvAccounts.ItemsSource = new AccountOverviewTable(new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag))).Items;
+                }
+            }
+            else if (OpenTable == OverviewTable.Debts)
+            {
+                if (DDLOptions.SelectedIndex > 0)
+                {
+                    GvDebts.ItemsSource = new AccountOverviewTable(new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag))).Items;
+                }
+            }
         }
 
         private void BtnNewOption_Click(object sender, RoutedEventArgs e)

@@ -72,25 +72,11 @@ namespace PersonalBudgetingApplication
 
             if (!Common.CheckAmountInput(amount)) { MessageBox.Show("Invalid amount provided. Please provide in format ###.##"); return; }
 
-            var entry = new Expense() { Amount = Convert.ToDouble(amount), Type = (ExpenseType)Convert.ToInt32(((ComboBoxItem)DDLExpenseType.SelectedItem).Tag), Date = DateTime.Parse(TbExpenseDate.Text) };
+            var entry = new Expense() { AccountID = Account.ID, Amount = Convert.ToDouble(amount), Type = (ExpenseType)Convert.ToInt32(((ComboBoxItem)DDLExpenseType.SelectedItem).Tag), Date = DateTime.Parse(TbExpenseDate.Text), RecordBy = Profile.ProfileName, RecordDate = DateTime.Now };
 
-            using (var conn = DataAccess.EstablishConnection())
-            {
-                var cmd = conn.CreateCommand();
-                try
-                {
-                    cmd.CommandText = "INSERT INTO tblExpense (AccountID, Exp_Amount, Exp_Type, Exp_Date, RecordBy, RecordDate) VALUES (@AccountID, @Amount, @Type, @Date)";
-                    cmd.Parameters.AddWithValue("@AccountID", Account.ID);
-                    cmd.Parameters.AddWithValue("@Amount", entry.Amount);
-                    cmd.Parameters.AddWithValue("@Type", (int)entry.Type);
-                    cmd.Parameters.AddWithValue("@Date", entry.Date);
+            entry.SubmitRecord();
 
-                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
-
-                    cmd.ExecuteNonQuery();
-                }
-                finally { conn.Close(); cmd.Dispose(); }
-            }
+            Account.UpdateAccountBalance(entry.Amount * -1.00, entry.Date);
 
             MessageBox.Show("Expense entry submitted");
 

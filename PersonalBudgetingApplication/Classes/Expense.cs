@@ -60,6 +60,93 @@ namespace PersonalBudgetingApplication.Classes
                 finally { conn.Close(); cmd.Dispose(); }
             }
         }
+
+        public bool SubmitRecord()
+        {
+            try
+            {
+                if (AccountID < 1) { return false; }
+                if (Amount < 0.00) { return false; }
+                if ((int)Type < 0) { return false; }
+                if (Date < new DateTime(2000, 1, 1)) { return false; }
+                if (RecordBy == "") { return false; }
+                if (RecordDate < new DateTime(2000, 1, 1)) { return false; }
+            }
+            catch (NullReferenceException) { return false; }
+
+            using (var conn = DataAccess.EstablishConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "INSERT INTO tblExpenses (AccountID, Exp_Amount, Exp_Date, Exp_Type, RecordBy, RecordDate) VALUES (@AccountID, @Amount, @Date, @Type, @RecordBy, @RecordDate)";
+                    cmd.Parameters.Add("@AccountID", DbType.Int32).Value = AccountID;
+                    cmd.Parameters.Add("@Amount", DbType.Double).Value = Amount;
+                    cmd.Parameters.Add("@Date", DbType.String).Value = Date.ToString("MM/dd/yyyy");
+                    cmd.Parameters.Add("@Type", DbType.Int32).Value = (int)Type;
+                    cmd.Parameters.Add("@RecordBy", DbType.String).Value = RecordBy;
+                    cmd.Parameters.Add("@RecordDate", DbType.String).Value = RecordDate.ToString("yyyy-MM-dd HH:mm");
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    cmd.ExecuteNonQuery();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return true;
+        }
+
+        public bool UpdateRecord()
+        {
+            try
+            {
+                if (ID < 1) { return false; }
+                if (AccountID < 1) { return false; }
+                if (Amount < 0.00) { return false; }
+                if ((int)Type < 0) { return false; }
+                if (Date < new DateTime(2000, 1, 1)) { return false; }
+                if (RecordBy == "") { return false; }
+                if (RecordDate < new DateTime(2000, 1, 1)) { return false; }
+            }
+            catch (NullReferenceException) { return false; }
+
+            using (var conn = DataAccess.EstablishConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = "UPDATE tblExpenses SET Amount = @Amount, Date = @Date, Type = @Type, RecordBy = @RecordBy, RecordDate = @RecordDate WHERE ExpenseID = @ExpenseID";
+                    cmd.Parameters.Add("@Amount", DbType.Double).Value = Amount;
+                    cmd.Parameters.Add("@Date", DbType.String).Value = Date.ToString("MM/dd/yyyy");
+                    cmd.Parameters.Add("@Type", DbType.Int32).Value = (int)Type;
+                    cmd.Parameters.Add("@RecordBy", DbType.String).Value = RecordBy;
+                    cmd.Parameters.Add("@RecordDate", DbType.String).Value = RecordDate.ToString("yyyy-MM-dd HH:mm");
+                    cmd.Parameters.Add("@ExpenseID", DbType.Int32).Value = ID;
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    cmd.ExecuteNonQuery();
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return true;
+        }
+
+        public Expense Transfer()
+        {
+            return new Expense()
+            {
+                ID = ID,
+                AccountID = AccountID,
+                Amount = Amount,
+                Type = Type,
+                Date = Date,
+                RecordBy = RecordBy,
+                RecordDate = RecordDate
+            };
+        }
     }
 
     public enum ExpenseType

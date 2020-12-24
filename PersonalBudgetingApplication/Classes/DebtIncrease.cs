@@ -112,6 +112,19 @@ namespace PersonalBudgetingApplication.Classes
             //Return Values
             return true;
         }
+
+        public DebtIncrease Transfer()
+        {
+            return new DebtIncrease(ID)
+            {
+                DebtID = DebtID,
+                Amount = Amount,
+                IncreaseType = IncreaseType,
+                Date = Date,
+                RecordBy = RecordBy,
+                RecordDate = RecordDate
+            };
+        }
     }
 
     public enum DebtIncreaseType

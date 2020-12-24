@@ -112,6 +112,17 @@ namespace PersonalBudgetingApplication.Classes
             target.ItemsSource = Binder;
         }
 
+        public static int CalculateDifferenceInDays(DateTime earlyDate, DateTime lateDate)
+        {
+            if (earlyDate > lateDate) { throw new Exception("Early date after late date"); }
+
+            var difference = (lateDate.Year - earlyDate.Year) * 365;
+
+            difference += lateDate.DayOfYear - earlyDate.DayOfYear;
+
+            return difference;
+        }
+
         public static void ReturnToMainWindow(Profile selected)
         {
             if (selected.ProfileName == "" || selected.ProfileName is null)
