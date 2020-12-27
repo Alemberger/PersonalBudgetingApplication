@@ -30,7 +30,7 @@ namespace PersonalBudgetingApplication.Classes
 
             var list = new List<AccountOverviewItem>();
 
-            for (int i = dateRange; i >= -1; i--)
+            for (int i = dateRange; i >= 0; i--)
             {
                 var date = earliestDate.AddDays(i);
 
@@ -116,6 +116,14 @@ namespace PersonalBudgetingApplication.Classes
             var difference = (late.Year - early.Year) * 365;
 
             difference += late.DayOfYear - early.DayOfYear;
+
+            if (late.Year != early.Year)
+            {
+                if (late.Year % 4 == 0 || early.Year % 4 == 0)
+                {
+                    difference += 1;
+                }
+            }
 
             return difference;
         }

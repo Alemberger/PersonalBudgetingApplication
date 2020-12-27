@@ -18,6 +18,24 @@ namespace PersonalBudgetingApplication.Classes
 
         public double IncreaseAmount { get; set; }
 
+        public string IncreaseDisplay
+        {
+            get
+            {
+                string display;
+
+                try
+                {
+                    display = string.Format("{0:C}", IncreaseAmount);
+                }
+                catch (FormatException) { return ""; }
+
+                if (display == "$0.00") { return ""; }
+
+                return display;
+            }
+        }
+
         public DebtIncreaseType IncreaseType
         {
             get
@@ -40,6 +58,24 @@ namespace PersonalBudgetingApplication.Classes
         }
 
         public double PaymentMade { get; set; }
+
+        public string PaymentDisplay
+        {
+            get
+            {
+                string display;
+
+                try
+                {
+                    display = string.Format("0:C", PaymentMade);
+                }
+                catch (FormatException) { return ""; }
+
+                if (display == "$0.00") { return ""; }
+
+                return display;
+            }
+        }
 
         public DebtOverviewItem()
         {

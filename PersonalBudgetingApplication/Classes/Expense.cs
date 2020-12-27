@@ -28,10 +28,10 @@ namespace PersonalBudgetingApplication.Classes
 
         public Expense(int ExpenseId)
         {
-            GatherExpenseRecord(ExpenseId);
+            GetExpenseRecord(ExpenseId);
         }
 
-        private void GatherExpenseRecord(int expenseId)
+        private void GetExpenseRecord(int expenseId)
         {
             using (var conn = DataAccess.EstablishConnection())
             {

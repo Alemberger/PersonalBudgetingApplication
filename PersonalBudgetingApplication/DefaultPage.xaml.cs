@@ -105,7 +105,17 @@ namespace PersonalBudgetingApplication
         {
             if (DDLOptions.SelectedIndex == -1 || DDLOptions.SelectedIndex == 0)
             {
-                MessageBox.Show("Must select an account or debt");
+                string message = "Must select a";
+                if (OpenTable == OverviewTable.Accounts)
+                {
+                    message += "n account.";
+                }
+                else if (OpenTable == OverviewTable.Debts)
+                {
+                    message += " debt.";
+                }
+
+                MessageBox.Show(message);
                 return;
             }
 
@@ -127,7 +137,17 @@ namespace PersonalBudgetingApplication
         {
             if (DDLOptions.SelectedIndex == -1 || DDLOptions.SelectedIndex == 0)
             {
-                MessageBox.Show("Must select an account or debt");
+                string message = "Must select a";
+                if (OpenTable == OverviewTable.Accounts)
+                {
+                    message += "n account.";
+                }
+                else if (OpenTable == OverviewTable.Debts)
+                {
+                    message += " debt.";
+                }
+
+                MessageBox.Show(message);
                 return;
             }
 

@@ -21,6 +21,8 @@ namespace PersonalBudgetingApplication.Classes.Sorting
         {
             var sorted = new List<Income>(Parent.Count);
 
+            if (Parent.Count == 0) { return sorted; }
+
             var newIndexes = new int[Parent.Count];
 
             for (int i = 0; i < newIndexes.Length; i++)

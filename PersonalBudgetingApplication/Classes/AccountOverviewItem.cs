@@ -24,6 +24,24 @@ namespace PersonalBudgetingApplication.Classes
 
         public double IncomeAmount { get; set; }
 
+        public string IncomeDisplay
+        {
+            get
+            {
+                string display;
+
+                try
+                {
+                    display = string.Format("{0:C}", IncomeAmount);
+                }
+                catch (FormatException) { return ""; }
+
+                if (display == "$0.00") { return ""; }
+
+                return display;
+            }
+        }
+
         public IncomeType IncomeType { get; set; }
 
         public string IncomeTypeName
@@ -38,6 +56,24 @@ namespace PersonalBudgetingApplication.Classes
         }
 
         public double ExpenseAmount { get; set; }
+
+        public string ExpenseDisplay
+        {
+            get
+            {
+                string display;
+
+                try
+                {
+                    display = string.Format("{0:C}", ExpenseAmount);
+                }
+                catch (FormatException) { return ""; }
+
+                if (display == "$0.00") { return ""; }
+
+                return display;
+            }
+        }
 
         public ExpenseType ExpenseType { get; set; }
 
