@@ -78,6 +78,7 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.113.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.113.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -97,11 +98,70 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccountEntryWindow.xaml.cs">
+      <DependentUpon>AccountEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdjustSettingsWindow.xaml.cs">
+      <DependentUpon>AdjustSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Account.cs" />
+    <Compile Include="Classes\AccountOverviewItem.cs" />
+    <Compile Include="Classes\AccountOverviewTable.cs" />
+    <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\DataAccess.cs" />
+    <Compile Include="Classes\DBTableCreator.cs" />
+    <Compile Include="Classes\Debt.cs" />
+    <Compile Include="Classes\DebtIncrease.cs" />
+    <Compile Include="Classes\DebtOverviewItem.cs" />
+    <Compile Include="Classes\DebtOverviewTable.cs" />
+    <Compile Include="Classes\DebtPayment.cs" />
+    <Compile Include="Classes\Expense.cs" />
+    <Compile Include="Classes\Income.cs" />
+    <Compile Include="Classes\Sorting\IncomeSorter.cs" />
+    <Compile Include="Classes\ListPopulaters.cs" />
+    <Compile Include="Classes\Profile.cs" />
+    <Compile Include="Classes\SettingSerialization.cs" />
+    <Compile Include="Classes\Sorting\Sorter.cs" />
+    <Compile Include="DebtEntryWindow.xaml.cs">
+      <DependentUpon>DebtEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExpenseEntryWindow.xaml.cs">
+      <DependentUpon>ExpenseEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IncomeEntryWindow.xaml.cs">
+      <DependentUpon>IncomeEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProfileCreation.xaml.cs">
+      <DependentUpon>ProfileCreation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SecondPage.xaml.cs">
       <DependentUpon>SecondPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StarterPage.xaml.cs">
+      <DependentUpon>StarterPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AccountEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdjustSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DebtEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DefaultPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExpenseEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IncomeEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,7 +180,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ProfileCreation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SecondPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StarterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -168,6 +236,53 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Basicons\address-book.png" />
+    <Resource Include="img\Basicons\black-clock.png" />
+    <Resource Include="img\Basicons\black-heart.png" />
+    <Resource Include="img\Basicons\black-wrench.png" />
+    <Resource Include="img\Basicons\book-with-bookmark.png" />
+    <Resource Include="img\Basicons\broken-link.png" />
+    <Resource Include="img\Basicons\calculator-with-six-buttons.png" />
+    <Resource Include="img\Basicons\calendar.png" />
+    <Resource Include="img\Basicons\delete-button.png" />
+    <Resource Include="img\Basicons\document-with-folded-corner.png" />
+    <Resource Include="img\Basicons\done-tick.png" />
+    <Resource Include="img\Basicons\down-arrow-download-button.png" />
+    <Resource Include="img\Basicons\file-folder.png" />
+    <Resource Include="img\Basicons\hanging-picture.png" />
+    <Resource Include="img\Basicons\heart-outline.png" />
+    <Resource Include="img\Basicons\home-button.png" />
+    <Resource Include="img\Basicons\info-round-button.png" />
+    <Resource Include="img\Basicons\link-button.png" />
+    <Resource Include="img\Basicons\list-button.png" />
+    <Resource Include="img\Basicons\locked-padlock.png" />
+    <Resource Include="img\Basicons\multimedia-file.png" />
+    <Resource Include="img\Basicons\music-file.png" />
+    <Resource Include="img\Basicons\musical-eighth-notes.png" />
+    <Resource Include="img\Basicons\new-document-button.png" />
+    <Resource Include="img\Basicons\old-key.png" />
+    <Resource Include="img\Basicons\planet-earth.png" />
+    <Resource Include="img\Basicons\print-button.png" />
+    <Resource Include="img\Basicons\print-image.png" />
+    <Resource Include="img\Basicons\puzzle-piece.png" />
+    <Resource Include="img\Basicons\refresh-button.png" />
+    <Resource Include="img\Basicons\return-button.png" />
+    <Resource Include="img\Basicons\returning-right-arrow.png" />
+    <Resource Include="img\Basicons\right-arrow.png" />
+    <Resource Include="img\Basicons\round-add-button.png" />
+    <Resource Include="img\Basicons\round-delete-button.png" />
+    <Resource Include="img\Basicons\round-favorite-button.png" />
+    <Resource Include="img\Basicons\share-button.png" />
+    <Resource Include="img\Basicons\ship-rudder.png" />
+    <Resource Include="img\Basicons\square-camera-viewfinder.png" />
+    <Resource Include="img\Basicons\unlocked-padlock.png" />
+    <Resource Include="img\Basicons\up-arrow-upload-button.png" />
+    <Resource Include="img\Basicons\zoom-in-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
