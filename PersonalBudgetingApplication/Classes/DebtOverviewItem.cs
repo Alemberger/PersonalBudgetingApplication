@@ -14,6 +14,14 @@ namespace PersonalBudgetingApplication.Classes
 
         public DateTime Date { get; set; }
 
+        public string DateString
+        {
+            get
+            {
+                return Date.ToString("MM/dd/yyyy");
+            }
+        }
+
         public double Principal { get; set; }
 
         public double IncreaseAmount { get; set; }
@@ -53,6 +61,8 @@ namespace PersonalBudgetingApplication.Classes
         {
             get
             {
+                if (_increaseType.ToString() == "None") { return ""; }
+
                 return _increaseType.ToString();
             }
         }
@@ -67,7 +77,7 @@ namespace PersonalBudgetingApplication.Classes
 
                 try
                 {
-                    display = string.Format("0:C", PaymentMade);
+                    display = string.Format("{0:C}", PaymentMade);
                 }
                 catch (FormatException) { return ""; }
 

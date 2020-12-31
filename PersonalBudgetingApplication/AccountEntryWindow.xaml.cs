@@ -50,12 +50,18 @@ namespace PersonalBudgetingApplication
 
             if (!submission.SubmitAccount()) { MessageBox.Show("Invalid parameters provided"); return; }
 
-            MessageBox.Show("Account created");
+            Common.ReturnToMainWindow(Profile);
+
+            //Refresh the default page
+            ((DefaultPage)((MainWindow)Application.Current.MainWindow).PrimaryFrame.Content).ChangeGrids(OverviewTable.Accounts);
+
+            MessageBox.Show("Account record created");
             Close();
         }
 
         private void BtnCancelAccount_Click(object sender, RoutedEventArgs e)
         {
+            Common.ReturnToMainWindow(Profile);
             Close();
         }
     }

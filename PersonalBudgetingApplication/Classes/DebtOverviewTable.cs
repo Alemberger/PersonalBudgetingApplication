@@ -22,17 +22,19 @@ namespace PersonalBudgetingApplication.Classes
 
             var list = new List<DebtOverviewItem>();
 
-            var latestDate = debt.LastUpdateDate;
+            var earliestDate = debt.GetEarliestDate();
 
             var dateRange = debt.CalculateDateRange();
 
-            for (int i = dateRange; i > 0; i--)
+            for (int i = dateRange; i >= 0; i--)
             {
-                var date = debt.LastUpdateDate.AddDays(-i);
+                var date = earliestDate.AddDays(i);
 
                 var dateIncreases = debt.GetDebtIncreasesForDate(date);
                 var datePayments = debt.GetDebtPaymentsForDate(date);
 
+                var paymentsCount = 0;
+                var increasesCount = 0;
 
                 for (int j = 0; j < dateIncreases.Count && j < datePayments.Count; j++)
                 {
@@ -46,6 +48,9 @@ namespace PersonalBudgetingApplication.Classes
 
                         PaymentMade = datePayments[j].Amount
                     };
+
+                    paymentsCount++;
+                    increasesCount++;
 
                     list.Add(item);
                 }
@@ -71,6 +76,17 @@ namespace PersonalBudgetingApplication.Classes
                         Principal = AdjustPrincipal(list, debt.Principal),
 
                         PaymentMade = datePayments[dateIncreases.Count].Amount
+                    };
+
+                    list.Add(item);
+                }
+
+                if (dateIncreases.Count == 0 && datePayments.Count == 0)
+                {
+                    var item = new DebtOverviewItem(DebtID)
+                    {
+                        Principal = AdjustPrincipal(list, debt.Principal),
+                        Date = date
                     };
 
                     list.Add(item);

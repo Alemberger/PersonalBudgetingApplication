@@ -155,7 +155,7 @@ namespace PersonalBudgetingApplication.Classes
 
                     while (read.Read())
                     {
-                        var debt = new Debt() { ID = read.GetInt32(0), ProfileID = profileId, Name = read.GetString(1), Principal = read.GetDouble(2), InterestType = (InterestType)read.GetInt32(3), TimesApplied = (CompoundNumberApplied)read.GetInt32(4), AnnualPercentageRate = read.GetDouble(5), RecordBy = read.GetString(6), RecordDate = DateTime.Parse(read.GetString(7)) };
+                        var debt = new Debt() { ID = read.GetInt32(0), ProfileID = profileId, Name = read.GetString(1), Principal = read.GetDouble(2), LastUpdateDate = DateTime.Parse(read.GetString(3)), InterestType = (InterestType)read.GetInt32(4), TimesApplied = (CompoundNumberApplied)read.GetInt32(5), AnnualPercentageRate = read.GetDouble(6), RecordBy = read.GetString(7), RecordDate = DateTime.Parse(read.GetString(8)) };
 
                         debts.Add(debt);
                     }

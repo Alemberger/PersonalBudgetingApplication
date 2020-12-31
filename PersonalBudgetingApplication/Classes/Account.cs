@@ -252,7 +252,7 @@ namespace PersonalBudgetingApplication.Classes
 
             var sorter = new IncomeSorter(incomes);
 
-            incomes = sorter.SortByDateDescending();
+            incomes = sorter.ByDateDescending();
 
             return incomes;
         }

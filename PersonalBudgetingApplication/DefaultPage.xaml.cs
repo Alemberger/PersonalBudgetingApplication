@@ -41,11 +41,13 @@ namespace PersonalBudgetingApplication
             {
                 ChangeGrids(saved.DefaultOverviewTable);
             }
-
-            DDLOptions.ItemsSource = Profile.ListAccounts();
+            else
+            {
+                ChangeGrids(OverviewTable.Accounts);
+            }
         }
 
-        private void ChangeGrids(OverviewTable target)
+        public void ChangeGrids(OverviewTable target)
         {
             switch (target)
             {
@@ -179,7 +181,7 @@ namespace PersonalBudgetingApplication
             {
                 if (DDLOptions.SelectedIndex > 0)
                 {
-                    GvDebts.ItemsSource = new AccountOverviewTable(new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag))).Items;
+                    GvDebts.ItemsSource = new DebtOverviewTable(new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag))).Items;
                 }
             }
         }

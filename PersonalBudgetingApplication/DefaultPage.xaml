@@ -35,7 +35,7 @@
                 <DataGridTextColumn Header="Expense Type" FontSize="20" Binding="{Binding Path=ExpenseTypeName}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" Margin="50,50,50,50" AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+        <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" Margin="50,50,50,50" AutoGenerateColumns="False" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Padding" Value="5,5,5,5"></Setter>
@@ -43,7 +43,7 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" FontSize="20" Binding="{Binding Path=DateString}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Amount" FontSize="20" Binding="{Binding Path=Principal}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Amount" FontSize="20" Binding="{Binding Path=Principal, StringFormat=C}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Intrest Accrued" FontSize="20" Binding="{Binding Path=IncreaseDisplay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Increase Type" FontSize="20" Binding="{Binding Path=IncreaseTypeName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Payment Made" FontSize="20" Binding="{Binding Path=PaymentDisplay}"></DataGridTextColumn>

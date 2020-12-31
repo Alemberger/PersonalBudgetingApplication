@@ -27,7 +27,7 @@ namespace PersonalBudgetingApplication.Classes
                 return false;
             }
 
-            if (!File.Exists("BudgetDB.db"))
+            if (!File.Exists("Data/BudgetDB.db"))
             {
                 return false;
             }
