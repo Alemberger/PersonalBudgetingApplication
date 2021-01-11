@@ -8,5 +8,8 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
             <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="SelectedIndex" Value="0"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

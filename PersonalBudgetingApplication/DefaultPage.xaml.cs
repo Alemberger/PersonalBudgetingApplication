@@ -68,6 +68,7 @@ namespace PersonalBudgetingApplication
                     BtnEnterNegative.Tag = "Account";
 
                     DDLOptions.ItemsSource = Profile.ListAccounts();
+                    DDLOptions.SelectedIndex = 0;
                     break;
                 case OverviewTable.Debts:
                     LblTitle.Content = "Debts";
@@ -86,6 +87,7 @@ namespace PersonalBudgetingApplication
                     BtnEnterNegative.Tag = "Debt";
 
                     DDLOptions.ItemsSource = Profile.ListDebts();
+                    DDLOptions.SelectedIndex = 0;
                     break;
             }
         }
