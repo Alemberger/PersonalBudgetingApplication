@@ -102,12 +102,20 @@ namespace PersonalBudgetingApplication.Classes
             var finalItem = new DebtOverviewItem(DebtID)
             {
                 Principal = AdjustPrincipal(list, debt.Principal),
-                Date = debt.LastUpdateDate
+                Date = DateTime.Now
             };
 
             list.Add(finalItem);
 
-            _items = list;
+            //Reverse Order
+            var reversed = new List<DebtOverviewItem>();
+
+            for(int i = list.Count - 1; i >= 0; i--)
+            {
+                reversed.Add(list[i].Transfer());
+            }
+
+            _items = reversed;
         }
 
         public double AdjustPrincipal(List<DebtOverviewItem> list, double startingPrincipal)

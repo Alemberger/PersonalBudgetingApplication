@@ -133,7 +133,11 @@ namespace PersonalBudgetingApplication
             }
             else if (OpenTable == OverviewTable.Debts)
             {
-                
+                var debt = new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
+
+                var window = new PaymentEntryWindow(debt, Profile);
+
+                window.Show();
             }
             else { throw new Exception("Unknown Table"); }
         }

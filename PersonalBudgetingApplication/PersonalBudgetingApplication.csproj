@@ -110,6 +110,7 @@
     <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\DataAccess.cs" />
+    <Compile Include="Classes\DatabaseException.cs" />
     <Compile Include="Classes\DBTableCreator.cs" />
     <Compile Include="Classes\Debt.cs" />
     <Compile Include="Classes\DebtIncrease.cs" />

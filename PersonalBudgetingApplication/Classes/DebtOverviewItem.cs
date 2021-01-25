@@ -111,5 +111,19 @@ namespace PersonalBudgetingApplication.Classes
         {
             DebtID = debtId;
         }
+
+        public DebtOverviewItem Transfer()
+        {
+            var transfer = new DebtOverviewItem();
+
+            transfer.DebtID = DebtID;
+            transfer.Date = Date;
+            transfer.Principal = Principal;
+            transfer.IncreaseAmount = IncreaseAmount;
+            transfer.IncreaseType = IncreaseType;
+            transfer.PaymentMade = PaymentMade;
+
+            return transfer;
+        }
     }
 }
