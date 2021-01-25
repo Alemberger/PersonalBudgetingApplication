@@ -38,7 +38,7 @@ namespace PersonalBudgetingApplication.Classes
                 var cmd = conn.CreateCommand();
                 try
                 {
-                    cmd.CommandText = "SELECT DebtID, Inc_Amount, Inc_Date, Inc_Type, RecordBy, RecordDate FROM tblDebtInterests WHERE IncreaseID = @IncreaseID";
+                    cmd.CommandText = "SELECT DebtID, Inc_Amount, Inc_Date, Inc_Type, RecordBy, RecordDate FROM tblDebtIncreases WHERE IncreaseID = @IncreaseID";
                     cmd.Parameters.Add("@IncreaseID", DbType.Int32).Value = increaseId;
 
                     if (conn.State == ConnectionState.Closed) { conn.Open(); }
@@ -107,6 +107,21 @@ namespace PersonalBudgetingApplication.Classes
                     cmd.ExecuteNonQuery();
                 }
                 finally { conn.Close(); cmd.Dispose(); }
+
+                var updateCmd = conn.CreateCommand();
+                try
+                {
+                    updateCmd.CommandText = "Update tblDebts SET Dbt_LastUpdateDate = @LastUpdateDate, RecordBy = @RecordBy, RecordDate = @RecordDate WHERE DebtID = @DebtID";
+                    updateCmd.Parameters.Add("@DebtID", DbType.Int32).Value = DebtID;
+                    updateCmd.Parameters.Add("@LastUpdateDate", DbType.String).Value = Date.ToString("MM/dd/yyyy");
+                    updateCmd.Parameters.Add("@RecordBy", DbType.String).Value = RecordBy;
+                    updateCmd.Parameters.Add("@RecordDate", DbType.String).Value = RecordDate.ToString("yyyy-MM-dd HH:mm");
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    updateCmd.ExecuteNonQuery();
+                }
+                finally { conn.Close(); updateCmd.Dispose(); }
             }
 
             //Return Values

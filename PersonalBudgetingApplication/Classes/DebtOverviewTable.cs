@@ -57,28 +57,34 @@ namespace PersonalBudgetingApplication.Classes
 
                 if (dateIncreases.Count > datePayments.Count)
                 {
-                    var item = new DebtOverviewItem(DebtID)
+                    for(int j = datePayments.Count; j < dateIncreases.Count; j++)
                     {
-                        Date = date,
-                        Principal = AdjustPrincipal(list, debt.Principal),
+                        var item = new DebtOverviewItem(DebtID)
+                        {
+                            Date = date,
+                            Principal = AdjustPrincipal(list, debt.Principal),
 
-                        IncreaseAmount = dateIncreases[datePayments.Count].Amount,
-                        IncreaseType = dateIncreases[datePayments.Count].IncreaseType
-                    };
+                            IncreaseAmount = dateIncreases[j].Amount,
+                            IncreaseType = dateIncreases[j].IncreaseType
+                        };
 
-                    list.Add(item);
+                        list.Add(item);
+                    }
                 }
                 else if (datePayments.Count > dateIncreases.Count)
                 {
-                    var item = new DebtOverviewItem(DebtID)
+                    for(int j = dateIncreases.Count; j < datePayments.Count; j++)
                     {
-                        Date = date,
-                        Principal = AdjustPrincipal(list, debt.Principal),
+                        var item = new DebtOverviewItem(DebtID)
+                        {
+                            Date = date,
+                            Principal = AdjustPrincipal(list, debt.Principal),
 
-                        PaymentMade = datePayments[dateIncreases.Count].Amount
-                    };
+                            PaymentMade = datePayments[j].Amount
+                        };
 
-                    list.Add(item);
+                        list.Add(item);
+                    }
                 }
 
                 if (dateIncreases.Count == 0 && datePayments.Count == 0)
@@ -93,6 +99,14 @@ namespace PersonalBudgetingApplication.Classes
                 }
             }
 
+            var finalItem = new DebtOverviewItem(DebtID)
+            {
+                Principal = AdjustPrincipal(list, debt.Principal),
+                Date = debt.LastUpdateDate
+            };
+
+            list.Add(finalItem);
+
             _items = list;
         }
 
@@ -104,12 +118,12 @@ namespace PersonalBudgetingApplication.Classes
             {
                 if (item.IncreaseAmount > 0.00)
                 {
-                    difference -= item.IncreaseAmount;
+                    difference += item.IncreaseAmount;
                 }
 
                 if (item.PaymentMade > 0.00)
                 {
-                    difference += item.PaymentMade;
+                    difference -= item.PaymentMade;
                 }
             }
 

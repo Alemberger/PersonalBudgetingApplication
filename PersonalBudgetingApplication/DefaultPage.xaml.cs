@@ -83,7 +83,7 @@ namespace PersonalBudgetingApplication
 
                     BtnEnterPositive.Content = "Enter Payment";
                     BtnEnterPositive.Tag = "Debt";
-                    BtnEnterNegative.Content = "Update Interest";
+                    BtnEnterNegative.Content = "Enter Increase";
                     BtnEnterNegative.Tag = "Debt";
 
                     DDLOptions.ItemsSource = Profile.ListDebts();
@@ -133,6 +133,7 @@ namespace PersonalBudgetingApplication
             }
             else if (OpenTable == OverviewTable.Debts)
             {
+                
             }
             else { throw new Exception("Unknown Table"); }
         }
@@ -165,7 +166,11 @@ namespace PersonalBudgetingApplication
             }
             else if (OpenTable == OverviewTable.Debts)
             {
+                var debt = new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
 
+                var window = new IncreaseEntryWindow(debt, Profile);
+
+                window.Show();
             }
             else { throw new Exception("Unknown Table"); }
         }

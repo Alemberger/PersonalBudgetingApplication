@@ -30,7 +30,10 @@
                 <RowDefinition Height="20*"></RowDefinition>
                 <RowDefinition Height="20*"></RowDefinition>
             </Grid.RowDefinitions>
-            
+            <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Amount</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="80" Name="TbIncreaseAmount"></TextBox>
+            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Type</Label>
+            <ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="80" Name="DDLIncreaseType"></ComboBox>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="2">
             <Grid.ColumnDefinitions>
@@ -41,6 +44,8 @@
                 <RowDefinition Height="20*"></RowDefinition>
                 <RowDefinition Height="20*"></RowDefinition>
             </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Date</Label>
+            <DatePicker Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="80" Name="TbIncreaseDate"></DatePicker>
         </Grid>
         <Button Grid.Column="1" Grid.Row="3" Padding="10,5" Content="Submit" Name="BtnIncreaseSubmit" Click="BtnIncreaseSubmit_Click" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
         <Button Grid.Column="2" Grid.Row="3" Padding="10,5" Content="Cancel" Name="BtnIncreaseCancel" Click="BtnIncreaseCancel_Click" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>

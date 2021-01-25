@@ -43,7 +43,7 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" FontSize="20" Binding="{Binding Path=DateString}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Amount" FontSize="20" Binding="{Binding Path=Principal, StringFormat=C}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Amount" FontSize="20" Binding="{Binding Path=PrincipalDisplay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Increase" FontSize="20" Binding="{Binding Path=IncreaseDisplay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Increase Type" FontSize="20" Binding="{Binding Path=IncreaseTypeName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Payment Made" FontSize="20" Binding="{Binding Path=PaymentDisplay}"></DataGridTextColumn>

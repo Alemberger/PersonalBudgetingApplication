@@ -136,7 +136,7 @@ namespace PersonalBudgetingApplication.Classes
         {
             var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
 
-            foreach (var item in Enum.GetValues(typeof(InterestType)))
+            foreach (var item in Enum.GetValues(typeof(DebtIncreaseType)))
             {
                 results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
             }

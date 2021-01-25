@@ -24,6 +24,22 @@ namespace PersonalBudgetingApplication.Classes
 
         public double Principal { get; set; }
 
+        public string PrincipalDisplay
+        {
+            get
+            {
+                string display;
+
+                try
+                {
+                    display = string.Format("{0:C}", Principal);
+                }
+                catch (FormatException) { return "$0.00"; }
+
+                return display;
+            }
+        }
+
         public double IncreaseAmount { get; set; }
 
         public string IncreaseDisplay
