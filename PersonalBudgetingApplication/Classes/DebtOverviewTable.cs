@@ -26,7 +26,7 @@ namespace PersonalBudgetingApplication.Classes
 
             var dateRange = debt.CalculateDateRange();
 
-            for (int i = dateRange; i >= 0; i--)
+            for (int i = 0; i <= dateRange; i++)
             {
                 var date = earliestDate.AddDays(i);
 

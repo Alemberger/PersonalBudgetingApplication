@@ -35,7 +35,7 @@
                 <DataGridTextColumn Header="Expense Type" FontSize="20" Binding="{Binding Path=ExpenseTypeName}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" Margin="50,50,50,50" AutoGenerateColumns="False" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+        <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" Margin="50,50,50,50" AutoGenerateColumns="False" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden" CanUserSortColumns="False">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Padding" Value="5,5,5,5"></Setter>
