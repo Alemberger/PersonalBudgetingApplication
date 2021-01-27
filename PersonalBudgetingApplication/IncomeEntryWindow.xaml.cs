@@ -86,6 +86,13 @@ namespace PersonalBudgetingApplication
 
             Common.ReturnToMainWindow(Profile);
 
+            var main = (MainWindow)Application.Current.MainWindow;
+
+            if (main.LoadedPage == "Default")
+            {
+                ((DefaultPage)main.PrimaryFrame.Content).RefreshGrid();
+            }
+
             Close();
         }
 

@@ -49,7 +49,7 @@
                 <DataGridTextColumn Header="Payment Made" FontSize="20" Binding="{Binding Path=PaymentDisplay}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox Name="DDLOptions" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="100,0,0,0"/>
+        <ComboBox Name="DDLOptions" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="100,0,0,0" SelectionChanged="DDLOptions_SelectionChanged"/>
         <Button Name="BtnNewOption" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="90" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="New Account" Click="BtnNewOption_Click"></Button>
         <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="30" Content="Refresh" Name="BtnRefreshGrids" Click="BtnRefreshGrids_Click"></Button>
         

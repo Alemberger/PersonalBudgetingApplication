@@ -24,6 +24,8 @@ namespace PersonalBudgetingApplication
     {
         public Profile Profile { get; set; }
 
+        public Account Account { get; set; }
+
         public AccountEntryWindow()
         {
             InitializeComponent();
@@ -34,6 +36,15 @@ namespace PersonalBudgetingApplication
             InitializeComponent();
 
             Profile = profile;
+        }
+
+        public AccountEntryWindow(Profile profile, Account account)
+        {
+            InitializeComponent();
+
+            Profile = profile;
+
+            Account = account;
         }
 
         private void BtnSubmitAccount_Click(object sender, RoutedEventArgs e)
@@ -48,7 +59,15 @@ namespace PersonalBudgetingApplication
 
             var submission = new Account() { ID = -1, Name = TbName.Text, Amount = Convert.ToDouble(TbAmount.Text), LastUpdateDate = DateTime.Now, ProfileID = Profile.ProfileID, RecordBy = Profile.ProfileName, RecordDate = DateTime.Now };
 
-            if (!submission.SubmitAccount()) { MessageBox.Show("Invalid parameters provided"); return; }
+            try
+            {
+                submission.SubmitAccount();
+            }
+            catch (DatabaseException ex)
+            {
+                MessageBox.Show(ex.ErrorMessage);
+                return;
+            }
 
             Common.ReturnToMainWindow(Profile);
 

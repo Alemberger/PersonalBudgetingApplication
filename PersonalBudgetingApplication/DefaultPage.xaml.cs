@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,10 @@ namespace PersonalBudgetingApplication
         public Profile Profile { get; set; }
 
         public OverviewTable OpenTable { get; set; } = OverviewTable.Accounts;
+
+        public Account SelectedAccount { get; set; }
+
+        public Debt SelectedDebt { get; set; }
 
         public DefaultPage()
         {
@@ -68,7 +73,7 @@ namespace PersonalBudgetingApplication
                     BtnEnterNegative.Tag = "Account";
 
                     DDLOptions.ItemsSource = Profile.ListAccounts();
-                    DDLOptions.SelectedIndex = 0;
+
                     break;
                 case OverviewTable.Debts:
                     LblTitle.Content = "Debts";
@@ -87,9 +92,10 @@ namespace PersonalBudgetingApplication
                     BtnEnterNegative.Tag = "Debt";
 
                     DDLOptions.ItemsSource = Profile.ListDebts();
-                    DDLOptions.SelectedIndex = 0;
+
                     break;
             }
+            GvAccounts.ItemsSource = GvDebts.ItemsSource = new DataTable().Rows;
         }
 
         private void BtnChangeGrid_Click(object sender, RoutedEventArgs e)
@@ -125,17 +131,13 @@ namespace PersonalBudgetingApplication
 
             if (OpenTable == OverviewTable.Accounts)
             {
-                var account = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
-
-                var window = new IncomeEntryWindow(account, Profile);
+                var window = new IncomeEntryWindow(SelectedAccount, Profile);
 
                 window.Show();
             }
             else if (OpenTable == OverviewTable.Debts)
             {
-                var debt = new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
-
-                var window = new PaymentEntryWindow(debt, Profile);
+                var window = new PaymentEntryWindow(SelectedDebt, Profile);
 
                 window.Show();
             }
@@ -162,17 +164,13 @@ namespace PersonalBudgetingApplication
 
             if (OpenTable == OverviewTable.Accounts)
             {
-                var account = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
-
-                var window = new ExpenseEntryWindow(account, Profile);
+                var window = new ExpenseEntryWindow(SelectedAccount, Profile);
 
                 window.Show();
             }
             else if (OpenTable == OverviewTable.Debts)
             {
-                var debt = new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
-
-                var window = new IncreaseEntryWindow(debt, Profile);
+                var window = new IncreaseEntryWindow(SelectedDebt, Profile);
 
                 window.Show();
             }
@@ -181,18 +179,23 @@ namespace PersonalBudgetingApplication
 
         private void BtnRefreshGrids_Click(object sender, RoutedEventArgs e)
         {
+            RefreshGrid();
+        }
+
+        public void RefreshGrid()
+        {
             if (OpenTable == OverviewTable.Accounts)
             {
                 if (DDLOptions.SelectedIndex > 0)
                 {
-                    GvAccounts.ItemsSource = new AccountOverviewTable(new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag))).Items;
+                    GvAccounts.ItemsSource = new AccountOverviewTable(SelectedAccount).Items;
                 }
             }
             else if (OpenTable == OverviewTable.Debts)
             {
                 if (DDLOptions.SelectedIndex > 0)
                 {
-                    GvDebts.ItemsSource = new DebtOverviewTable(new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag))).Items;
+                    GvDebts.ItemsSource = new DebtOverviewTable(SelectedDebt).Items;
                 }
             }
         }
@@ -210,6 +213,40 @@ namespace PersonalBudgetingApplication
                 var window = new DebtEntryWindow(Profile);
 
                 window.Show();
+            }
+        }
+
+        private void DDLOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (OpenTable == OverviewTable.Accounts)
+            {
+                if (DDLOptions.SelectedIndex < 1)
+                {
+                    BtnNewOption.Content = "New Account";
+                    SelectedAccount = null;
+                    GvAccounts.ItemsSource = new DataTable().Rows;
+                }
+                else
+                {
+                    BtnNewOption.Content = "Edit Account";
+                    SelectedAccount = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
+                    GvAccounts.ItemsSource = new AccountOverviewTable(SelectedAccount).Items;
+                }
+            }
+            else
+            {
+                if (DDLOptions.SelectedIndex < 1)
+                {
+                    BtnNewOption.Content = "New Debt";
+                    GvDebts.ItemsSource = new DataTable().Rows;
+                    SelectedDebt = null;
+                }
+                else
+                {
+                    BtnNewOption.Content = "Edit Debt";
+                    SelectedDebt = new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
+                    GvDebts.ItemsSource = new DebtOverviewTable(SelectedDebt).Items;
+                }
             }
         }
     }

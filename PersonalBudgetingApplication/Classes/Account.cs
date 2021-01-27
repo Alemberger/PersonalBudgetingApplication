@@ -287,21 +287,41 @@ namespace PersonalBudgetingApplication.Classes
             return expenses;
         }
 
-        public bool SubmitAccount()
+        public void SubmitAccount()
         {
+            var valid = true;
+
             try
             {
-                if (ProfileID < 1) { return false; }
-                if (Name == "") { return false; }
-                if (Amount < 0.00) { return false; }
-                if (LastUpdateDate < DateTime.Parse("2000/01/01")) { return false; }
-                if (RecordBy == "") { return false; }
-                if (RecordDate < DateTime.Parse("2000/01/01")) { return false; }
+                if (ProfileID < 1) { valid = false; }
+                if (Name == "") { valid = false; }
+                if (Amount < 0.00) { valid = false; }
+                if (LastUpdateDate < DateTime.Parse("2000/01/01")) { valid = false; }
+                if (RecordBy == "") { valid = false; }
+                if (RecordDate < DateTime.Parse("2000/01/01")) { valid = false; }
             }
-            catch (NullReferenceException) { return false; }
+            catch (NullReferenceException) { valid = false; }
+
+            if (!valid) { throw new DatabaseException("Invalid parameters provided"); }
 
             using (var conn = DataAccess.EstablishConnection())
             {
+                var checkCmd = conn.CreateCommand();
+                try
+                {
+                    checkCmd.CommandText = "SELECT AccountID FROM tblAccounts WHERE Acc_Name = @Name AND ProfileID = @ProfileID";
+                    checkCmd.Parameters.Add("@ProfileID", DbType.Int32).Value = ProfileID;
+                    checkCmd.Parameters.Add("@Name", DbType.String).Value = Name;
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = checkCmd.ExecuteReader();
+
+                    if (read.HasRows) { throw new DatabaseException("An account with this name already exists"); }
+                    read.Close();
+                }
+                finally { conn.Close(); checkCmd.Dispose(); }
+
                 var cmd = conn.CreateCommand();
                 try
                 {
@@ -319,8 +339,6 @@ namespace PersonalBudgetingApplication.Classes
                 }
                 finally { conn.Close(); cmd.Dispose(); }
             }
-
-            return true;
         }
     }
 }
