@@ -17,4 +17,4 @@ Easy Updates: First screen will contain an at-a-glance update about the current 
 Reports: Will be able to view expense breakdowns based on category, Income breakdowns based on category
 
 Attributions:
-BasIcons icon pack made by Freepik
+<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
