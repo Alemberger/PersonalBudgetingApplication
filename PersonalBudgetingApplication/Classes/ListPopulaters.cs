@@ -131,5 +131,29 @@ namespace PersonalBudgetingApplication.Classes
 
             target.ItemsSource = results;
         }
+
+        public void InterestTypeList(ComboBox target)
+        {
+            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            foreach (var item in Enum.GetValues(typeof(DebtIncreaseType)))
+            {
+                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
+            }
+
+            target.ItemsSource = results;
+        }
+
+        public void CompoundingFrequencyList(ComboBox target)
+        {
+            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            foreach (var item in Enum.GetValues(typeof(CompoundNumberApplied)))
+            {
+                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
+            }
+
+            target.ItemsSource = results;
+        }
     }
 }

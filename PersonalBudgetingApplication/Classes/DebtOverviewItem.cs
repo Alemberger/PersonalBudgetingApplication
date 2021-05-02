@@ -14,7 +14,31 @@ namespace PersonalBudgetingApplication.Classes
 
         public DateTime Date { get; set; }
 
+        public string DateString
+        {
+            get
+            {
+                return Date.ToString("MM/dd/yyyy");
+            }
+        }
+
         public double Principal { get; set; }
+
+        public string PrincipalDisplay
+        {
+            get
+            {
+                string display;
+
+                try
+                {
+                    display = string.Format("{0:C}", Principal);
+                }
+                catch (FormatException) { return "$0.00"; }
+
+                return display;
+            }
+        }
 
         public double IncreaseAmount { get; set; }
 
@@ -53,6 +77,8 @@ namespace PersonalBudgetingApplication.Classes
         {
             get
             {
+                if (_increaseType.ToString() == "None") { return ""; }
+
                 return _increaseType.ToString();
             }
         }
@@ -67,7 +93,7 @@ namespace PersonalBudgetingApplication.Classes
 
                 try
                 {
-                    display = string.Format("0:C", PaymentMade);
+                    display = string.Format("{0:C}", PaymentMade);
                 }
                 catch (FormatException) { return ""; }
 
@@ -84,6 +110,20 @@ namespace PersonalBudgetingApplication.Classes
         public DebtOverviewItem(int debtId)
         {
             DebtID = debtId;
+        }
+
+        public DebtOverviewItem Transfer()
+        {
+            var transfer = new DebtOverviewItem();
+
+            transfer.DebtID = DebtID;
+            transfer.Date = Date;
+            transfer.Principal = Principal;
+            transfer.IncreaseAmount = IncreaseAmount;
+            transfer.IncreaseType = IncreaseType;
+            transfer.PaymentMade = PaymentMade;
+
+            return transfer;
         }
     }
 }

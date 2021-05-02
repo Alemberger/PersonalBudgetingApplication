@@ -17,7 +17,7 @@
         <Grid Name="NavBar" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
             <Label Content="Profile" FontSize="18" HorizontalAlignment="Left" Margin="236.5,0,0,0" VerticalAlignment="Center" Height="36" Width="66" Grid.Column="1"/>
             <ComboBox Name="DDLProfileList" ToolTip="Select a profile"  SelectionChanged="DDLProfileList_SelectionChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="307.5,0,0,0" VerticalAlignment="Center" Width="120" Height="30" Grid.Column="1"></ComboBox>
-            <Button Name="BtnLockProfile" Height="20" Width="20" BorderThickness="0" ToolTip="Lock Selected Profile" Background="Transparent" Margin="0,0,650,0" Click="BtnLockProfile_Click">
+            <Button Name="BtnLockProfile" Height="20" Width="20" BorderThickness="0" ToolTip="Lock Selected Profile" Background="Transparent" Margin="450,0,0,0" HorizontalAlignment="Left" Click="BtnLockProfile_Click">
                 <Image Name="ImgLockButton" Source="img/Basicons/unlocked-padlock.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Tag="Unlocked"></Image>
             </Button>
             <Button Content="NewProfile" Name="BtnNewProfile" Click="BtnNewProfile_Click" Margin="30,13,0,13" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="30"/>

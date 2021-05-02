@@ -29,13 +29,13 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" FontSize="20" Binding="{Binding Path=DateString}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Balance" FontSize="20" Binding="{Binding Path=Balance, StringFormat=C}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Income Amount" FontSize="20" Binding="{Binding Path=IncomeDisplay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Income" FontSize="20" Binding="{Binding Path=IncomeDisplay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Income Type" FontSize="20" Binding="{Binding Path=IncomeTypeName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Expense Amount" FontSize="20" Binding="{Binding Path=ExpenseDisplay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Expense" FontSize="20" Binding="{Binding Path=ExpenseDisplay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Expense Type" FontSize="20" Binding="{Binding Path=ExpenseTypeName}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" Margin="50,50,50,50" AutoGenerateColumns="False" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+        <DataGrid Name="GvDebts" Grid.Column="1" Grid.Row="1" IsReadOnly="True" Margin="50,50,50,50" AutoGenerateColumns="False" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden" CanUserSortColumns="False">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Padding" Value="5,5,5,5"></Setter>
@@ -43,13 +43,13 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" FontSize="20" Binding="{Binding Path=DateString}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Amount" FontSize="20" Binding="{Binding Path=Principal}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Intrest Accrued" FontSize="20" Binding="{Binding Path=IncreaseDisplay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Amount" FontSize="20" Binding="{Binding Path=PrincipalDisplay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Increase" FontSize="20" Binding="{Binding Path=IncreaseDisplay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Increase Type" FontSize="20" Binding="{Binding Path=IncreaseTypeName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Payment Made" FontSize="20" Binding="{Binding Path=PaymentDisplay}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox Name="DDLOptions" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="100,0,0,0"></ComboBox>
+        <ComboBox Name="DDLOptions" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="100,0,0,0" SelectionChanged="DDLOptions_SelectionChanged"/>
         <Button Name="BtnNewOption" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="90" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="New Account" Click="BtnNewOption_Click"></Button>
         <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="30" Content="Refresh" Name="BtnRefreshGrids" Click="BtnRefreshGrids_Click"></Button>
         
