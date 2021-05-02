@@ -17,7 +17,7 @@ namespace PersonalBudgetingApplication.Classes.Sorting
             Parent = parent;
         }
 
-        public List<Income> SortByDateDescending()
+        public List<Income> ByDateDescending()
         {
             var sorted = new List<Income>(Parent.Count);
 
@@ -44,9 +44,15 @@ namespace PersonalBudgetingApplication.Classes.Sorting
 
                 while (newIndexes[checkIndex] != -1)
                 {
-                    if (record.Date > Parent[newIndexes[checkIndex]].Date)
+                    switch (SortDates(record.Date, Parent[newIndexes[checkIndex]].Date))
                     {
-                        greaterThan = true;
+                        case -1:
+                            greaterThan = true;
+                            break;
+                        case 0:
+                            break;
+                        case 1:
+                            break;
                     }
 
                     if (greaterThan)
@@ -93,7 +99,7 @@ namespace PersonalBudgetingApplication.Classes.Sorting
 
         public List<Income> SortByDateAscending()
         {
-            var sorted = SortByDateDescending();
+            var sorted = ByDateDescending();
 
             var reversed = new List<Income>();
 
