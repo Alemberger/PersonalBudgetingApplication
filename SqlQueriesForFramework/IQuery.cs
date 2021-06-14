@@ -9,6 +9,8 @@ namespace SqlQueriesForFramework
 {
     public interface IQuery
     {
+        QueryType Type { get; }
+
         ExecutionType ExecType { get; set; }
 
         string QueryString { get; }
@@ -17,13 +19,13 @@ namespace SqlQueriesForFramework
 
         List<QueryClause> Clauses { get; }
 
-        Dictionary<QueryClause, List<string>> ClauseValues { get; }
-
         void AddClause(QueryClause clause);
 
-        void AddValues(QueryClause clause, List<string> values);
+        void AddValues(QueryClause clause, List<object> values);
 
-        void AddClause(QueryClause clause, List<string> values);
+        void AddClause(QueryClause clause, List<object> values);
+
+        void ValidateObjectList(QueryClause target, List<object> objList);
 
         string BuildString();
 
@@ -37,9 +39,21 @@ namespace SqlQueriesForFramework
         Tables,
         Joins,
         Where,
+        WhereJoins,
         GroupBy,
         Having,
+        HavingJoins,
         OrderBy
+    }
+
+    public enum JoinType
+    {
+        Unset,
+        Left,
+        Right,
+        Inner,
+        Outer,
+        Full
     }
 
     public enum ExecutionType
@@ -51,9 +65,29 @@ namespace SqlQueriesForFramework
 
     public enum QueryType
     {
-        Select = 1,
+        Unset = 0,
+        Select,
         Insert,
         Update,
         Delete
+    }
+
+    public class ComparisonComponent
+    {
+        public string Value1 { get; set; }
+        public string Value2 { get; set; }
+        public string Operation { get; set; }
+
+        public ComparisonComponent(string first, string second, string operation)
+        {
+            Value1 = first;
+            Value2 = second;
+            Operation = operation;
+        }
+
+        public override string ToString()
+        {
+            return Value1 + " " + Operation + " " + Value2;
+        }
     }
 }
