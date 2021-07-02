@@ -16,6 +16,8 @@ namespace PersonalBudgetingApplication.Classes
 
         public DBTableCreator(bool createTables)
         {
+            Created = !createTables;
+
             if (createTables)
             {
                 CreateTables();
@@ -28,15 +30,11 @@ namespace PersonalBudgetingApplication.Classes
 
             CreateAccountsTable();
 
-            CreateIncomesTable();
+            CreateTransactionsTable();
 
-            CreateExpensesTable();
+            CreateLookupsTable();
 
-            CreateDebtsTable();
-
-            CreatePaymentsTable();
-
-            CreateIncreaseTable();
+            CreateLookupTypesTable();
 
             Created = true;
         }
@@ -55,37 +53,23 @@ namespace PersonalBudgetingApplication.Classes
             ExecuteNonQuery(query);
         }
 
-        private void CreateIncomesTable()
+        private void CreateTransactionsTable()
         {
-            var query = "CREATE TABLE IF NOT EXISTS tblIncomes (IncomeID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, AccountID INTEGER NOT NULL, Inc_Amount REAL NOT NULL, Inc_Type INTEGER NOT NULL, Inc_Date TEXT NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
+            var query = "CREATE TABLE IF NOT EXISTS tblTransactions (TransactionID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, AccountID INTEGER NOT NULL, Trn_Amount REAL NOT NULL, Trn_Type INTEGER NOT NULL, Trn_Category INTEGER NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
 
             ExecuteNonQuery(query);
         }
 
-        private void CreateExpensesTable()
+        private void CreateLookupsTable()
         {
-            var query = "CREATE TABLE IF NOT EXISTS tblExpenses (ExpenseID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, AccountID INTEGER NOT NULL, Exp_Amount REAL NOT NULL, Exp_Type INTEGER NOT NULL, Exp_Date TEXT NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
+            var query = "CREATE TABLE IF NOT EXISTS tblLookups (LookupID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TypeID INTEGER NOT NULL, Description TEXT NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
 
             ExecuteNonQuery(query);
         }
 
-        private void CreateDebtsTable()
+        private void CreateLookupTypesTable()
         {
-            var query = "CREATE TABLE IF NOT EXISTS tblDebts (DebtID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ProfileID INTEGER NOT NULL, Dbt_Name TEXT NOT NULL, Dbt_Principal REAL NOT NULL, Dbt_LastUpdateDate TEXT NULL, Dbt_InterestType INTERGER NOT NULL, Dbt_NumberOfTimesApplied INTERGER NULL, Dbt_AnnualPercentageRate REAL NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
-
-            ExecuteNonQuery(query);
-        }
-
-        private void CreatePaymentsTable()
-        {
-            var query = "CREATE TABLE IF NOT EXISTS tblDebtPayments (PaymentID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DebtID INTEGER NOT NULL, Pmt_Amount REAL NOT NULL, Pmt_Date TEXT NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
-
-            ExecuteNonQuery(query);
-        }
-
-        private void CreateIncreaseTable()
-        {
-            var query = "CREATE TABLE IF NOT EXISTS tblDebtIncreases (IncreaseID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DebtID INTEGER NOT NULL, Inc_Amount REAL NOT NULL, Inc_Date TEXT NOT NULL, Inc_Type INTEGER NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
+            var query = "CREATE TABLE IF NOT EXISTS tblLookupTypes (TypeID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TypeName TEXT NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
 
             ExecuteNonQuery(query);
         }

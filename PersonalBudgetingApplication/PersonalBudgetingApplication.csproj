@@ -125,9 +125,10 @@
     <Compile Include="Classes\Profile.cs" />
     <Compile Include="Classes\SettingSerialization.cs" />
     <Compile Include="Classes\Sorting\Sorter.cs" />
-    <Compile Include="Core Objects\IAccount.cs" />
-    <Compile Include="Core Objects\IDBObject.cs" />
-    <Compile Include="Core Objects\ITransaction.cs" />
+    <Compile Include="Core Objects\Account.cs" />
+    <Compile Include="Core Objects\ApplicationContext.cs" />
+    <Compile Include="Core Objects\Profile.cs" />
+    <Compile Include="Core Objects\Transaction.cs" />
     <Compile Include="DebtEntryWindow.xaml.cs">
       <DependentUpon>DebtEntryWindow.xaml</DependentUpon>
     </Compile>

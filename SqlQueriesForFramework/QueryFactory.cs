@@ -10,9 +10,39 @@ namespace SqlQueriesForFramework
     {
         public QueryType TargetQuery { get; set; } = QueryType.Unset;
 
-        public List<QueryClause> IncludedClauses { get; set; }
-        public Dictionary<QueryClause, List<object>> ClauseValues { get; set; }
-        
+        List<QueryClause> IncludedClauses { get; set; }
+        Dictionary<QueryClause, List<object>> ClauseValues { get; set; }
+
+        public void IncludeClause(QueryClause clause)
+        {
+            if (!IncludedClauses.Contains(clause))
+            {
+                IncludedClauses.Add(clause);
+            }
+            else { throw new ArgumentException("This clause is already added"); }
+        }
+
+        public string ListIncludedClauses()
+        {
+            var output = "Included Clauses: ";
+
+            if (IncludedClauses.Count < 1) { return output += "None"; }
+
+            output += IncludedClauses[0].ToString();
+
+            for (int i = 1; i < IncludedClauses.Count; i++)
+            {
+                output += string.Format(", {0}", IncludedClauses[i].ToString());
+            }
+
+            return output;
+        }
+
+        public void AddValues(QueryClause clause, List<object> content)
+        {
+            
+        }
+
         public IQuery BuildQuery(QueryType type)
         {
             if (TargetQuery == QueryType.Unset)
