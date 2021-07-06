@@ -45,6 +45,74 @@ namespace PersonalBudgetingApplication.Classes
             SQLiteConnection.CreateFile("Data/BudgetDB.db");
         }
 
+        public static DataTable ExecuteSelectQuery(string query, List<DataColumn> columns)
+        {
+            DataTable results = new DataTable();
+
+            foreach (DataColumn column in columns)
+            {
+                results.Columns.Add(column); 
+            }
+
+            using (var conn = EstablishConnection())
+            {
+                var cmd = conn.CreateCommand();
+                try
+                {
+                    cmd.CommandText = query;
+
+                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
+
+                    var read = cmd.ExecuteReader();
+
+                    if (read.FieldCount != columns.Count) { throw new DataException("Incorrect number of columns"); }
+
+                    while (read.Read())
+                    {
+                        DataRow row = results.NewRow();
+                        for(int i = 0; i < columns.Count; i++)
+                        {
+                            row[i] = ConvertValue(read[i], results.Columns[i].DataType);
+                        }
+                        results.Rows.Add(row);
+                    }
+                }
+                finally { conn.Close(); cmd.Dispose(); }
+            }
+
+            return results;
+        }
+
+        private static object ConvertValue(object value, Type target)
+        {
+            if (value.GetType() == typeof(DBNull))
+            {
+                if (target == typeof(string)) { return ""; }
+                else { return null; }
+            }
+
+            if (target == Type.GetType("System.String"))
+            {
+                return value.ToString();
+            }
+            else if (target == Type.GetType("System.Int32"))
+            {
+                return Convert.ToInt32(value);
+            }
+            else if (target == Type.GetType("System.DateTime"))
+            {
+                return DateTime.Parse(value.ToString());
+            }
+            else if (target == Type.GetType("System.Double"))
+            {
+                return Convert.ToDouble(value);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Target Type provided");
+            }
+        }
+
         public static void ExecuteNonQuery(string query)
         {
             using (var conn = EstablishConnection())
