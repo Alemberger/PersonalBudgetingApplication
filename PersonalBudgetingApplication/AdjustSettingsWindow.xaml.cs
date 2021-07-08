@@ -41,7 +41,7 @@ namespace PersonalBudgetingApplication
             {
                 foreach (ComboBoxItem item in DDLDefaultProfile.Items)
                 {
-                    if (item.Content.ToString() == loaded.DefaultProfile.ProfileName)
+                    if (item.Content.ToString() == loaded.DefaultProfile.Name)
                     {
                         DDLDefaultProfile.SelectedItem = item;
                     }
@@ -71,7 +71,7 @@ namespace PersonalBudgetingApplication
 
             if (DDLDefaultProfile.SelectedIndex > 0)
             {
-                Settings.DefaultProfile = new Profile(((ComboBoxItem)DDLDefaultProfile.SelectedItem).Content.ToString());
+                Settings.DefaultProfile = new Core_Objects.Profile(((ComboBoxItem)DDLDefaultProfile.SelectedItem).Content.ToString());
             }
 
             if (DDLDefaultOverviewTable.SelectedIndex <= 0)

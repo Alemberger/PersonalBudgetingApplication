@@ -27,7 +27,7 @@ namespace PersonalBudgetingApplication
     {
         public string LoadedPage { get; set; } = "Starter";
 
-        public Profile Profile { get; set; }
+        public Core_Objects.Profile Profile { get; set; }
 
         private bool CheckedSettings { get; set; } = false;
 
@@ -57,7 +57,7 @@ namespace PersonalBudgetingApplication
                 {
                     foreach (ComboBoxItem item in DDLProfileList.Items)
                     {
-                        if (item.Content.ToString() == applied.DefaultProfile.ProfileName)
+                        if (item.Content.ToString() == applied.DefaultProfile.Name)
                         {
                             DDLProfileList.SelectedItem = item;
                             Profile = applied.DefaultProfile;
@@ -97,7 +97,7 @@ namespace PersonalBudgetingApplication
         private void BtnNewProfile_Click(object sender, RoutedEventArgs e)
         {
             var Win2 = new ProfileCreation();
-
+            
             Win2.Show();
         }
 
@@ -157,7 +157,7 @@ namespace PersonalBudgetingApplication
             var selected = new Profile(((ComboBoxItem)DDLProfileList.Items[index]).Content.ToString());
 
             Profile = selected;
-            LblTitle.Content = "Overview of " + Profile.ProfileName;
+            LblTitle.Content = "Overview of " + Profile.Name;
 
             //If the previous selected option was a blank option (index -1 or 0)
             //Lock the profile selection, otherwise leave it unlocked

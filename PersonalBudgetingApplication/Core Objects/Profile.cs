@@ -11,15 +11,24 @@ namespace PersonalBudgetingApplication.Core_Objects
 {
     public class Profile
     {
+        private int _profileId;
+        private string _name;
         public int ProfileID 
         {
-            get { return ProfileID; }
-            set { ProfileID = value; }
+            get => _profileId;
+            set => _profileId = value;
         }
         public string Name 
         {
-            get { return Name; }
-            set { Name = value; State = EntityState.Modified; }
+            get => _name;
+            set
+            {
+                _name = value;
+                if (State != EntityState.Added)
+                {
+                    State = EntityState.Modified;
+                }
+            }
         }
         public string RecordBy { get; set; }
         public DateTime? RecordDate { get; set; }
@@ -138,7 +147,7 @@ namespace PersonalBudgetingApplication.Core_Objects
 
         private int Insert()
         {
-            var insertQuery = string.Format("INSERT INTO tblProfile (ProfileName, RecordBy, RecordDate) VALUES ({0}, {1}, {2})",
+            var insertQuery = string.Format("INSERT INTO tblProfile (ProfileName, RecordBy, RecordDate) VALUES ('{0}', '{1}', '{2}')",
                 GetProfileName(), GetRecordBy(), GetRecordDate());
 
             try
@@ -163,7 +172,7 @@ namespace PersonalBudgetingApplication.Core_Objects
 
         private void Update()
         {
-            var updateQuery = string.Format("UPDATE tblProfile SET ProfileName = {0}, RecordBy = {1}, RecordDate = {2} WHERE ProfileID = {3}",
+            var updateQuery = string.Format("UPDATE tblProfile SET ProfileName = '{0}', RecordBy = '{1}', RecordDate = '{2}' WHERE ProfileID = {3}",
                 GetProfileName(), GetRecordBy(), GetRecordDate(), GetProfileID());
             try
             {

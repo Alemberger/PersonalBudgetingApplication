@@ -14,22 +14,20 @@ namespace PersonalBudgetingApplication.Core_Objects
         public int AccountID { get; set; }
         public string Name
         {
-            get { return Name; }
+            get => Name;
             set { Name = value; State = EntityState.Modified; }
         }
-        public double? Amount { get { return Amount; } set { Amount = value; State = EntityState.Modified; } }
-        public int? Type { get { return Type; } set { Type = value; State = EntityState.Modified; } }
+        public double? Amount { get => Amount;  set { Amount = value; State = EntityState.Modified; } }
+        public int? Type { get => Type; set { Type = value; State = EntityState.Modified; } }
         public DateTime? LastUpdateDate 
-        { 
-            get 
-            { 
-                return LastUpdateDate; 
-            }
+        {
+            get => LastUpdateDate;
+
             set
             {
                 LastUpdateDate = value;
                 State = EntityState.Modified;
-            } 
+            }
         }
         public string RecordBy { get; set; }
         public DateTime? RecordDate { get; set; }
@@ -164,7 +162,7 @@ namespace PersonalBudgetingApplication.Core_Objects
 
             foreach (DataRow row in transactions.Rows)
             {
-                var newTransaction = new Transaction((int)row[0]);
+                Transaction newTransaction = new Transaction((int)row[0]);
                 linkedTransactions.Add(newTransaction);
             }
 
@@ -186,7 +184,7 @@ namespace PersonalBudgetingApplication.Core_Objects
             {
                 case EntityState.Added:
                     if (AccountID > 0) { throw new InvalidOperationException("Cannot insert a record that already has a valid AccountID"); }
-                    var id = Input();
+                    int id = Input();
                     AccountID = id;
                     break;
                 case EntityState.Modified:
@@ -215,12 +213,7 @@ namespace PersonalBudgetingApplication.Core_Objects
                 string.Format("INSERT INTO tblAccounts (Acc_Name, Acc_Amount, Acc_Type, Acc_LastUpdateDate, ProfileID, RecordBy, RecordDate) VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6})",
                 GetAccountName(), GetCurrentBalance(), GetAccountType(), GetLastUpdateDate(), GetProfileID(), GetRecordBy(), GetRecordDate());
 
-            //Execute the insert query
-            try
-            {
-                DataAccess.ExecuteNonQuery(query);
-            }
-            catch (Exception ex) { var Type = ex.GetType(); throw ex; }
+            DataAccess.ExecuteNonQuery(query);
 
             //Get the most recently added AccountID 
             try

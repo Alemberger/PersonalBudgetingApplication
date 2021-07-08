@@ -16,7 +16,7 @@ namespace PersonalBudgetingApplication.Classes
     /// </summary>
     public class ApplicationSettings
     {
-        public Profile DefaultProfile { get; set; }
+        public Core_Objects.Profile DefaultProfile { get; set; }
 
         public OverviewTable DefaultOverviewTable { get; set; } = OverviewTable.None;
 
