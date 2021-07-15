@@ -36,6 +36,10 @@ namespace PersonalBudgetingApplication.Classes
 
             CreateLookupTypesTable();
 
+            InitializeLookupTypesTable();
+
+            InitializeLookupsTable();
+
             Created = true;
         }
 
@@ -70,6 +74,20 @@ namespace PersonalBudgetingApplication.Classes
         private void CreateLookupTypesTable()
         {
             var query = "CREATE TABLE IF NOT EXISTS tblLookupType (TypeID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TypeName TEXT NOT NULL, RecordBy TEXT NULL, RecordDate TEXT NULL)";
+
+            ExecuteNonQuery(query);
+        }
+
+        private void InitializeLookupTypesTable()
+        {
+            var query = string.Format("INSERT INTO tblLookupType (TypeName, RecordBy, RecordDate) VALUES ('AccountType','init','{0}'), ('ExpenseCategory', 'init', '{0}'), ('IncomeCategory', 'init', '{0}')", DateTime.Now.ToString("yyyy-MM-dd HH:mm")); ;
+
+            ExecuteNonQuery(query);
+        }
+
+        private void InitializeLookupsTable()
+        {
+            var query = string.Format("INSERT INTO tblLookup (TypeID, Description, RecordBy, RecordDate) VALUES (1,'Banking', 'init','{0}'), (1, 'CreditCard', 'init', '{0}'), (1, 'Debt', 'init', '{0}'), (2, 'Food', 'init', '{0}'), (2, 'Rent', 'init', '{0}'), (2, 'OtherBills', 'init', '{0}'), (2, ('Other', 'init', '{0}'), (3, 'Paycheck', 'init', '{0}'), (3, 'Gift', 'init', '{0}'), (3, 'Other', 'init', '{0}')", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
 
             ExecuteNonQuery(query);
         }

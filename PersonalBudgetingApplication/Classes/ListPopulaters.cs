@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using SqlQueriesForFramework;
 
 namespace PersonalBudgetingApplication.Classes
 {
@@ -15,145 +16,94 @@ namespace PersonalBudgetingApplication.Classes
 
         public void PopulateProfileList(ComboBox target)
         {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+            List<ComboBoxItem> bindList = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
 
-            using (var conn = EstablishConnection())
+            string selectQuery = "SELECT ProfileID, ProfileName FROM tblProfile";
+            List<DataColumn> selectColumns = new List<DataColumn> { new DataColumn("ProfileID", typeof(int)), new DataColumn("ProfileName", typeof(string)) };
+
+            DataTable results = ExecuteSelectQuery(selectQuery, selectColumns);
+
+            foreach (DataRow row in results.Rows)
             {
-                var cmd = conn.CreateCommand();
-                try
-                {
-                    cmd.CommandText = "SELECT ProfileID, ProfileName FROM tblProfile";
-
-                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
-
-                    var read = cmd.ExecuteReader();
-
-                    while (read.Read())
-                    {
-                        results.Add(new ComboBoxItem() { Content = read.GetString(1), Tag = read.GetInt32(0) });
-                    }
-                    read.Close();
-                }
-                finally { conn.Close(); cmd.Dispose(); }
+                ComboBoxItem newItem = new ComboBoxItem() { Content = row.ItemArray[1].ToString(), Tag = row.ItemArray[0].ToString() };
+                bindList.Add(newItem);
             }
 
-            target.ItemsSource = results;
+            target.ItemsSource = bindList;
         }
 
         public void PopulateIncomeTypeList(ComboBox target)
         {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+            string queryString = "SELECT LookupTypeID FROM tblLookupType WHERE TypeName = 'IncomeCategory'";
+            List<DataColumn> queryColumns = new List<DataColumn> { new DataColumn("LookupTypeID", typeof(int)) };
 
-            foreach (var item in Enum.GetValues(typeof(IncomeType)))
+            var result = ExecuteSelectQuery(queryString, queryColumns);
+
+            if (result.Rows.Count != 1) { throw new DataException("Unexpected result when getting the LookupTypeID"); }
+
+            int typeId = (int)result.Rows[0].ItemArray[0];
+
+            string incomeCategory = string.Format("SELECT LookupID, Description FROM tblLookup WHERE TypeID = {0}", typeId.ToString());
+            List<DataColumn> incomeCats = new List<DataColumn> { new DataColumn("LookupID", typeof(int)), new DataColumn("Description", typeof(string)) };
+
+            var bindResults = ExecuteSelectQuery(incomeCategory, incomeCats);
+
+            var bindList = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            foreach (DataRow row in bindResults.Rows)
             {
-                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
+                var newItem = new ComboBoxItem() { Content = row[1].ToString(), Tag = row[0].ToString() };
+                bindList.Add(newItem);
             }
 
-            target.ItemsSource = results;
+            target.ItemsSource = bindList;
         }
 
         public void PopulateExpenseTypeList(ComboBox target)
         {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+            string queryString = "SELECT LookupTypeID FROM tblLookupType WHERE TypeName = 'ExpenseCategory'";
+            List<DataColumn> queryColumns = new List<DataColumn> { new DataColumn("LookupTypeID", typeof(int)) };
 
-            foreach (var item in Enum.GetValues(typeof(ExpenseType)))
+            var result = ExecuteSelectQuery(queryString, queryColumns);
+
+            if (result.Rows.Count != 1) { throw new DataException("Unexpected result when getting the LookupTypeID"); }
+
+            int typeId = (int)result.Rows[0].ItemArray[0];
+
+            string incomeCategory = string.Format("SELECT LookupID, Description FROM tblLookup WHERE TypeID = {0}", typeId.ToString());
+            List<DataColumn> incomeCats = new List<DataColumn> { new DataColumn("LookupID", typeof(int)), new DataColumn("Description", typeof(string)) };
+
+            var bindResults = ExecuteSelectQuery(incomeCategory, incomeCats);
+
+            var bindList = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            foreach (DataRow row in bindResults.Rows)
             {
-                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
+                var newItem = new ComboBoxItem() { Content = row[1].ToString(), Tag = row[0].ToString() };
+                bindList.Add(newItem);
             }
 
-            target.ItemsSource = results;
+            target.ItemsSource = bindList;
         }
 
         public void PopulateAccountsList(ComboBox target, int profileId)
         {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+            if (profileId < 1) { throw new ArgumentException("Valid ProfileID's must be positive"); }
 
-            using (var conn = EstablishConnection())
+            var selectQuery = string.Format("SELECT AccountID, Acc_name FROM tblAccount WHERE ProfileID = {0}", profileId.ToString());
+            var selectColumns = new List<DataColumn> { new DataColumn("AccountID", typeof(int)), new DataColumn("Acc_name", typeof(string)) };
+
+            var results = ExecuteSelectQuery(selectQuery, selectColumns);
+
+            var bindList = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
+
+            foreach (DataRow row in results.Rows)
             {
-                var cmd = conn.CreateCommand();
-                try
-                {
-                    cmd.CommandText = "SELECT AccountID, Acc_Name FROM tblAccounts WHERE ProfileID = @ProfileID";
-                    cmd.Parameters.AddWithValue("@ProfileID", profileId);
-
-                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
-
-                    var read = cmd.ExecuteReader();
-
-                    while (read.Read())
-                    {
-                        results.Add(new ComboBoxItem() { Content = read.GetString(1), Tag = read.GetInt32(0) });
-                    }
-                    read.Close();
-                }
-                finally { conn.Close(); cmd.Dispose(); }
+                var newItem = new ComboBoxItem() { Content = row[1].ToString(), Tag = row[0].ToString() };
+                bindList.Add(newItem);
             }
 
-            target.ItemsSource = results;
-        }
-
-        public void PopulateDebtsList(ComboBox target, int profileId)
-        {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
-
-            using (var conn = EstablishConnection())
-            {
-                var cmd = conn.CreateCommand();
-                try
-                {
-                    cmd.CommandText = "SELECT DebtID, Dbt_Name FROM tblDebts WHERE ProfileID = @ProfileID";
-                    cmd.Parameters.AddWithValue("@ProfileID", profileId);
-
-                    if (conn.State == ConnectionState.Closed) { conn.Open(); }
-
-                    var read = cmd.ExecuteReader();
-
-                    while (read.Read())
-                    {
-                        results.Add(new ComboBoxItem() { Content = read.GetString(1), Tag = read.GetInt32(0) });
-                    }
-                    read.Close();
-                }
-                finally { conn.Close(); cmd.Dispose(); }
-            }
-
-            target.ItemsSource = results;
-        }
-
-        public void PopulateOverviewTableList(ComboBox target)
-        {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
-
-            foreach (var item in Enum.GetValues(typeof(OverviewTable)))
-            {
-                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
-            }
-
-            target.ItemsSource = results;
-        }
-
-        public void InterestTypeList(ComboBox target)
-        {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
-
-            foreach (var item in Enum.GetValues(typeof(DebtIncreaseType)))
-            {
-                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
-            }
-
-            target.ItemsSource = results;
-        }
-
-        public void CompoundingFrequencyList(ComboBox target)
-        {
-            var results = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "" } };
-
-            foreach (var item in Enum.GetValues(typeof(CompoundNumberApplied)))
-            {
-                results.Add(new ComboBoxItem() { Content = item.ToString(), Tag = (int)item });
-            }
-
-            target.ItemsSource = results;
+            target.ItemsSource = bindList;
         }
     }
 }

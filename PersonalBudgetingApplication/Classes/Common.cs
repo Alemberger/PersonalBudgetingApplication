@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using PersonalBudgetingApplication.Core_Objects;
 
 namespace PersonalBudgetingApplication.Classes
 {
@@ -125,7 +126,7 @@ namespace PersonalBudgetingApplication.Classes
 
         public static void ReturnToMainWindow(Profile selected)
         {
-            if (selected.ProfileName == "" || selected.ProfileName is null)
+            if (selected.Name == "" || selected.Name is null)
             {
                 try
                 {
@@ -155,7 +156,7 @@ namespace PersonalBudgetingApplication.Classes
                     {
                         var Item = (ComboBoxItem)Main.DDLProfileList.Items[i];
 
-                        if (Item.Content.ToString() == selected.ProfileName)
+                        if (Item.Content.ToString() == selected.Name)
                         {
                             index = i;
                         }
@@ -178,7 +179,7 @@ namespace PersonalBudgetingApplication.Classes
                     {
                         var Item = (ComboBoxItem)Main.DDLProfileList.Items[i];
 
-                        if (Item.Content.ToString() == selected.ProfileName)
+                        if (Item.Content.ToString() == selected.Name)
                         {
                             index = i;
                         }

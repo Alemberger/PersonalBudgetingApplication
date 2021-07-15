@@ -78,18 +78,52 @@ namespace PersonalBudgetingApplication.Core_Objects
             {
                 return DateTime.Now.ToString("yyyy-MM-dd HH:mm");
             }
+
+        }
+
+        /// <summary>
+        /// Get all accounts of type banking or credit card
+        /// </summary>
+        /// <returns></returns>
+        public List<Account> GetAccounts()
+        {
+            List<Account> compositeList = GetAccountsOfType(1);
+
+            compositeList.AddRange(GetAccountsOfType(2));
+
+            return compositeList;
+        }
+
+        public List<Account> GetDebts()
+        {
+            return GetAccountsOfType(3);
+        }
+
+        private List<Account> GetAccountsOfType(int typeId)
+        {
+            List<Account> outputList = new List<Account>();
+
+            foreach (Account check in Accounts)
+            {
+                if (check.Type.Value == typeId)
+                {
+                    outputList.Add(check);
+                }
+            }
+
+            return outputList;
         }
 
         private void GetRecord()
         {
             if (ProfileID < 1) { throw new ArgumentException("Invalid ProfileID provided"); }
 
-            var selectString = "SELECT ProfileName, RecordBy, RecordDate FROM tblProfiles WHERE ProfileID = " + GetProfileID();
-            var selectColumns = new List<DataColumn> { new DataColumn("ProfileName", typeof(string)), new DataColumn("RecordBy", typeof(string)), new DataColumn("RecordDate", typeof(DateTime)) };
+            string selectString = "SELECT ProfileName, RecordBy, RecordDate FROM tblProfile WHERE ProfileID = " + GetProfileID();
+            List<DataColumn> selectColumns = new List<DataColumn> { new DataColumn("ProfileName", typeof(string)), new DataColumn("RecordBy", typeof(string)), new DataColumn("RecordDate", typeof(DateTime)) };
 
             try
             {
-                var results = DataAccess.ExecuteSelectQuery(selectString, selectColumns);
+                DataTable results = DataAccess.ExecuteSelectQuery(selectString, selectColumns);
 
                 if (results.Rows.Count != 1) { throw new DataException("Query returned incorrect number of records"); }
 
@@ -99,17 +133,17 @@ namespace PersonalBudgetingApplication.Core_Objects
             }
             catch (Exception ex) { throw ex; }
 
-            var accountSelect = "SELECT AccountID FROM tblAccount WHERE ProfileID = " + GetProfileID();
-            var accountColumns = new List<DataColumn> { new DataColumn("AccountID", typeof(int)) };
+            string accountSelect = "SELECT AccountID FROM tblAccount WHERE ProfileID = " + GetProfileID();
+            List<DataColumn> accountColumns = new List<DataColumn> { new DataColumn("AccountID", typeof(int)) };
 
-            var accounts = DataAccess.ExecuteSelectQuery(accountSelect, accountColumns);
+            DataTable accounts = DataAccess.ExecuteSelectQuery(accountSelect, accountColumns);
 
-            var linkedAccounts = new List<Account>();
+            List<Account> linkedAccounts = new List<Account>();
             if (accounts.Rows.Count > 0)
             {
                 foreach (DataRow row in accounts.Rows)
                 {
-                    var newAccount = new Account((int)row[0]);
+                    Account newAccount = new Account((int)row[0]);
                     linkedAccounts.Add(newAccount);
                 }
             }
@@ -125,7 +159,7 @@ namespace PersonalBudgetingApplication.Core_Objects
             {
                 case EntityState.Added:
                     if (ProfileID > 0) { throw new ArgumentException("Cannot provide a positive ProfileID for records to be added"); }
-                    var id = Insert();
+                    int id = Insert();
                     ProfileID = id;
                     break;
                 case EntityState.Modified:
@@ -136,6 +170,8 @@ namespace PersonalBudgetingApplication.Core_Objects
                     if (ProfileID < 1) { throw new ArgumentException("Cannot delete a record without a valid ProfileID"); }
                     Delete();
                     break;
+                case EntityState.Detached:
+                    throw new InvalidOperationException("Cannot save changes to an already detached record");
                 case EntityState.Unchanged:
                     break;
                 default:
@@ -147,7 +183,7 @@ namespace PersonalBudgetingApplication.Core_Objects
 
         private int Insert()
         {
-            var insertQuery = string.Format("INSERT INTO tblProfile (ProfileName, RecordBy, RecordDate) VALUES ('{0}', '{1}', '{2}')",
+            string insertQuery = string.Format("INSERT INTO tblProfile (ProfileName, RecordBy, RecordDate) VALUES ('{0}', '{1}', '{2}')",
                 GetProfileName(), GetRecordBy(), GetRecordDate());
 
             try
@@ -158,10 +194,10 @@ namespace PersonalBudgetingApplication.Core_Objects
 
             try
             {
-                var selectQuery = "SELECT ProfileID FROM tblProfile ORDER BY ProfileID DESC LIMIT 1";
-                var selectColumns = new List<DataColumn> { new DataColumn("ProfileID", typeof(int)) };
+                string selectQuery = "SELECT ProfileID FROM tblProfile ORDER BY ProfileID DESC LIMIT 1";
+                List<DataColumn> selectColumns = new List<DataColumn> { new DataColumn("ProfileID", typeof(int)) };
 
-                var result = DataAccess.ExecuteSelectQuery(selectQuery, selectColumns);
+                DataTable result = DataAccess.ExecuteSelectQuery(selectQuery, selectColumns);
 
                 if (result.Rows.Count != 1) { throw new DataException("Unexpected number of records returned"); }
 
@@ -172,7 +208,7 @@ namespace PersonalBudgetingApplication.Core_Objects
 
         private void Update()
         {
-            var updateQuery = string.Format("UPDATE tblProfile SET ProfileName = '{0}', RecordBy = '{1}', RecordDate = '{2}' WHERE ProfileID = {3}",
+            string updateQuery = string.Format("UPDATE tblProfile SET ProfileName = '{0}', RecordBy = '{1}', RecordDate = '{2}' WHERE ProfileID = {3}",
                 GetProfileName(), GetRecordBy(), GetRecordDate(), GetProfileID());
             try
             {
@@ -183,7 +219,7 @@ namespace PersonalBudgetingApplication.Core_Objects
 
         private void Delete()
         {
-            var deleteQuery = string.Format("DELETE FROM tblProfile WHERE ProfileID = {0}", GetProfileID());
+            string deleteQuery = string.Format("DELETE FROM tblProfile WHERE ProfileID = {0}", GetProfileID());
 
             try
             {

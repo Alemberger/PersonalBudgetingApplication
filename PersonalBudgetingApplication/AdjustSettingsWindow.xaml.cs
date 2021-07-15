@@ -28,8 +28,6 @@ namespace PersonalBudgetingApplication
 
             populater.PopulateProfileList(DDLDefaultProfile);
 
-            populater.PopulateOverviewTableList(DDLDefaultOverviewTable);
-
             var applied = SettingSerialization.ReadSettings();
 
             ApplySettings(applied);
@@ -47,17 +45,6 @@ namespace PersonalBudgetingApplication
                     }
                 }
             }
-
-            if (!(loaded.DefaultOverviewTable == OverviewTable.None))
-            {
-                foreach (ComboBoxItem item in DDLDefaultOverviewTable.Items)
-                {
-                    if (item.Content.ToString() == loaded.DefaultOverviewTable.ToString())
-                    {
-                        DDLDefaultOverviewTable.SelectedItem = item;
-                    }
-                }
-            }
         }
 
         private void BtnCancelSettings_Click(object sender, RoutedEventArgs e)
@@ -71,20 +58,17 @@ namespace PersonalBudgetingApplication
 
             if (DDLDefaultProfile.SelectedIndex > 0)
             {
-                Settings.DefaultProfile = new Core_Objects.Profile(((ComboBoxItem)DDLDefaultProfile.SelectedItem).Content.ToString());
-            }
-
-            if (DDLDefaultOverviewTable.SelectedIndex <= 0)
-            {
-                Settings.DefaultOverviewTable = OverviewTable.None;
-            }
-            else
-            {
-                Settings.DefaultOverviewTable = (OverviewTable)Convert.ToInt32(((ComboBoxItem)DDLDefaultOverviewTable.SelectedItem).Tag);
+                Settings.DefaultProfile = new Core_Objects.Profile(Convert.ToInt32(((ComboBoxItem)DDLDefaultProfile.SelectedItem).Tag));
             }
 
             SettingSerialization.SaveSettings(Settings);
             Close();
+        }
+
+        private void BtnManageLookups_Click(object sender, RoutedEventArgs e)
+        {
+            //Open a new window dedicated to adjusting the content of the Lookups Table and the Lookups Type tables
+
         }
     }
 }

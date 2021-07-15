@@ -1,20 +1,10 @@
-﻿using System;
+﻿using PersonalBudgetingApplication.Classes;
+using PersonalBudgetingApplication.Core_Objects;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PersonalBudgetingApplication.Classes;
-using PersonalBudgetingApplication.Classes.Sorting;
 
 namespace PersonalBudgetingApplication
 {
@@ -27,9 +17,7 @@ namespace PersonalBudgetingApplication
 
         public OverviewTable OpenTable { get; set; } = OverviewTable.Accounts;
 
-        public Account SelectedAccount { get; set; }
-
-        public Debt SelectedDebt { get; set; }
+        public Account Selected { get; set; }
 
         public DefaultPage()
         {
@@ -52,6 +40,16 @@ namespace PersonalBudgetingApplication
             }
         }
 
+        private List<ComboBoxItem> FormatOptionList(List<Account> sourceList)
+        {
+            List<ComboBoxItem> bindList = new List<ComboBoxItem> { new ComboBoxItem() { Content = "", Tag = "", IsSelected = true } };
+            foreach (Account account in sourceList)
+            {
+                bindList.Add(new ComboBoxItem() { Content = account.Name, Tag = account.AccountID.ToString() });
+            }
+            return bindList;
+        }
+
         public void ChangeGrids(OverviewTable target)
         {
             switch (target)
@@ -72,7 +70,7 @@ namespace PersonalBudgetingApplication
                     BtnEnterNegative.Content = "Enter Expense";
                     BtnEnterNegative.Tag = "Account";
 
-                    DDLOptions.ItemsSource = Profile.ListAccounts();
+                    DDLOptions.ItemsSource = FormatOptionList(Profile.GetAccounts());
 
                     break;
                 case OverviewTable.Debts:
@@ -91,7 +89,7 @@ namespace PersonalBudgetingApplication
                     BtnEnterNegative.Content = "Enter Increase";
                     BtnEnterNegative.Tag = "Debt";
 
-                    DDLOptions.ItemsSource = Profile.ListDebts();
+                    DDLOptions.ItemsSource = FormatOptionList(Profile.GetDebts());
 
                     break;
             }
@@ -113,68 +111,12 @@ namespace PersonalBudgetingApplication
 
         private void BtnEnterPositive_Click(object sender, RoutedEventArgs e)
         {
-            if (DDLOptions.SelectedIndex == -1 || DDLOptions.SelectedIndex == 0)
-            {
-                string message = "Must select a";
-                if (OpenTable == OverviewTable.Accounts)
-                {
-                    message += "n account.";
-                }
-                else if (OpenTable == OverviewTable.Debts)
-                {
-                    message += " debt.";
-                }
-
-                MessageBox.Show(message);
-                return;
-            }
-
-            if (OpenTable == OverviewTable.Accounts)
-            {
-                var window = new IncomeEntryWindow(SelectedAccount, Profile);
-
-                window.Show();
-            }
-            else if (OpenTable == OverviewTable.Debts)
-            {
-                var window = new PaymentEntryWindow(SelectedDebt, Profile);
-
-                window.Show();
-            }
-            else { throw new Exception("Unknown Table"); }
+            throw new NotImplementedException();
         }
 
         private void BtnEnterNegative_Click(object sender, RoutedEventArgs e)
         {
-            if (DDLOptions.SelectedIndex == -1 || DDLOptions.SelectedIndex == 0)
-            {
-                string message = "Must select a";
-                if (OpenTable == OverviewTable.Accounts)
-                {
-                    message += "n account.";
-                }
-                else if (OpenTable == OverviewTable.Debts)
-                {
-                    message += " debt.";
-                }
-
-                MessageBox.Show(message);
-                return;
-            }
-
-            if (OpenTable == OverviewTable.Accounts)
-            {
-                var window = new ExpenseEntryWindow(SelectedAccount, Profile);
-
-                window.Show();
-            }
-            else if (OpenTable == OverviewTable.Debts)
-            {
-                var window = new IncreaseEntryWindow(SelectedDebt, Profile);
-
-                window.Show();
-            }
-            else { throw new Exception("Unknown Table"); }
+            throw new NotImplementedException();
         }
 
         private void BtnRefreshGrids_Click(object sender, RoutedEventArgs e)
@@ -184,70 +126,34 @@ namespace PersonalBudgetingApplication
 
         public void RefreshGrid()
         {
-            if (OpenTable == OverviewTable.Accounts)
-            {
-                if (DDLOptions.SelectedIndex > 0)
-                {
-                    GvAccounts.ItemsSource = new AccountOverviewTable(SelectedAccount).Items;
-                }
-            }
-            else if (OpenTable == OverviewTable.Debts)
-            {
-                if (DDLOptions.SelectedIndex > 0)
-                {
-                    GvDebts.ItemsSource = new DebtOverviewTable(SelectedDebt).Items;
-                }
-            }
+            throw new NotImplementedException();
         }
 
         private void BtnNewOption_Click(object sender, RoutedEventArgs e)
         {
             if (OpenTable == OverviewTable.Accounts)
             {
-                var window = new AccountEntryWindow(Profile);
+                AccountCreator newWindow = new AccountCreator();
 
-                window.Show();
+                newWindow.Profile = Profile;
+
+                newWindow.EditAccount = new Account() { State = System.Data.Entity.EntityState.Added };
+
+                newWindow.Show();
             }
             else if (OpenTable == OverviewTable.Debts)
             {
-                var window = new DebtEntryWindow(Profile);
-
-                window.Show();
+                throw new NotImplementedException();
+            }
+            else
+            {
+                throw new InvalidOperationException("Cannot add a new option without selecting an appropriate table type");
             }
         }
 
         private void DDLOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (OpenTable == OverviewTable.Accounts)
-            {
-                if (DDLOptions.SelectedIndex < 1)
-                {
-                    BtnNewOption.Content = "New Account";
-                    SelectedAccount = null;
-                    GvAccounts.ItemsSource = new DataTable().Rows;
-                }
-                else
-                {
-                    BtnNewOption.Content = "Edit Account";
-                    SelectedAccount = new Account(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
-                    GvAccounts.ItemsSource = new AccountOverviewTable(SelectedAccount).Items;
-                }
-            }
-            else
-            {
-                if (DDLOptions.SelectedIndex < 1)
-                {
-                    BtnNewOption.Content = "New Debt";
-                    GvDebts.ItemsSource = new DataTable().Rows;
-                    SelectedDebt = null;
-                }
-                else
-                {
-                    BtnNewOption.Content = "Edit Debt";
-                    SelectedDebt = new Debt(Convert.ToInt32(((ComboBoxItem)DDLOptions.SelectedItem).Tag));
-                    GvDebts.ItemsSource = new DebtOverviewTable(SelectedDebt).Items;
-                }
-            }
+            //Display the selected Options Information in the appropriate table
         }
     }
 }

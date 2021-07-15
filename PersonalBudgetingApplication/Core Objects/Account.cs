@@ -53,6 +53,52 @@ namespace PersonalBudgetingApplication.Core_Objects
             State = EntityState.Unchanged;
         }
 
+        public bool ValidateName()
+        {
+            //Ensure a name is provided
+            if (Name is null || Name.Length == 0) { return false; }
+
+            switch (State)
+            {
+                case EntityState.Added:
+                    if (AccountID > 0) { throw new InvalidOperationException("Cannot validate a record in State Added that has a positive AccountID"); }
+                    var addQuery = string.Format("SELECT AccountID FROM tblAccount WHERE acc_name = '{0}'", GetAccountName());
+                    var addColumns = new List<DataColumn> { new DataColumn("AccountID", typeof(int)) };
+                    var addResult = DataAccess.ExecuteSelectQuery(addQuery, addColumns);
+                    if (addResult.Rows.Count > 0) { return false; }
+                    break;
+                case EntityState.Modified:
+                    if (AccountID < 1) { throw new InvalidOperationException("Cannot validate a record in State Modified that does not have a valid AccountID"); }
+                    var modifyQuery = string.Format("SELECT AccountID FROM tblAccount WHERE acc_name = '{0}' AND AccountID <> {1}", GetAccountName(), GetAccountID());
+                    var modifyColumns = new List<DataColumn> { new DataColumn("AccountID", typeof(int)) };
+                    var modifyResult = DataAccess.ExecuteSelectQuery(modifyQuery, modifyColumns);
+                    if (modifyResult.Rows.Count > 0) { return false; }
+                    break;
+                default:
+                    break;
+            }
+
+            return true;
+        }
+
+        public bool ValidateAmount()
+        {
+            if (Amount is null) { return false; }
+            return true;
+        }
+
+        public bool ValidateType()
+        {
+            if (Type is null || Type < 1) { return false; }
+            return true;
+        }
+
+        public bool ValidateUpdateDate()
+        {
+            if (LastUpdateDate is null || LastUpdateDate.Value < new DateTime(2000,1,1)) { return false; }
+            return true;
+        }
+
         private string GetAccountID()
         {
             if (AccountID < 1) { return ""; }

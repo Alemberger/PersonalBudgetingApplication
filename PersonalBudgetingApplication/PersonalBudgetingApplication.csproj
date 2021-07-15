@@ -99,8 +99,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AccountEntryWindow.xaml.cs">
-      <DependentUpon>AccountEntryWindow.xaml</DependentUpon>
+    <Compile Include="AccountCreator.xaml.cs">
+      <DependentUpon>AccountCreator.xaml</DependentUpon>
     </Compile>
     <Compile Include="AdjustSettingsWindow.xaml.cs">
       <DependentUpon>AdjustSettingsWindow.xaml</DependentUpon>
@@ -111,28 +111,20 @@
     <Compile Include="Classes\DataAccess.cs" />
     <Compile Include="Classes\DatabaseException.cs" />
     <Compile Include="Classes\DBTableCreator.cs" />
-    <Compile Include="Classes\Sorting\IncomeSorter.cs" />
     <Compile Include="Classes\ListPopulaters.cs" />
     <Compile Include="Classes\SettingSerialization.cs" />
     <Compile Include="Classes\Sorting\Sorter.cs" />
     <Compile Include="Core Objects\Account.cs" />
     <Compile Include="Core Objects\ApplicationContext.cs" />
+    <Compile Include="Core Objects\Lookup.cs" />
+    <Compile Include="Core Objects\LookupType.cs" />
     <Compile Include="Core Objects\Profile.cs" />
     <Compile Include="Core Objects\Transaction.cs" />
-    <Compile Include="DebtEntryWindow.xaml.cs">
-      <DependentUpon>DebtEntryWindow.xaml</DependentUpon>
+    <Compile Include="LookupManagement.xaml.cs">
+      <DependentUpon>LookupManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExpenseEntryWindow.xaml.cs">
-      <DependentUpon>ExpenseEntryWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="IncomeEntryWindow.xaml.cs">
-      <DependentUpon>IncomeEntryWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="IncreaseEntryWindow.xaml.cs">
-      <DependentUpon>IncreaseEntryWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PaymentEntryWindow.xaml.cs">
-      <DependentUpon>PaymentEntryWindow.xaml</DependentUpon>
+    <Compile Include="Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Primary.xaml.cs">
       <DependentUpon>Primary.xaml</DependentUpon>
@@ -146,7 +138,7 @@
     <Compile Include="StarterPage.xaml.cs">
       <DependentUpon>StarterPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="AccountEntryWindow.xaml">
+    <Page Include="AccountCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,23 +146,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DebtEntryWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DefaultPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ExpenseEntryWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="IncomeEntryWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="IncreaseEntryWindow.xaml">
+    <Page Include="LookupManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,7 +169,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PaymentEntryWindow.xaml">
+    <Page Include="Page1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -299,6 +279,12 @@
     <Resource Include="img\Basicons\unlocked-padlock.png" />
     <Resource Include="img\Basicons\up-arrow-upload-button.png" />
     <Resource Include="img\Basicons\zoom-in-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SqlQueriesForFramework\SqlQueriesForFramework.csproj">
+      <Project>{e3d267d3-845b-4d6e-ac9e-4d8b3d3d0459}</Project>
+      <Name>SqlQueriesForFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 using PersonalBudgetingApplication.Classes;
+using PersonalBudgetingApplication.Core_Objects;
 
 namespace PersonalBudgetingApplication
 {
@@ -154,7 +155,7 @@ namespace PersonalBudgetingApplication
                 return; 
             }
 
-            var selected = new Profile(((ComboBoxItem)DDLProfileList.Items[index]).Content.ToString());
+            var selected = new Profile(Convert.ToInt32(((ComboBoxItem)DDLProfileList.SelectedItem).Tag));
 
             Profile = selected;
             LblTitle.Content = "Overview of " + Profile.Name;

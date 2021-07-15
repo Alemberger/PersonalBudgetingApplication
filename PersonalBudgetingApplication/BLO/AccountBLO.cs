@@ -105,5 +105,29 @@ namespace PersonalBudgetingApplication.BLO
 
             return incomes;
         }
+
+        public double GetExpensesForDate(DateTime targetDate)
+        {
+            double total = 0.00;
+
+            foreach (Transaction operation in GetExpenses(targetDate))
+            {
+                total += operation.Amount.Value;
+            }
+
+            return total;
+        }
+
+        public double GetIncomesForDate(DateTime targetDate)
+        {
+            double total = 0.00;
+
+            foreach (Transaction operation in GetIncomes(targetDate))
+            {
+                total += operation.Amount.Value;
+            }
+
+            return total;
+        }
     }
 }
